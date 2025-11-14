@@ -1,0 +1,5 @@
+{
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Users\\cradules\\Desktop\\udemy\\angular;C:\\Users\\cradules\\Desktop\\udemy\\angular\\angular-cli\\node_modules\\.bin;${env:PATH}"
+  }
+}
