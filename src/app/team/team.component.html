@@ -1,1 +1,33 @@
-<p>team works!</p>
+<h2>Lista colegilor</h2>
+
+<button (click)="showAddForm = true">
+  + Adaugă coleg
+</button>
+
+<app-add-member
+  *ngIf="showAddForm"
+  (save)="addMember($event)"
+  (cancel)="showAddForm = false">
+</app-add-member>
+
+<table *ngIf="members.length > 0">
+  <thead>
+    <tr>
+      <th>PerNR</th>
+      <th>Nume</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let m of members">
+      <td>{{ m.perNr }}</td>
+      <td>{{ m.nume }}</td>
+      <td>{{ m.email }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="members.length === 0">
+  Nu există colegi încă.
+</p>
