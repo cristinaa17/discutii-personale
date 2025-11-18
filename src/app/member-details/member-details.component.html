@@ -1,0 +1,35 @@
+<div class="details">
+
+  <h3>Detalii coleg</h3>
+
+  <div class="photo-section">
+    <img *ngIf="member.photoUrl; else noPhoto"
+         [src]="member.photoUrl"
+         alt="Foto coleg">
+
+    <ng-template #noPhoto>
+      <div class="placeholder-photo">Fără poză</div>
+    </ng-template>
+  </div>
+
+  <div class="info">
+    <p><strong>Nume:</strong> {{ member.nume }}</p>
+    <p><strong>PerNR:</strong> {{ member.perNr }}</p>
+    <p><strong>Email:</strong> {{ member.email }}</p>
+    <p><strong>Data angajării:</strong> {{ member.dataAngajarii }}</p>
+    <p><strong>Data nașterii:</strong> {{ member.dataNasterii }}</p>
+    <p><strong>Gen:</strong> {{ member.gen }}</p>
+    <p><strong>Oraș:</strong> {{ member.oras }}</p>
+    <p><strong>Departament:</strong> {{ member.departament }}</p>
+    <p><strong>Business Unit:</strong> {{ member.businessUnit }}</p>
+    <p><strong>Funcție:</strong> {{ member.functie }}</p>
+    <p><strong>Project:</strong> {{ member.project }}</p>
+    <p><strong>Client:</strong> {{ member.client }}</p>
+    <p><strong>Manager Proiect:</strong> {{ member.projectManager }}</p>
+    <p><strong>Nivel Germană:</strong> {{ member.german }}</p>
+    <p><strong>Nivel Engleză:</strong> {{ member.english }}</p>
+    <p><strong>G-Level:</strong> {{ member.gLevel }}</p>
+    <p><strong>Skills:</strong> {{ member.skills }}</p>
+  </div>
+
+</div>

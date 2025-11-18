@@ -20,13 +20,18 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let m of members">
+    <tr *ngFor="let m of members" (click)="selectMember(m)">
       <td>{{ m.perNr }}</td>
       <td>{{ m.nume }}</td>
       <td>{{ m.email }}</td>
     </tr>
   </tbody>
 </table>
+
+<app-member-details
+  *ngIf="selectedMember"
+  [member]="selectedMember">
+</app-member-details>
 
 <p *ngIf="members.length === 0">
   Nu există colegi încă.
