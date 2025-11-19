@@ -1,0 +1,16 @@
+<div class="discussion-list">
+
+  <div *ngFor="let d of discussions" class="discussion-item">
+    
+    <div class="text">
+      <div class="date">
+        {{ d.date | date:'dd.MM.yyyy HH:mm' }}
+      </div>
+      <div>{{ d.text }}</div>
+    </div>
+
+    <button class="delete-btn" (click)="delete.emit(d.id)">Șterge</button>
+
+  </div>
+
+</div>
