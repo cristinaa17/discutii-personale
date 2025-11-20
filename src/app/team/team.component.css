@@ -58,3 +58,42 @@ tbody tr {
 tbody tr:hover {
   background-color: #f0f7ff;
 }
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  margin-right: 6px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.action-btn:hover {
+  transform: scale(1.03);
+}
+
+.edit-btn {
+  background-color: #ffa726;
+}
+
+.edit-btn:hover {
+  background-color: #fb8c00;
+}
+
+.delete-btn {
+  background-color: #e53935;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
+
+.discuss-btn {
+  background-color: #42a5f5;
+}
+
+.discuss-btn:hover {
+  background-color: #1e88e5;
+}

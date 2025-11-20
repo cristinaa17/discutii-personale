@@ -1,0 +1,83 @@
+<h3>Editează colegul</h3>
+
+<div class="form-container">
+
+  <label>PerNR</label>
+  <input type="number" [(ngModel)]="form.perNr">
+
+  <label>Nume</label>
+  <input type="text" [(ngModel)]="form.nume">
+
+  <label>Email</label>
+  <input type="email" [(ngModel)]="form.email">
+
+  <label>Data angajării</label>
+  <input type="date" [(ngModel)]="form.dataAngajarii">
+
+  <label>Data nașterii</label>
+  <input type="date" [(ngModel)]="form.dataNasterii">
+
+  <label>Gen</label>
+  <input type="text" [(ngModel)]="form.gen">
+
+  <label>Oraș</label>
+  <input type="text" [(ngModel)]="form.oras">
+
+  <label>Departament</label>
+  <input type="text" [(ngModel)]="form.departament">
+
+  <label>Business Unit</label>
+  <input type="text" [(ngModel)]="form.businessUnit">
+
+  <label>Normă</label>
+  <input type="number" [(ngModel)]="form.norma">
+
+  <label>FTE</label>
+  <input type="number" [(ngModel)]="form.fte">
+
+  <label>Forma Colaborare</label>
+  <input type="text" [(ngModel)]="form.formaColaborare">
+
+  <label>Tip Contract</label>
+  <input type="text" [(ngModel)]="form.tipContract">
+
+  <label>Funcție</label>
+  <input type="text" [(ngModel)]="form.functie">
+
+  <label>Drept Concediu</label>
+  <input type="number" [(ngModel)]="form.dreptConcediu">
+
+  <label>HR Manager</label>
+  <input type="text" [(ngModel)]="form.hrManager">
+
+  <label>Project</label>
+  <input type="text" [(ngModel)]="form.project">
+
+  <label>Project Start Date</label>
+  <input type="date" [(ngModel)]="form.projectStartDate">
+
+  <label>Project End Date</label>
+  <input type="date" [(ngModel)]="form.projectEndDate">
+
+  <label>Client</label>
+  <input type="text" [(ngModel)]="form.client">
+
+  <label>Project Manager</label>
+  <input type="text" [(ngModel)]="form.projectManager">
+
+  <label>Nivel Germană</label>
+  <input type="text" [(ngModel)]="form.german">
+
+  <label>Nivel Engleză</label>
+  <input type="text" [(ngModel)]="form.english">
+
+  <label>G-Level</label>
+  <input type="text" [(ngModel)]="form.gLevel">
+
+  <label>Skills</label>
+  <input type="text" [(ngModel)]="form.skills">
+
+  <button (click)="submit()">Salvează modificările</button>
+  <button (click)="cancel.emit()">Renunță</button>
+
+</div>

@@ -16,17 +16,32 @@
       <th>PerNR</th>
       <th>Nume</th>
       <th>Email</th>
+      <th>Acțiuni</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr *ngFor="let m of members" (click)="selectMember(m)">
-      <td>{{ m.perNr }}</td>
-      <td>{{ m.nume }}</td>
-      <td>{{ m.email }}</td>
+    <tr *ngFor="let m of members; let i = index">
+      <td (click)="selectMember(m)" style="cursor:pointer;">{{ m.perNr }}</td>
+      <td (click)="selectMember(m)" style="cursor:pointer;">{{ m.nume }}</td>
+      <td (click)="selectMember(m)" style="cursor:pointer;">{{ m.email }}</td>
+      <td>
+      <button class="action-btn edit-btn" (click)="onEditMember(m, $event)">Editează</button>
+
+       <button class="action-btn delete-btn" (click)="onDeleteMember(i, $event)">Șterge</button> 
+
+       <button class="action-btn discuss-btn" (click)="onAddDiscussionFromTable(m, $event)">Discuție nouă</button>
+      </td>
     </tr>
   </tbody>
 </table>
+
+<app-edit-member
+*ngIf="showEditForm && editTarget"
+  [member]="editTarget!"
+  (save)="onSaveEdit($event)"
+  (cancel)="onCancelEdit()">
+</app-edit-member>
 
 <app-member-details
   *ngIf="selectedMember"
