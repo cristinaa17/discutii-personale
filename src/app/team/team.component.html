@@ -4,11 +4,11 @@
   + Adaugă coleg
 </button>
 
-<app-add-member
+<app-member-form
   *ngIf="showAddForm"
   (save)="addMember($event)"
   (cancel)="showAddForm = false">
-</app-add-member>
+</app-member-form>
 
 <table *ngIf="members.length > 0">
   <thead>
@@ -36,12 +36,12 @@
   </tbody>
 </table>
 
-<app-edit-member
-*ngIf="showEditForm && editTarget"
+<app-member-form
+*ngIf="showEditForm"
   [member]="editTarget!"
   (save)="onSaveEdit($event)"
   (cancel)="onCancelEdit()">
-</app-edit-member>
+</app-member-form>
 
 <app-member-details
   *ngIf="selectedMember"

@@ -1,4 +1,4 @@
-<h3>Editează colegul</h3>
+<h2>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h2>
 
 <div class="form-container">
 
@@ -9,7 +9,14 @@
   <input type="text" [(ngModel)]="form.nume">
 
   <label>Email</label>
-  <input type="email" [(ngModel)]="form.email">
+
+  <div class="input-group">
+    <input type="email" [(ngModel)]="form.email" name="email" #emailRef="ngModel" email>
+
+    <div class="error" *ngIf="emailRef.invalid && emailRef.touched">
+    <span *ngIf="emailRef.errors?.['email']">Formatul emailului nu este valid.</span>
+    </div>
+  </div>
 
   <label>Data angajării</label>
   <input type="date" [(ngModel)]="form.dataAngajarii">
@@ -65,10 +72,10 @@
   <label>Project Manager</label>
   <input type="text" [(ngModel)]="form.projectManager">
 
-  <label>Nivel Germană</label>
+  <label>Germană</label>
   <input type="text" [(ngModel)]="form.german">
 
-  <label>Nivel Engleză</label>
+  <label>Engleză</label>
   <input type="text" [(ngModel)]="form.english">
 
   <label>G-Level</label>
@@ -77,7 +84,10 @@
   <label>Skills</label>
   <input type="text" [(ngModel)]="form.skills">
 
-  <button (click)="submit()">Salvează modificările</button>
-  <button (click)="cancel.emit()">Renunță</button>
+  <button (click)="submit()" [disabled]="emailRef.invalid">
+    {{ isEditMode ? 'Salvează modificările' : 'Adaugă colegul' }}
+  </button>
+
+  <button class="cancel" (click)="cancel.emit()">Renunță</button>
 
 </div>

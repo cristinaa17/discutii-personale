@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Member } from '../models/member';
 import { TeamService } from '../team.service';
 import { NgFor, NgIf } from '@angular/common';
-import { AddMemberComponent } from '../add-member/add-member.component';
 import { MemberDetailsComponent } from '../member-details/member-details.component';
-import { EditMemberComponent } from "../edit-member/edit-member.component";
+import { MemberFormComponent } from "../member-form/member-form.component";
 
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [NgIf, NgFor, AddMemberComponent, MemberDetailsComponent, EditMemberComponent],
+  imports: [NgIf, NgFor, MemberDetailsComponent, MemberFormComponent],
   templateUrl: './team.component.html',
   styleUrl: './team.component.css'
 })
