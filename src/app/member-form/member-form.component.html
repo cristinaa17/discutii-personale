@@ -3,10 +3,40 @@
 <div class="form-container">
 
   <label>PerNR</label>
-  <input type="number" [(ngModel)]="form.perNr">
 
-  <label>Nume</label>
-  <input type="text" [(ngModel)]="form.nume">
+  <div class="input-group">
+  <input 
+    type="number"
+    [(ngModel)]="form.perNr"
+    name="pernr"
+    #pernrRef="ngModel"
+    min="1"
+  >
+
+  <div class="error" *ngIf="pernrRef.invalid && pernrRef.touched">
+    <span *ngIf="pernrRef.errors?.['min']">PerNR nu poate fi negativ sau zero.</span>
+  </div>
+</div>
+
+  <label>
+    Nume <span class="required">*</span>
+  </label>
+
+  <div class="input-group">
+  <input
+    type="text"
+    [(ngModel)]="form.nume"
+    name="nume"
+    #numeRef="ngModel"
+    required
+    minlength="2"
+  >
+
+  <div class="error" *ngIf="numeRef.invalid && numeRef.touched">
+    <span *ngIf="numeRef.errors?.['required']">Numele este obligatoriu.</span>
+    <span *ngIf="numeRef.errors?.['minlength']">Minim 2 caractere.</span>
+  </div>
+  </div>
 
   <label>Email</label>
 
@@ -73,18 +103,33 @@
   <input type="text" [(ngModel)]="form.projectManager">
 
   <label>Germană</label>
-  <input type="text" [(ngModel)]="form.german">
+  <select [(ngModel)]="form.german">
+    <option value="">Selectează nivelul</option>
+    <option *ngFor="let level of germanLevels" [value]="level">
+    {{ level }}
+    </option>
+  </select>
 
   <label>Engleză</label>
-  <input type="text" [(ngModel)]="form.english">
+  <select [(ngModel)]="form.english">
+    <option value="">Selectează nivelul</option>
+    <option *ngFor="let level of englishLevels" [value]="level">
+    {{ level }}
+    </option>
+  </select>
 
   <label>G-Level</label>
-  <input type="text" [(ngModel)]="form.gLevel">
+  <select [(ngModel)]="form.gLevel">
+    <option value="">Selectează nivelul</option>
+    <option *ngFor="let level of glevels" [value]="level">
+    {{ level }}
+    </option>
+  </select>
 
   <label>Skills</label>
   <input type="text" [(ngModel)]="form.skills">
 
-  <button (click)="submit()" [disabled]="emailRef.invalid">
+  <button (click)="submit()">
     {{ isEditMode ? 'Salvează modificările' : 'Adaugă colegul' }}
   </button>
 
