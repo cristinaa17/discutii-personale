@@ -1,138 +1,210 @@
-<h2>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h2>
+<div class="card shadow-sm p-4">
 
-<div class="form-container">
+  <h4 class="mb-3">{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h4>
 
-  <label>PerNR</label>
+  <form class="row g-3">
 
-  <div class="input-group">
-  <input 
-    type="number"
-    [(ngModel)]="form.perNr"
-    name="pernr"
-    #pernrRef="ngModel"
-    min="1"
-  >
+    <!-- PerNr -->
+    <div class="col-md-4">
+      <label class="form-label">PerNR</label>
+        <input 
+          type="number"
+          class="form-control"
+          [(ngModel)]="form.perNr"
+          name="pernr"
+          #pernrRef="ngModel"
+          min="1"
+        />
 
-  <div class="error" *ngIf="pernrRef.invalid && pernrRef.touched">
-    <span *ngIf="pernrRef.errors?.['min']">PerNR nu poate fi negativ sau zero.</span>
-  </div>
-</div>
-
-  <label>
-    Nume <span class="required">*</span>
-  </label>
-
-  <div class="input-group">
-  <input
-    type="text"
-    [(ngModel)]="form.nume"
-    name="nume"
-    #numeRef="ngModel"
-    required
-    minlength="2"
-  >
-
-  <div class="error" *ngIf="numeRef.invalid && numeRef.touched">
-    <span *ngIf="numeRef.errors?.['required']">Numele este obligatoriu.</span>
-    <span *ngIf="numeRef.errors?.['minlength']">Minim 2 caractere.</span>
-  </div>
-  </div>
-
-  <label>Email</label>
-
-  <div class="input-group">
-    <input type="email" [(ngModel)]="form.email" name="email" #emailRef="ngModel" email>
-
-    <div class="error" *ngIf="emailRef.invalid && emailRef.touched">
-    <span *ngIf="emailRef.errors?.['email']">Formatul emailului nu este valid.</span>
+      <div class="text-danger small mt-1" *ngIf="pernrRef.invalid && pernrRef.touched">
+        PerNR nu poate fi negativ sau zero.
+      </div>
     </div>
-  </div>
 
-  <label>Data angajării</label>
-  <input type="date" [(ngModel)]="form.dataAngajarii">
+    <!--Nume-->
+    <div class="col-md-8">
+      <label class="form-label">
+        Nume <span class="text-danger">*</span>
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="form.nume"
+        name="nume"
+        #numeRef="ngModel"
+        required
+        minlength="2"
+      />
+      <div class="text-danger small mt-1" *ngIf="numeRef.invalid && numeRef.touched">
+        <span *ngIf="numeRef.errors?.['required']">Numele este obligatoriu.</span>
+        <span *ngIf="numeRef.errors?.['minlength']">Minim 2 caractere.</span>
+      </div>
+    </div>
 
-  <label>Data nașterii</label>
-  <input type="date" [(ngModel)]="form.dataNasterii">
+    <!--Email-->
+    <div class="col-md-6">
+      <label class="form-label">Email</label>
+      <input 
+        type="email"
+        class="form-control"
+        [(ngModel)]="form.email" 
+        name="email" 
+        #emailRef="ngModel" 
+        email
+      />
+      <div class="text-danger small mt-1" *ngIf="emailRef.invalid && emailRef.touched">
+        Formatul emailului nu este valid.
+      </div>
+    </div>
 
-  <label>Gen</label>
-  <input type="text" [(ngModel)]="form.gen">
+    <!--Data angajarii-->
+    <div class="col-md-6">
+      <label class="form-label">Data angajării</label>
+      <input type="date" class="form-control" [(ngModel)]="form.dataAngajarii" name="dataang"/>
+    </div>
 
-  <label>Oraș</label>
-  <input type="text" [(ngModel)]="form.oras">
+    <!--Data nasterii-->
+    <div class="col-md-6">
+      <label class="form-label">Data nașterii</label>
+      <input type="date" class="form-control" [(ngModel)]="form.dataNasterii" name="datan"/>
+    </div>
 
-  <label>Departament</label>
-  <input type="text" [(ngModel)]="form.departament">
+    <!--Gen-->
+    <div class="col-md-6">
+      <label class="form-label">Gen</label>
+      <input type="text" class="form-control" [(ngModel)]="form.gen" name="gen"/>
+    </div>
 
-  <label>Business Unit</label>
-  <input type="text" [(ngModel)]="form.businessUnit">
+    <!--Oras-->
+    <div class="col-md-6">
+      <label class="form-label">Oraș</label>
+      <input type="text" class="form-control" [(ngModel)]="form.oras" name="oras"/>
+    </div>
 
-  <label>Normă</label>
-  <input type="number" [(ngModel)]="form.norma">
+    <!--Departament-->
+    <div class="col-md-6">
+      <label class="form-label">Departament</label>
+      <input type="text" class="form-control" [(ngModel)]="form.departament" name="departament"/>
+    </div>
 
-  <label>FTE</label>
-  <input type="number" [(ngModel)]="form.fte">
+    <!--Business Unit-->
+    <div class="col-md-6">
+      <label class="form-label">Business Unit</label>
+      <input type="text" class="form-control" [(ngModel)]="form.businessUnit" name="bu"/>
+    </div>
 
-  <label>Forma Colaborare</label>
-  <input type="text" [(ngModel)]="form.formaColaborare">
+    <!--Norma-->
+    <div class="col-md-4">
+      <label class="form-label">Normă</label>
+      <input type="number" class="form-control" [(ngModel)]="form.norma" name="norma"/>
+    </div>
 
-  <label>Tip Contract</label>
-  <input type="text" [(ngModel)]="form.tipContract">
+    <!--FTE-->
+    <div class="col-md-4">
+      <label class="form-label">FTE</label>
+      <input type="number" class="form-control" [(ngModel)]="form.fte" name="fte"/>
+    </div>
 
-  <label>Funcție</label>
-  <input type="text" [(ngModel)]="form.functie">
+    <!--Forma colaborare-->
+    <div class="col-md-6">
+      <label class="form-label">Forma Colaborare</label>
+      <input type="text" class="form-control" [(ngModel)]="form.formaColaborare" name="forma"/>
+    </div>
 
-  <label>Drept Concediu</label>
-  <input type="number" [(ngModel)]="form.dreptConcediu">
+    <!--Tip contract-->
+    <div class="col-md-6">
+      <label class="form-label">Tip Contract</label>
+      <input type="text" class="form-control" [(ngModel)]="form.tipContract" name="tc"/>
+    </div>
 
-  <label>HR Manager</label>
-  <input type="text" [(ngModel)]="form.hrManager">
+    <!--Functie-->
+    <div class="col-md-6">
+      <label class="form-label">Funcție</label>
+      <input type="text" class="form-control" [(ngModel)]="form.functie" name="functie"/>
+    </div>
 
-  <label>Project</label>
-  <input type="text" [(ngModel)]="form.project">
+    <!--Drept Concediu-->
+    <div class="col-md-4">
+      <label class="form-label">Drept Concediu</label>
+      <input type="number" class="form-control" [(ngModel)]="form.dreptConcediu" name="dc"/>
+    </div>
 
-  <label>Project Start Date</label>
-  <input type="date" [(ngModel)]="form.projectStartDate">
+    <!--HR Manager-->
+    <div class="col-md-6">
+      <label class="form-label">HR Manager</label>
+      <input type="text" class="form-control" [(ngModel)]="form.hrManager" name="hr"/>
+    </div>
 
-  <label>Project End Date</label>
-  <input type="date" [(ngModel)]="form.projectEndDate">
+    <!--Project-->
+    <div class="col-md-6">
+      <label class="form-label">Project</label>
+      <input type="text" class="form-control" [(ngModel)]="form.project" name="proj"/>
+    </div>
 
-  <label>Client</label>
-  <input type="text" [(ngModel)]="form.client">
+    <!--Project Start Date-->
+    <div class="col-md-6">
+      <label class="form-label">Project Start Date</label>
+      <input type="date" class="form-control" [(ngModel)]="form.projectStartDate" name="psd"/>
+    </div>
 
-  <label>Project Manager</label>
-  <input type="text" [(ngModel)]="form.projectManager">
+    <!--Project End Date-->
+    <div class="col-md-6">
+      <label class="form-label">Project End Date</label>
+      <input type="date" class="form-control" [(ngModel)]="form.projectEndDate" name="ped"/>
+    </div>
 
-  <label>Germană</label>
-  <select [(ngModel)]="form.german">
-    <option value="">Selectează nivelul</option>
-    <option *ngFor="let level of germanLevels" [value]="level">
-    {{ level }}
-    </option>
-  </select>
+    <!--Client-->
+    <div class="col-md-6">
+      <label class="form-label">Client</label>
+      <input type="text" class="form-control" [(ngModel)]="form.client" name="client"/>
+    </div>
 
-  <label>Engleză</label>
-  <select [(ngModel)]="form.english">
-    <option value="">Selectează nivelul</option>
-    <option *ngFor="let level of englishLevels" [value]="level">
-    {{ level }}
-    </option>
-  </select>
+    <!--Project Manager-->
+    <div class="col-md-6">
+      <label class="form-label">Project Manager</label>
+      <input type="text" class="form-control" [(ngModel)]="form.projectManager" name="pm"/>
+    </div>
 
-  <label>G-Level</label>
-  <select [(ngModel)]="form.gLevel">
-    <option value="">Selectează nivelul</option>
-    <option *ngFor="let level of glevels" [value]="level">
-    {{ level }}
-    </option>
-  </select>
+    <!--Germana-->
+    <div class="col-md-4">
+      <label class="form-label">Germană</label>
+      <select class="form-select" [(ngModel)]="form.german" name="german">
+        <option value="">Selectează nivelul</option>
+        <option *ngFor="let level of germanLevels" [value]="level">{{ level }}</option>
+      </select>
+    </div>
 
-  <label>Skills</label>
-  <input type="text" [(ngModel)]="form.skills">
+    <!--Engleza-->
+    <div class="col-md-4">
+      <label class="form-label">Engleză</label>
+      <select class="form-select" [(ngModel)]="form.english"  name="english">
+        <option value="">Selectează nivelul</option>
+        <option *ngFor="let level of englishLevels" [value]="level">{{ level }}</option>
+      </select>
+    </div>
 
-  <button (click)="submit()">
-    {{ isEditMode ? 'Salvează modificările' : 'Adaugă colegul' }}
-  </button>
+    <!--G-Level-->
+    <div class="col-md-4">
+      <label class="form-label">G-Level</label>
+      <select class="form-select" [(ngModel)]="form.gLevel" name="glevel">
+        <option value="">Selectează nivelul</option>
+        <option *ngFor="let level of glevels" [value]="level">{{ level }}</option>
+      </select>
+    </div>
 
-  <button class="cancel" (click)="cancel.emit()">Renunță</button>
+    <!--Skills-->
+    <div class="col-12">
+      <label class="form-label">Skills</label>
+      <input type="text" class="form-control" [(ngModel)]="form.skills" name="skills"/>
+    </div>
 
+      <!--Butoane-->
+      <div class="col-12 mt-3">
+        <button type="button" class="btn btn-primary me-2" (click)="submit()">
+          {{ isEditMode ? 'Salvează modificările' : 'Adaugă colegul' }}
+        </button>
+
+        <button type="button" class="btn btn-secondary" (click)="cancel.emit()">Renunță</button>
+      </div>
+  </form>
 </div>

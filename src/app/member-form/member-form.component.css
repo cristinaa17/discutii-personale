@@ -1,62 +1,20 @@
-.form-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+.is-invalid {
+  border-color: #dc3545 !important;
+  background-color: #fff5f5 !important;
 }
 
-input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+.text-danger {
+  font-size: 0.85rem;
+}
+
+h4 {
+  font-weight: 600;
 }
 
 button {
-  padding: 8px 14px;
-  border-radius: 6px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
+  min-width: 140px;
 }
 
-button.cancel {
-  background-color: #777;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.required {
-  color: #d32f2f;
-  font-weight: bold;
-}
-
-.error {
-  color: #d32f2f;
-  font-size: 13px;
-  margin-top: 4px;
-  padding-left: 2px;
-}
-
-input.ng-invalid.ng-touched {
-    border: 1px solid #d32f2f !important;
-    background-color: #fff5f5;
-}
-
-select {
-  width: 100%;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: white;
-  font-size: 14px;
-}
-
-select:focus {
-  outline: none;
-  border-color: #1976d2;
+form label {
+  font-weight: 500;
 }
