@@ -1,28 +1,3 @@
-.discussion-add {
-  margin: 15px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  resize: vertical;
-}
-
-button {
-  width: fit-content;
-  background-color: #1976d2;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0f5ca8;
+.card {
+  border-radius: 12px;
 }

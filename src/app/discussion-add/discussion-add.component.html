@@ -1,8 +1,19 @@
-<div class="discussion-add">
-  <textarea 
-    [(ngModel)]="text"
-    placeholder="Scrie ce ai discutat..."
-    rows="3"></textarea>
+<div class="card shadow-sm">
+  <div class="card-body">
+    
+    <h6 class="card-title mb-3">Adaugă o discuție</h6>
 
-  <button (click)="submit()">Adaugă discuția</button>
+      <textarea 
+        [(ngModel)]="text"
+        class="form-control mb-3"
+        rows="3"
+        placeholder="Scrie ce ai discutat..."
+        ></textarea>
+
+      <button 
+        class="btn btn-success btn-sm"
+        (click)="submit()">
+        Salvează discuția
+      </button>
+  </div>
 </div>
