@@ -32,21 +32,28 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let m of members; let i = index">
-          <td (click)="selectMember(m)" style="cursor:pointer;">{{ m.perNr || '-' }}</td>
-          <td (click)="selectMember(m)" style="cursor:pointer;">{{ m.nume }}</td>
-          <td (click)="selectMember(m)" style="cursor:pointer;">{{ m.email || '-' }}</td>
+        <ng-container *ngFor="let m of members; let i = index">  
+          <tr>
+            <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.perNr || '-' }}</td>
+            <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.nume }}</td>
+            <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.email || '-' }}</td>
 
-          <td class="text-end">
+            <td class="text-end">
 
-          <button class="btn btn-primary btn-sm me-1" (click)="onEditMember(m, $event)">Editează</button>
+            <button class="btn btn-primary btn-sm me-1" (click)="onEditMember(m, $event)">Editează</button>
+            <button class="btn btn-danger btn-sm me-1" (click)="onDeleteMember(i, $event)">Șterge</button> 
+            <button class="btn btn-outline-success btn-sm" (click)="onAddDiscussionFromTable(m, $event)">Discuție nouă</button>
 
-          <button class="btn btn-danger btn-sm me-1" (click)="onDeleteMember(i, $event)">Șterge</button> 
+            </td>
+          </tr>
 
-          <button class="btn btn-outline-success btn-sm" (click)="onAddDiscussionFromTable(m, $event)">Discuție nouă</button>
+          <tr *ngIf="selectedIndex === i">
+            <td colspan="4">
+              <app-member-details [member]="m"></app-member-details>
+            </td>
+          </tr>
 
-          </td>
-        </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>
@@ -69,12 +76,6 @@
         </app-member-form>
       </div>
     </div>
-  </div>
-
-  <div *ngIf="selectedMember">
-    <app-member-details
-      [member]="selectedMember">
-    </app-member-details>
   </div>
 </div>
 </div>

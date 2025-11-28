@@ -66,6 +66,27 @@ export class MemberFormComponent {
   return regex.test(email);
 }
 
+  onPhotoSelected(event: any) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.form.photoUrl = reader.result as string;
+  };
+  reader.readAsDataURL(file);
+}
+
+  triggerPhotoUpload() {
+  const fileInput = document.getElementById('photoUploadInput') as HTMLInputElement;
+  fileInput.click();
+}
+
+removePhoto() {
+  this.form.photoUrl = '';
+}
+
+
   submit() {
     if (!this.form.nume || this.form.nume.trim().length < 2) {
     alert("Te rog să completezi numele (minim 2 caractere).");

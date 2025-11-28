@@ -15,6 +15,7 @@ import { MemberFormComponent } from "../member-form/member-form.component";
 export class TeamComponent implements OnInit {
   members: Member[] =[];
   selectedMember: Member | null = null;
+  selectedIndex: number | null = null;
   showAddForm = false;
   editTarget: Member | null = null;
   showEditForm = false;
@@ -31,10 +32,9 @@ export class TeamComponent implements OnInit {
     this.showAddForm = false;
   }
 
-  selectMember(member: Member) {
-  console.log("Ai selectat:", member);
-  this.selectedMember = member;
-}
+  selectMember(m: Member, index: number) {
+  this.selectedIndex = this.selectedIndex === index ? null : index;
+  }
 
   onDeleteMember(index: number, event: Event) {
     event.stopPropagation();
@@ -50,10 +50,11 @@ export class TeamComponent implements OnInit {
   onEditMember(member: Member, event: Event) {
   event.stopPropagation();
 
+  this.selectedIndex = null;
   this.selectedMember = null;
   this.editTarget = member;
   this.showEditForm = true;
-}
+  }
 
 onSaveEdit(updated: Member) {
   Object.assign(this.editTarget!, updated);
@@ -69,10 +70,12 @@ onCancelEdit() {
 onAddDiscussionFromTable(member: Member, event: Event) {
   event.stopPropagation(); 
   this.selectedMember = member;
+  this.selectedIndex = this.members.indexOf(member);
   setTimeout(() => {
     const el = document.getElementById('discussion-section');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, 10);
+     if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 150);
 }
-
 }
