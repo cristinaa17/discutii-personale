@@ -33,7 +33,8 @@ export class TeamComponent implements OnInit {
   }
 
   selectMember(m: Member, index: number) {
-  this.selectedIndex = this.selectedIndex === index ? null : index;
+    if (this.showEditForm) return;
+    this.selectedIndex = this.selectedIndex === index ? null : index;
   }
 
   onDeleteMember(index: number, event: Event) {
@@ -50,7 +51,7 @@ export class TeamComponent implements OnInit {
   onEditMember(member: Member, event: Event) {
   event.stopPropagation();
 
-  this.selectedIndex = null;
+  this.selectedIndex = this.members.indexOf(member);
   this.selectedMember = null;
   this.editTarget = member;
   this.showEditForm = true;
@@ -60,6 +61,8 @@ onSaveEdit(updated: Member) {
   Object.assign(this.editTarget!, updated);
   this.showEditForm = false;
   this.editTarget = null;
+  this.selectedIndex = null;
+  this.selectedMember = null;
 }
 
 onCancelEdit() {

@@ -1,83 +1,77 @@
-<div class="row g-4">
-  <div class="col-lg-7">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h3 class="mb-0">Lista colegilor</h3>
+<div class="container my-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0">Lista colegilor</h3>
 
-      <button class="btn btn-success btn-sm"*ngIf="!showAddForm && !showEditForm" (click)="showAddForm = true">
-        + Adaugă coleg
-      </button>
-  </div>
+        <button class="btn btn-success btn-sm" *ngIf="!showAddForm && !showEditForm" (click)="showAddForm = true">
+          + Adaugă coleg
+        </button>
+    </div>
 
-  <div *ngIf="showAddForm" class="mb-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <app-member-form
-          (save)="addMember($event)"
-          (cancel)="showAddForm = false">
-        </app-member-form>
+    <div *ngIf="showAddForm" class="mb-section">
+      <div class="card shadow-sm center-card">
+        <div class="card-body">
+          <app-member-form
+            (save)="addMember($event)"
+            (cancel)="showAddForm = false">
+          </app-member-form>
+        </div>
       </div>
     </div>
-  </div>
 
-<div class="card shadow-sm" *ngIf="members.length > 0">
-  <div class="card-body p-0">
-    <table class="table table-hover align-middle mb-0">
-      <thead class="table-light">
-        <tr>
-          <th>PerNR</th>
-          <th>Nume</th>
-          <th>Email</th>
-          <th class="text-end">Acțiuni</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <ng-container *ngFor="let m of members; let i = index">  
+  <div class="card shadow-sm mb-section center-card" *ngIf="members.length > 0">
+    <div class="card-body p-0">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
           <tr>
-            <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.perNr || '-' }}</td>
-            <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.nume }}</td>
-            <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.email || '-' }}</td>
-
-            <td class="text-end">
-
-            <button class="btn btn-primary btn-sm me-1" (click)="onEditMember(m, $event)">Editează</button>
-            <button class="btn btn-danger btn-sm me-1" (click)="onDeleteMember(i, $event)">Șterge</button> 
-            <button class="btn btn-outline-success btn-sm" (click)="onAddDiscussionFromTable(m, $event)">Discuție nouă</button>
-
-            </td>
+            <th>PerNR</th>
+            <th>Nume</th>
+            <th>Email</th>
+            <th class="text-end">Acțiuni</th>
           </tr>
+        </thead>
 
-          <tr *ngIf="selectedIndex === i">
-            <td colspan="4">
-              <app-member-details [member]="m"></app-member-details>
-            </td>
-          </tr>
+        <tbody>
+          <ng-container *ngFor="let m of members; let i = index">  
+            <tr>
+              <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.perNr || '-' }}</td>
+              <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.nume }}</td>
+              <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.email || '-' }}</td>
 
-        </ng-container>
-      </tbody>
-    </table>
-  </div>
-</div> 
+              <td class="text-end">
 
-  <p *ngIf="members.length === 0">
-    Nu există colegi încă.
-  </p>
-</div>
+              <button class="btn btn-primary btn-sm me-1" (click)="onEditMember(m, $event)">Editează</button>
+              <button class="btn btn-danger btn-sm me-1" (click)="onDeleteMember(i, $event)">Șterge</button> 
+              <button class="btn btn-outline-success btn-sm" (click)="onAddDiscussionFromTable(m, $event)">Discuție nouă</button>
 
-<div class="col-lg-5">
+              </td>
+            </tr>
 
-  <div *ngIf="showEditForm" class="mb-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <app-member-form
-          [member]="editTarget!"
-          (save)="onSaveEdit($event)"
-          (cancel)="onCancelEdit()">
-        </app-member-form>
-      </div>
+            <tr *ngIf="selectedIndex === i && !showEditForm">
+              <td colspan="4">
+                <app-member-details [member]="m"></app-member-details>
+              </td>
+            </tr>
+
+            <tr *ngIf="selectedIndex === i && showEditForm">
+              <td colspan="4">
+                <div class="card shadow-sm p-3 center-card">
+                  <app-member-form
+                    [member]="editTarget!"
+                    (save)="onSaveEdit($event)"
+                    (cancel)="onCancelEdit()">
+                  </app-member-form>
+                </div>
+              </td>
+            </tr>
+
+          </ng-container>
+        </tbody>
+      </table>
     </div>
-  </div>
-</div>
-</div>
+  </div> 
 
+    <p *ngIf="members.length === 0">
+      Nu există colegi încă.
+    </p>
+  </div>
 
