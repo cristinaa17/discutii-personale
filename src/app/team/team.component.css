@@ -1,17 +1,6 @@
 h3 {
   font-weight: 600;
 }
-.container {
-  max-width: 900px;
-}
-.card {
-  margin-inline: auto;
-}
 .mb-section {
   margin-bottom: 30px;
-}
-.center-card {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
 }

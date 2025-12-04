@@ -2,11 +2,16 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Member } from '../models/member';
 import { NgFor, NgIf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-member-form',
   standalone: true,
-  imports: [FormsModule, NgIf, NgFor],
+  imports: [FormsModule, NgIf, NgFor, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule],
   templateUrl: './member-form.component.html',
   styleUrls: ['./member-form.component.css']
 })
@@ -18,15 +23,16 @@ export class MemberFormComponent {
 
   form: Member = {} as Member;
   isEditMode = false;
+  previewUrl: string | null = null;
 
   germanLevels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   englishLevels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   glevels = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'L9', 'L10', 'L11', 'L12'];
 
-
   ngOnInit() {
     if (this.member) {
       this.form = { ...this.member };
+      this.previewUrl = this.member.photoUrl || null;
       this.isEditMode = true;
     } else {
       this.form = {
@@ -61,6 +67,11 @@ export class MemberFormComponent {
     }
   }
 
+  triggerFileInput() {
+    const input = document.querySelector('#fileInput') as HTMLInputElement;
+    if (input) input.click();
+  }
+
   validateEmail(email: string): boolean {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
@@ -72,26 +83,29 @@ export class MemberFormComponent {
 
   const reader = new FileReader();
   reader.onload = () => {
-    this.form.photoUrl = reader.result as string;
+    this.previewUrl = reader.result as string;
+    this.form.photoUrl = this.previewUrl;
   };
   reader.readAsDataURL(file);
 }
 
   triggerPhotoUpload() {
-  const fileInput = document.getElementById('photoUploadInput') as HTMLInputElement;
-  fileInput.click();
-}
+    const fileInput = document.getElementById('photoUploadInput') as HTMLInputElement;
+    fileInput.click();
+  }
 
-removePhoto() {
-  this.form.photoUrl = '';
-}
+
+  removePhoto() {
+    this.previewUrl = null;
+    this.form.photoUrl = '';
+  }
 
 
   submit() {
     if (!this.form.nume || this.form.nume.trim().length < 2) {
     alert("Te rog să completezi numele (minim 2 caractere).");
     return;
-  }
+    }
 
   if (this.form.email && !this.validateEmail(this.form.email)) {
     alert("Te rog să introduci un email valid.");

@@ -27,6 +27,6 @@ export interface Member {
   english: string;          
   gLevel: string;           
   skills: string;          
-  photoUrl?: string;        
+  photoUrl: string;        
   discussions: Discussion[];
 }

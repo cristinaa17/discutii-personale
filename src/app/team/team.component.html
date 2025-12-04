@@ -1,4 +1,4 @@
-<div class="container my-4">
+<div class="container-fluid px-4 my-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="mb-0">Lista colegilor</h3>
 
@@ -8,7 +8,7 @@
     </div>
 
     <div *ngIf="showAddForm" class="mb-section">
-      <div class="card shadow-sm center-card">
+      <div class="card shadow-sm">
         <div class="card-body">
           <app-member-form
             (save)="addMember($event)"
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-  <div class="card shadow-sm mb-section center-card" *ngIf="members.length > 0">
+  <div *ngIf="!showAddForm && members.length > 0" class="card shadow-sm mb-section">
     <div class="card-body p-0">
       <table class="table table-hover align-middle mb-0">
         <thead class="table-light">
@@ -54,7 +54,7 @@
 
             <tr *ngIf="selectedIndex === i && showEditForm">
               <td colspan="4">
-                <div class="card shadow-sm p-3 center-card">
+                <div class="card shadow-sm p-3">
                   <app-member-form
                     [member]="editTarget!"
                     (save)="onSaveEdit($event)"

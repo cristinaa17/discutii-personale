@@ -1,35 +1,91 @@
-.is-invalid {
-  border-color: #dc3545 !important;
-  background-color: #fff5f5 !important;
+.form-wrapper {
+  width: 100%;
+  padding: 20px;
 }
 
-.text-danger {
-  font-size: 0.85rem;
-}
-
-h4 {
+h2 {
+  margin-bottom: 20px;
   font-weight: 600;
 }
 
-button {
-  min-width: 140px;
+.photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-form label {
-  font-weight: 500;
+.photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ddd;
 }
 
-.form-wrapper {
-  max-width: 650px;
+.no-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+  font-size: 14px;
+  border: 2px dashed #ccc;
+}
+
+.photo-btns {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.photo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;       /* CENTRARE pe orizontală */
+  justify-content: center;   /* CENTRARE pe verticală */
   width: 100%;
+  margin-bottom: 30px;
 }
 
-.photo-section,
-.upload-buttons {
-  text-align: center;
+.photo-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: #d3d3d3;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
-.photo-section {
-  margin-bottom: 20px;
+.photo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.photo-circle span {
+  color: #555;
+  font-size: 18px;
+}

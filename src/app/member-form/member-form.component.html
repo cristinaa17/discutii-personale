@@ -1,265 +1,216 @@
-<div class="card shadow-sm p-4">
-  <div class="row">
-    <div class="col-12 col-md-10 col-lg-8 mx-auto">
+<div class="material-form-container">
 
-    <h4 class="mb-3">{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h4>
+  <!-- TITLU -->
+  <h2>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h2>
 
-    <!--Poza-->
-    <div class="col-12 text-center mb-4">
-      <div class="w-100 d-flex justify-content-center mb-4">
-        <ng-container *ngIf="form.photoUrl; else noPhoto">
-          <img
-            [src]="form.photoUrl"
-            alt="Poză coleg"
-            class="rounded-circle mb-2 shadow-sm"
-            width="110"
-            height="110"
-            style="object-fit: cover;"
-          />
-        </ng-container>
+  <!-- FOTO -->
+  <div class="photo-section">
 
-        <ng-template #noPhoto>
-          <div 
-            class="rounded-circle bg-light d-flex align-items-center justify-content-center text-muted mb-2 shadow-sm"
-            style="width: 110px; height: 100px; font-size: 14px; text-align: center; line-height: 1.2;">
-            Fără poză
-          </div>
-        </ng-template>
-      </div>
-
-        <div *ngIf="form.photoUrl" class="mt-2">
-          <button 
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              (click)="removePhoto()">
-              Șterge poza
-            </button>
-        </div>
-
-        <input
-          type="file"
-          id="photoUploadInput"
-          accept="image/*"
-          (change)="onPhotoSelected($event)"
-          style="display:none"
-        />
-
-        <div class="mt-3">
-          <button 
-            type="button" 
-            class="btn btn-outline-primary btn-sm"
-            (click)="triggerPhotoUpload()"
-            >
-            Încarcă poză
-          </button>
-        </div>  
+  <div class="photo-wrapper">
+    <div class="photo-circle">
+      <img *ngIf="previewUrl; else noPhoto" [src]="previewUrl" alt="poza" />
+      
+      <ng-template #noPhoto>
+        <span>Fără poză</span>
+      </ng-template>
     </div>
 
-      <form class="row g-3">
+    <button mat-stroked-button color="primary" (click)="triggerPhotoUpload()">
+      Încarcă poză
+    </button>
 
-        <!-- PerNr -->
-        <div class="col-md-4">
-          <label class="form-label">PerNR</label>
-            <input 
-              type="number"
-              class="form-control"
-              [(ngModel)]="form.perNr"
-              name="pernr"
-              #pernrRef="ngModel"
-              min="1"
-            />
+    <button 
+      mat-stroked-button 
+      color="warn" 
+      *ngIf="previewUrl" 
+      (click)="removePhoto()"
+      style="margin-top: 8px;"
+    >
+      Șterge poza
+    </button>
 
-          <div class="text-danger small mt-1" *ngIf="pernrRef.invalid && pernrRef.touched">
-            PerNR nu poate fi negativ sau zero.
-          </div>
-        </div>
+    <input 
+      type="file" 
+      id="photoUploadInput" 
+      hidden 
+      (change)="onPhotoSelected($event)"
+    >
+  </div>
+  </div>
 
-        <!--Nume-->
-        <div class="col-md-8">
-          <label class="form-label">
-            Nume <span class="text-danger">*</span>
-          </label>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="form.nume"
-            name="nume"
-            #numeRef="ngModel"
-            required
-            minlength="2"
-          />
-          <div class="text-danger small mt-1" *ngIf="numeRef.invalid && numeRef.touched">
-            <span *ngIf="numeRef.errors?.['required']">Numele este obligatoriu.</span>
-            <span *ngIf="numeRef.errors?.['minlength']">Minim 2 caractere.</span>
-          </div>
-        </div>
+  <form class="grid">
 
-        <!--Email-->
-        <div class="col-md-6">
-          <label class="form-label">Email</label>
-          <input 
-            type="email"
-            class="form-control"
-            [(ngModel)]="form.email" 
-            name="email" 
-            #emailRef="ngModel" 
-            email
-          />
-          <div class="text-danger small mt-1" *ngIf="emailRef.invalid && emailRef.touched">
-            Formatul emailului nu este valid.
-          </div>
-        </div>
+    <!-- PerNR -->
+    <mat-form-field appearance="outline">
+      <mat-label>PerNR</mat-label>
+      <input matInput type="number" [(ngModel)]="form.perNr" name="pernr" />
+    </mat-form-field>
 
-        <!--Data angajarii-->
-        <div class="col-md-6">
-          <label class="form-label">Data angajării</label>
-          <input type="date" class="form-control" [(ngModel)]="form.dataAngajarii" name="dataang"/>
-        </div>
+    <!-- Nume -->
+    <mat-form-field appearance="outline">
+      <mat-label>Nume *</mat-label>
+      <input matInput [(ngModel)]="form.nume" name="nume" required />
+    </mat-form-field>
 
-        <!--Data nasterii-->
-        <div class="col-md-6">
-          <label class="form-label">Data nașterii</label>
-          <input type="date" class="form-control" [(ngModel)]="form.dataNasterii" name="datan"/>
-        </div>
+    <!-- Email -->
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [(ngModel)]="form.email" name="email" />
+    </mat-form-field>
 
-        <!--Gen-->
-        <div class="col-md-6">
-          <label class="form-label">Gen</label>
-          <input type="text" class="form-control" [(ngModel)]="form.gen" name="gen"/>
-        </div>
+    <!-- Data angajării -->
+    <mat-form-field appearance="outline">
+      <mat-label>Data angajării</mat-label>
+      <input matInput type="date" [(ngModel)]="form.dataAngajarii" name="ang" />
+    </mat-form-field>
 
-        <!--Oras-->
-        <div class="col-md-6">
-          <label class="form-label">Oraș</label>
-          <input type="text" class="form-control" [(ngModel)]="form.oras" name="oras"/>
-        </div>
+    <!-- Data nașterii -->
+    <mat-form-field appearance="outline">
+      <mat-label>Data nașterii</mat-label>
+      <input matInput type="date" [(ngModel)]="form.dataNasterii" name="nastere" />
+    </mat-form-field>
 
-        <!--Departament-->
-        <div class="col-md-6">
-          <label class="form-label">Departament</label>
-          <input type="text" class="form-control" [(ngModel)]="form.departament" name="departament"/>
-        </div>
+    <!-- Gen -->
+    <mat-form-field appearance="outline">
+      <mat-label>Gen</mat-label>
+      <input matInput [(ngModel)]="form.gen" name="gen" />
+    </mat-form-field>
 
-        <!--Business Unit-->
-        <div class="col-md-6">
-          <label class="form-label">Business Unit</label>
-          <input type="text" class="form-control" [(ngModel)]="form.businessUnit" name="bu"/>
-        </div>
+    <!-- Oraș -->
+    <mat-form-field appearance="outline">
+      <mat-label>Oraș</mat-label>
+      <input matInput [(ngModel)]="form.oras" name="oras" />
+    </mat-form-field>
 
-        <!--Norma-->
-        <div class="col-md-4">
-          <label class="form-label">Normă</label>
-          <input type="number" class="form-control" [(ngModel)]="form.norma" name="norma"/>
-        </div>
+    <!-- Departament -->
+    <mat-form-field appearance="outline">
+      <mat-label>Departament</mat-label>
+      <input matInput [(ngModel)]="form.departament" name="departament" />
+    </mat-form-field>
 
-        <!--FTE-->
-        <div class="col-md-4">
-          <label class="form-label">FTE</label>
-          <input type="number" class="form-control" [(ngModel)]="form.fte" name="fte"/>
-        </div>
+    <!-- Business Unit -->
+    <mat-form-field appearance="outline">
+      <mat-label>Business Unit</mat-label>
+      <input matInput [(ngModel)]="form.businessUnit" name="bu" />
+    </mat-form-field>
 
-        <!--Forma colaborare-->
-        <div class="col-md-6">
-          <label class="form-label">Forma Colaborare</label>
-          <input type="text" class="form-control" [(ngModel)]="form.formaColaborare" name="forma"/>
-        </div>
+    <!-- Normă -->
+    <mat-form-field appearance="outline">
+      <mat-label>Normă</mat-label>
+      <input matInput type="number" [(ngModel)]="form.norma" name="norma" />
+    </mat-form-field>
 
-        <!--Tip contract-->
-        <div class="col-md-6">
-          <label class="form-label">Tip Contract</label>
-          <input type="text" class="form-control" [(ngModel)]="form.tipContract" name="tc"/>
-        </div>
+    <!-- FTE -->
+    <mat-form-field appearance="outline">
+      <mat-label>FTE</mat-label>
+      <input matInput type="number" [(ngModel)]="form.fte" name="fte" />
+    </mat-form-field>
 
-        <!--Functie-->
-        <div class="col-md-6">
-          <label class="form-label">Funcție</label>
-          <input type="text" class="form-control" [(ngModel)]="form.functie" name="functie"/>
-        </div>
+    <!-- Forma colaborare -->
+    <mat-form-field appearance="outline">
+      <mat-label>Forma Colaborare</mat-label>
+      <input matInput [(ngModel)]="form.formaColaborare" name="forma" />
+    </mat-form-field>
 
-        <!--Drept Concediu-->
-        <div class="col-md-4">
-          <label class="form-label">Drept Concediu</label>
-          <input type="number" class="form-control" [(ngModel)]="form.dreptConcediu" name="dc"/>
-        </div>
+    <!-- Tip contract -->
+    <mat-form-field appearance="outline">
+      <mat-label>Tip Contract</mat-label>
+      <input matInput [(ngModel)]="form.tipContract" name="contract" />
+    </mat-form-field>
 
-        <!--HR Manager-->
-        <div class="col-md-6">
-          <label class="form-label">HR Manager</label>
-          <input type="text" class="form-control" [(ngModel)]="form.hrManager" name="hr"/>
-        </div>
+    <!-- Funcție -->
+    <mat-form-field appearance="outline">
+      <mat-label>Funcție</mat-label>
+      <input matInput [(ngModel)]="form.functie" name="functie" />
+    </mat-form-field>
 
-        <!--Project-->
-        <div class="col-md-6">
-          <label class="form-label">Project</label>
-          <input type="text" class="form-control" [(ngModel)]="form.project" name="proj"/>
-        </div>
+    <!-- Drept concediu -->
+    <mat-form-field appearance="outline">
+      <mat-label>Drept concediu</mat-label>
+      <input matInput type="number" [(ngModel)]="form.dreptConcediu" name="dc" />
+    </mat-form-field>
 
-        <!--Project Start Date-->
-        <div class="col-md-6">
-          <label class="form-label">Project Start Date</label>
-          <input type="date" class="form-control" [(ngModel)]="form.projectStartDate" name="psd"/>
-        </div>
+    <!-- HR Manager -->
+    <mat-form-field appearance="outline">
+      <mat-label>HR Manager</mat-label>
+      <input matInput [(ngModel)]="form.hrManager" name="hr" />
+    </mat-form-field>
 
-        <!--Project End Date-->
-        <div class="col-md-6">
-          <label class="form-label">Project End Date</label>
-          <input type="date" class="form-control" [(ngModel)]="form.projectEndDate" name="ped"/>
-        </div>
+    <!-- Project -->
+    <mat-form-field appearance="outline">
+      <mat-label>Project</mat-label>
+      <input matInput [(ngModel)]="form.project" name="project" />
+    </mat-form-field>
 
-        <!--Client-->
-        <div class="col-md-6">
-          <label class="form-label">Client</label>
-          <input type="text" class="form-control" [(ngModel)]="form.client" name="client"/>
-        </div>
+    <!-- Project Start -->
+    <mat-form-field appearance="outline">
+      <mat-label>Project Start Date</mat-label>
+      <input matInput type="date" [(ngModel)]="form.projectStartDate" name="psd" />
+    </mat-form-field>
 
-        <!--Project Manager-->
-        <div class="col-md-6">
-          <label class="form-label">Project Manager</label>
-          <input type="text" class="form-control" [(ngModel)]="form.projectManager" name="pm"/>
-        </div>
+    <!-- Project End -->
+    <mat-form-field appearance="outline">
+      <mat-label>Project End Date</mat-label>
+      <input matInput type="date" [(ngModel)]="form.projectEndDate" name="ped" />
+    </mat-form-field>
 
-        <!--Germana-->
-        <div class="col-md-4">
-          <label class="form-label">Germană</label>
-          <select class="form-select" [(ngModel)]="form.german" name="german">
-            <option value="">Selectează nivelul</option>
-            <option *ngFor="let level of germanLevels" [value]="level">{{ level }}</option>
-          </select>
-        </div>
+    <!-- Client -->
+    <mat-form-field appearance="outline">
+      <mat-label>Client</mat-label>
+      <input matInput [(ngModel)]="form.client" name="client" />
+    </mat-form-field>
 
-        <!--Engleza-->
-        <div class="col-md-4">
-          <label class="form-label">Engleză</label>
-          <select class="form-select" [(ngModel)]="form.english"  name="english">
-            <option value="">Selectează nivelul</option>
-            <option *ngFor="let level of englishLevels" [value]="level">{{ level }}</option>
-          </select>
-        </div>
+    <!-- Project Manager -->
+    <mat-form-field appearance="outline">
+      <mat-label>Project Manager</mat-label>
+      <input matInput [(ngModel)]="form.projectManager" name="pm" />
+    </mat-form-field>
 
-        <!--G-Level-->
-        <div class="col-md-4">
-          <label class="form-label">G-Level</label>
-          <select class="form-select" [(ngModel)]="form.gLevel" name="glevel">
-            <option value="">Selectează nivelul</option>
-            <option *ngFor="let level of glevels" [value]="level">{{ level }}</option>
-          </select>
-        </div>
+    <!-- Germana -->
+    <mat-form-field appearance="outline">
+      <mat-label>Germană</mat-label>
+      <mat-select [(ngModel)]="form.german" name="german">
+        <mat-option *ngFor="let level of germanLevels" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <!--Skills-->
-        <div class="col-12">
-          <label class="form-label">Skills</label>
-          <input type="text" class="form-control" [(ngModel)]="form.skills" name="skills"/>
-        </div>
+    <!-- Engleză -->
+    <mat-form-field appearance="outline">
+      <mat-label>Engleză</mat-label>
+      <mat-select [(ngModel)]="form.english" name="english">
+        <mat-option *ngFor="let level of englishLevels" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-          <!--Butoane-->
-          <div class="col-12 mt-3">
-            <button type="button" class="btn btn-primary me-2" (click)="submit()">
-              {{ isEditMode ? 'Salvează modificările' : 'Adaugă colegul' }}
-            </button>
+    <!-- G-Level -->
+    <mat-form-field appearance="outline">
+      <mat-label>G-Level</mat-label>
+      <mat-select [(ngModel)]="form.gLevel" name="glevel">
+        <mat-option *ngFor="let level of glevels" [value]="level">
+          {{ level }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-            <button type="button" class="btn btn-secondary" (click)="cancel.emit()">Renunță</button>
-          </div>
-      </form>
-    </div>
-  </div> 
+    <!-- Skills -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Skills</mat-label>
+      <input matInput [(ngModel)]="form.skills" name="skills" />
+    </mat-form-field>
+
+  </form>
+
+  <div class="buttons">
+    <button mat-flat-button color="primary" (click)="submit()">
+      {{ isEditMode ? 'Salvează' : 'Adaugă coleg' }}
+    </button>
+
+    <button mat-stroked-button color="warn" (click)="cancel.emit()">
+      Renunță
+    </button>
+  </div>
 </div>
