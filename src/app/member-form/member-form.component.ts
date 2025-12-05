@@ -102,8 +102,8 @@ export class MemberFormComponent {
 
 
   submit() {
-    if (!this.form.nume || this.form.nume.trim().length < 2) {
-    alert("Te rog să completezi numele (minim 2 caractere).");
+    if (!this.form.nume) {
+    alert("Te rog să completezi numele.");
     return;
     }
 

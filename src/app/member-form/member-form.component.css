@@ -3,67 +3,15 @@
   padding: 20px;
 }
 
-h2 {
+h3 {
   margin-bottom: 20px;
-  font-weight: 600;
-}
-
-.photo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-.photo {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ddd;
-}
-
-.no-photo {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: #f3f3f3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #777;
-  font-size: 14px;
-  border: 2px dashed #ccc;
-}
-
-.photo-btns {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.grid {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.full {
-  grid-column: 1 / -1;
-}
-
-.actions {
-  margin-top: 25px;
-  display: flex;
-  gap: 15px;
+  font-weight: 500;
 }
 
 .photo-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;       /* CENTRARE pe orizontală */
-  justify-content: center;   /* CENTRARE pe verticală */
-  width: 100%;
+  align-items: center;
   margin-bottom: 30px;
 }
 
@@ -71,12 +19,12 @@ h2 {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  background: #d3d3d3;
+  background: #e0e0e0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .photo-circle img {
@@ -87,5 +35,42 @@ h2 {
 
 .photo-circle span {
   color: #555;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);  
+}
+
+.full-width {
+  grid-column: span 3;                     
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+}
+
+.actions, .buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
 }

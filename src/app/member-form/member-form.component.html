@@ -1,7 +1,7 @@
 <div class="material-form-container">
 
   <!-- TITLU -->
-  <h2>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h2>
+  <h3>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h3>
 
   <!-- FOTO -->
   <div class="photo-section">
@@ -48,14 +48,22 @@
 
     <!-- Nume -->
     <mat-form-field appearance="outline">
-      <mat-label>Nume *</mat-label>
-      <input matInput [(ngModel)]="form.nume" name="nume" required />
+      <mat-label>Nume</mat-label>
+      <input matInput [(ngModel)]="form.nume" name="nume" required #numeInput="ngModel"/>
+
+      <mat-error *ngIf="numeInput.invalid && numeInput.touched">
+        Numele este obligatoriu.
+      </mat-error>
     </mat-form-field>
 
     <!-- Email -->
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput type="email" [(ngModel)]="form.email" name="email" />
+      <input matInput type="email" [(ngModel)]="form.email" name="email" email #emailInput="ngModel"/>
+
+      <mat-error *ngIf="emailInput.invalid && emailInput.touched">
+        Emailul este invalid.
+      </mat-error>
     </mat-form-field>
 
     <!-- Data angajării -->

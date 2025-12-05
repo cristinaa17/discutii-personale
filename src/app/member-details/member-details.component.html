@@ -1,42 +1,38 @@
-<div class="card shadow-sm p-4 text-center">
+<mat-card class="details-card">
 
-  <h4 class="mb-3">Detalii coleg</h4>
-
-    <!--Poza-->
-    <div class="d-flex justify-content-center mb-3">
+  <mat-card-header>
+    <div mat-card-avatar class="avatar-wrapper">
       <ng-container *ngIf="member.photoUrl; else noPhoto">
-        <img
-         [src]="member.photoUrl"
-         alt="Foto coleg"
-         class="rounded-circle"
-         width="140"
-         height="140"
-         style="object-fit: cover;"
-         />
+        <img [src]="member.photoUrl" class="avatar-img" />
       </ng-container>
 
       <ng-template #noPhoto>
-        <div 
-          class="rounded-circle bg-light d-flex align-items-center justify-content-center text-muted"
-          style="width: 140px; height: 140px;">
-          Fără poză
-        </div>
+        <div class="avatar-placeholder">Fără poză</div>
       </ng-template>
     </div>
 
     <!--Nume-->
-    <h3 class="mb-4">{{ member.nume }}</h3>
+    <mat-card-title>{{ member.nume }}</mat-card-title>
+    <mat-card-subtitle>Detalii coleg</mat-card-subtitle>
+
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
 
     <!--Discutii-->
-    <h5 id="discussion-section" class="text-start mt-4 mb-3">Discuții 1:1</h5>
+    <mat-card-content>
+    
+      <h3 id="discussion-section" class="section-title">Discuții 1:1</h3>
 
-    <app-discussion-add 
-      (add)="onAddDiscussion($event)"
-      class="mb-3">
-    </app-discussion-add>
+      <app-discussion-add 
+        (add)="onAddDiscussion($event)"
+        class="mb-3">
+      </app-discussion-add>
 
-    <app-discussion-list 
-      [discussions]="member.discussions"
-      (delete)="onDeleteDiscussion($event)">
-    </app-discussion-list>
-</div>
+      <app-discussion-list 
+        [discussions]="member.discussions"
+        (delete)="onDeleteDiscussion($event)">
+      </app-discussion-list>
+    </mat-card-content>
+  </mat-card>
+
