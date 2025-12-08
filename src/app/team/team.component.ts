@@ -4,11 +4,15 @@ import { TeamService } from '../team.service';
 import { NgFor, NgIf } from '@angular/common';
 import { MemberDetailsComponent } from '../member-details/member-details.component';
 import { MemberFormComponent } from "../member-form/member-form.component";
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [NgIf, NgFor, MemberDetailsComponent, MemberFormComponent],
+  imports: [NgIf, NgFor, MemberDetailsComponent, MemberFormComponent, MatCardModule,
+  MatDividerModule, MatIconModule],
   templateUrl: './team.component.html',
   styleUrl: './team.component.css'
 })

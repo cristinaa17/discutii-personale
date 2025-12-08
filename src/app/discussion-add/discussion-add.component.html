@@ -1,19 +1,23 @@
-<div class="card shadow-sm">
-  <div class="card-body">
+<mat-card class="discussion-add-card">
     
-    <h6 class="card-title mb-3">Adaugă o discuție</h6>
+    <h3 class="section-title">Adaugă o discuție</h3>
 
-      <textarea 
-        [(ngModel)]="text"
-        class="form-control mb-3"
-        rows="3"
-        placeholder="Scrie ce ai discutat..."
-        ></textarea>
+    <mat-form-field appearance="outline" class="full">
+    <mat-label>Scrie ce ai discutat…</mat-label>
+    <textarea
+      matInput
+      rows="4"
+      [(ngModel)]="text"
+      name="discussionText">
+    </textarea>
+    </mat-form-field>
 
       <button 
-        class="btn btn-success btn-sm"
-        (click)="submit()">
+        mat-raised-button
+        color="primary"
+        class="save-btn"
+        (click)="submit()"
+        [disabled]="!text || text.trim().length < 2">
         Salvează discuția
       </button>
-  </div>
-</div>
+</mat-card>

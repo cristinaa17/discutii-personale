@@ -1,3 +1,49 @@
-.card {
+.discussion-list-card {
+  padding: 20px;
   border-radius: 12px;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.discussion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.discussion-item:last-child {
+  border-bottom: none;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date {
+  font-size: 13px;
+  color: #777;
+}
+
+.text {
+  font-size: 15px;
+  color: #222;
+}
+
+.delete-button {
+  margin-left: 16px;
+}
+
+.no-discussions {
+  font-style: italic;
+  color: #666;
+  margin-top: 10px;
 }

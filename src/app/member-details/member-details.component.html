@@ -1,38 +1,52 @@
 <mat-card class="details-card">
 
-  <mat-card-header>
-    <div mat-card-avatar class="avatar-wrapper">
+  <div class="header">
+    <div class="photo">
       <ng-container *ngIf="member.photoUrl; else noPhoto">
-        <img [src]="member.photoUrl" class="avatar-img" />
+        <img [src]="member.photoUrl" />
       </ng-container>
 
       <ng-template #noPhoto>
-        <div class="avatar-placeholder">Fără poză</div>
+        <div class="no-photo">Fără poză</div>
       </ng-template>
     </div>
 
-    <!--Nume-->
-    <mat-card-title>{{ member.nume }}</mat-card-title>
-    <mat-card-subtitle>Detalii coleg</mat-card-subtitle>
-
-  </mat-card-header>
+    <div class="info">
+      <h2>{{ member.nume }}</h2>
+      <span class="subtitle">Detalii coleg</span>
+    </div>
+  </div>
 
   <mat-divider></mat-divider>
 
-    <!--Discutii-->
-    <mat-card-content>
-    
-      <h3 id="discussion-section" class="section-title">Discuții 1:1</h3>
+  <h2 class="section-title">Discuții 1:1</h2>
 
-      <app-discussion-add 
-        (add)="onAddDiscussion($event)"
-        class="mb-3">
-      </app-discussion-add>
+  <mat-card class="discussion-card">
 
-      <app-discussion-list 
-        [discussions]="member.discussions"
-        (delete)="onDeleteDiscussion($event)">
-      </app-discussion-list>
-    </mat-card-content>
+    <h3 class="small-title">Adaugă o discuție</h3>
+
+    <mat-form-field appearance="outline" class="full">
+      <textarea
+        matInput
+        rows="3"
+        placeholder="Scrie ce ai discutat..."
+        [(ngModel)]="text">
+      </textarea>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="full-button"
+      (click)="submit()">
+      Salvează discuția
+    </button>
+
   </mat-card>
 
+  <app-discussion-list
+    [discussions]="member.discussions"
+    (delete)="onDeleteDiscussion($event)">
+  </app-discussion-list>
+
+</mat-card>

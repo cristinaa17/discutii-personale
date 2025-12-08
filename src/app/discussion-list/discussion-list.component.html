@@ -1,30 +1,21 @@
-  <div *ngIf="discussions.length > 0" class="card shadow-sm mb-3">
-    <div class="card-body">
+  <mat-card *ngIf="discussions.length > 0" class="discussion-list-card">
 
-      <h6 class="card-title mb-3">Discuții anterioare</h6>
+      <h3 class="section-title">Discuții anterioare</h3>
 
-        <ul class="list-group list-group-flush">
-          <li
-          class="list-group-item d-flex justify-content-between align-items-start"
-          *ngFor="let d of discussions"
-          >
-            <div class="me-3">
-              <div class="small text-muted mb-1">
-                {{ d.date | date:'dd.MM.yyyy HH:mm' }}
-              </div>
-            <div>{{ d.text }}</div>
-            </div>
+      <div class="discussion-item" *ngFor="let d of discussions">
+    
+      <div class="left">
+        <div class="date">{{ d.date | date:'dd.MM.yyyy HH:mm' }}</div>
+        <div class="text">{{ d.text }}</div>
+      </div>
 
-          <button 
-            class="btn btn-outline-danger btn-sm" 
-            (click)="delete.emit(d.id)">
-            Șterge
-          </button>
-        </li>
-      </ul>
+      <button mat-icon-button color="warn" class="delete-button" (click)="delete.emit(d.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
   </div>
-</div>
+  </mat-card>
 
-<div *ngIf="!discussions || discussions.length === 0" class="text-muted small">
+<div *ngIf="!discussions || discussions.length === 0" class="no-discussions">
   Nu există discuții pentru acest coleg.
 </div>
