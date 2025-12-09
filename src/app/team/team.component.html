@@ -1,77 +1,87 @@
-<div class="container-fluid px-4 my-4">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Lista colegilor</h2>
+<div class="team-wrapper">
 
-        <button class="btn btn-success btn-sm" *ngIf="!showAddForm && !showEditForm" (click)="showAddForm = true">
-          + Adaugă coleg
-        </button>
-    </div>
+  <div class="team-header">
+  <h2>Lista colegilor</h2>
 
-    <div *ngIf="showAddForm" class="mb-section">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <app-member-form
-            (save)="addMember($event)"
-            (cancel)="showAddForm = false">
-          </app-member-form>
-        </div>
-      </div>
-    </div>
+  <button mat-raised-button color="primary" class="add-btn" (click)="showAddForm = true">
+    <mat-icon>person_add</mat-icon>
+    Adaugă coleg
+  </button>
+</div>
 
-  <div *ngIf="!showAddForm && members.length > 0" class="card shadow-sm mb-section">
-    <div class="card-body p-0">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
-          <tr>
-            <th>PerNR</th>
-            <th>Nume</th>
-            <th>Email</th>
-            <th class="text-end">Acțiuni</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <ng-container *ngFor="let m of members; let i = index">  
-            <tr>
-              <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.perNr || '-' }}</td>
-              <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.nume }}</td>
-              <td (click)="selectMember(m, i)" style="cursor:pointer;">{{ m.email || '-' }}</td>
-
-              <td class="text-end">
-
-              <button class="btn btn-primary btn-sm me-1" (click)="onEditMember(m, $event)">Editează</button>
-              <button class="btn btn-danger btn-sm me-1" (click)="onDeleteMember(i, $event)">Șterge</button> 
-              <button class="btn btn-outline-success btn-sm" (click)="onAddDiscussionFromTable(m, $event)">Discuție nouă</button>
-
-              </td>
-            </tr>
-
-            <tr *ngIf="selectedIndex === i && !showEditForm">
-              <td colspan="4">
-                <app-member-details [member]="m"></app-member-details>
-              </td>
-            </tr>
-
-            <tr *ngIf="selectedIndex === i && showEditForm">
-              <td colspan="4">
-                <div class="card shadow-sm p-3">
-                  <app-member-form
-                    [member]="editTarget!"
-                    (save)="onSaveEdit($event)"
-                    (cancel)="onCancelEdit()">
-                  </app-member-form>
-                </div>
-              </td>
-            </tr>
-
-          </ng-container>
-        </tbody>
-      </table>
-    </div>
-  </div> 
-
-    <p *ngIf="members.length === 0">
-      Nu există colegi încă.
-    </p>
+  <div *ngIf="showAddForm">
+    <mat-card class="p-3 mb">
+      <app-member-form
+        (save)="addMember($event)"
+        (cancel)="showAddForm = false">
+      </app-member-form>
+    </mat-card>
   </div>
+
+  <mat-card class="mt">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2 full-table">
+
+      <ng-container matColumnDef="perNr">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> PerNR </th>
+        <td mat-cell *matCellDef="let m; let i = index" (click)="selectMember(m, i)" class="clickable">
+          {{ m.perNr }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nume">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nume </th>
+        <td mat-cell *matCellDef="let m; let i = index" (click)="selectMember(m, i)" class="clickable">
+          {{ m.nume }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let m; let i = index" (click)="selectMember(m, i)" class="clickable">
+          {{ m.email || '-' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-end"> Acțiuni </th>
+
+        <td mat-cell *matCellDef="let m; let i = index" class="text-end">
+
+          <button mat-raised-button color="primary" (click)="onEditMember(m, $event)">
+            <mat-icon>edit</mat-icon> Editează
+          </button>
+
+          <button mat-raised-button color="warn" (click)="onDeleteMember(m, $event)">
+            <mat-icon>delete</mat-icon> Șterge
+          </button>
+
+          <button mat-stroked-button color="accent" (click)="onAddDiscussionFromTable(m, $event)">
+            <mat-icon>chat</mat-icon> Discuție nouă
+          </button>
+
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+</mat-card>
+
+<div *ngIf="selectedMember && !showEditForm" class="mt">
+  <mat-card>
+    <app-member-details [member]="selectedMember"></app-member-details>
+  </mat-card>
+</div>
+
+<div *ngIf="showEditForm && editTarget" class="mt">
+  <mat-card class="p-3">
+    <app-member-form
+      [member]="editTarget"
+      (save)="onSaveEdit($event)"
+      (cancel)="onCancelEdit()">
+    </app-member-form>
+  </mat-card>
+</div>
 
