@@ -1,25 +1,36 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Member } from '../models/member';
 import { TeamService } from '../team.service';
+
 import { MemberDetailsComponent } from '../member-details/member-details.component';
 import { MemberFormComponent } from '../member-form/member-form.component';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+
 import { NgIf, NgFor } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from "@angular/material/icon";
+import { MatIconModule } from "@angular/material/icon";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
   selector: 'app-team',
   standalone: true,
   imports: [
-    NgIf, NgFor,
-    MatTableModule, MatCardModule, MatButtonModule,
-    MemberDetailsComponent, MemberFormComponent,
-    MatIcon
-],
+    NgIf,
+    NgFor,
+    MatTableModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MemberDetailsComponent,
+    MemberFormComponent
+  ],
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css']
 })
@@ -51,7 +62,12 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   reloadMembers() {
     this.members = this.teamService.getMembers();
-    this.dataSource.data = this.members;
+    this.dataSource.data = [...this.members];
+  }
+
+  applyFilter(event: Event) {
+    const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = value;
   }
 
   addMember(member: Member) {
@@ -61,10 +77,15 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   selectMember(m: Member, index: number) {
-    if (this.showEditForm) return;
+    const filteredIndex = this.dataSource.filteredData.indexOf(m);
 
-    this.selectedIndex = this.selectedIndex === index ? null : index;
-    this.selectedMember = this.selectedIndex !== null ? m : null;
+  if (this.selectedIndex === filteredIndex) {
+    this.selectedIndex = null;
+    this.selectedMember = null;
+  } else {
+    this.selectedIndex = filteredIndex;
+    this.selectedMember = m;
+  }
   }
 
   onDeleteMember(member: Member, event: Event) {
@@ -72,8 +93,8 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
     if (!confirm("Sigur dorești să ștergi colegul?")) return;
 
-    const index = this.members.indexOf(member);
-    this.teamService.deleteMember(index);
+    const realIndex = this.members.indexOf(member);
+    this.teamService.deleteMember(realIndex);
 
     this.selectedIndex = null;
     this.selectedMember = null;
@@ -83,7 +104,9 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   onEditMember(member: Member, event: Event) {
     event.stopPropagation();
-    this.editTarget = member;
+    this.selectedMember = member;
+    this.selectedIndex = this.members.indexOf(member);
+    this.editTarget = { ...member };
     this.showEditForm = true;
   }
 
@@ -97,6 +120,10 @@ export class TeamComponent implements OnInit, AfterViewInit {
   onCancelEdit() {
     this.showEditForm = false;
     this.editTarget = null;
+  }
+
+  onCancelAdd() {
+    this.showAddForm = false;
   }
 
   onAddDiscussionFromTable(member: Member, event: Event) {

@@ -19,6 +19,18 @@
   margin-bottom: 40px;
 }
 
+.search-box {
+  width: 300px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.action-btn {
+  pointer-events: auto;
+  z-index: 10;
+}
+
+
 .clickable {
   cursor: pointer;
 }
