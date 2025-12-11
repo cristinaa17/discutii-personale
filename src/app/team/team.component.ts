@@ -41,7 +41,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['perNr', 'nume', 'email', 'actions'];
 
-  selectedIndex: number | null = null;
   selectedMember: Member | null = null;
 
   showAddForm = false;
@@ -76,16 +75,11 @@ export class TeamComponent implements OnInit, AfterViewInit {
     this.reloadMembers();
   }
 
-  selectMember(m: Member, index: number) {
-    const filteredIndex = this.dataSource.filteredData.indexOf(m);
+  selectMember(member: Member) {
+    if (this.showEditForm) return;
 
-  if (this.selectedIndex === filteredIndex) {
-    this.selectedIndex = null;
-    this.selectedMember = null;
-  } else {
-    this.selectedIndex = filteredIndex;
-    this.selectedMember = m;
-  }
+    this.selectedMember =
+      this.selectedMember === member ? null : member;
   }
 
   onDeleteMember(member: Member, event: Event) {
@@ -93,33 +87,32 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
     if (!confirm("Sigur dorești să ștergi colegul?")) return;
 
-    const realIndex = this.members.indexOf(member);
-    this.teamService.deleteMember(realIndex);
+    const index = this.members.indexOf(member);
+    this.teamService.deleteMember(index);
 
-    this.selectedIndex = null;
     this.selectedMember = null;
-
     this.reloadMembers();
   }
 
   onEditMember(member: Member, event: Event) {
     event.stopPropagation();
-    this.selectedMember = member;
-    this.selectedIndex = this.members.indexOf(member);
     this.editTarget = { ...member };
+    this.selectedMember = member;
     this.showEditForm = true;
   }
 
   onSaveEdit(updated: Member) {
-    Object.assign(this.editTarget!, updated);
+    Object.assign(this.selectedMember!, updated);
     this.showEditForm = false;
     this.editTarget = null;
+    this.selectedMember = null;
     this.reloadMembers();
   }
 
   onCancelEdit() {
     this.showEditForm = false;
     this.editTarget = null;
+    this.selectedMember = null;
   }
 
   onCancelAdd() {
@@ -129,7 +122,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
   onAddDiscussionFromTable(member: Member, event: Event) {
     event.stopPropagation();
     this.selectedMember = member;
-    this.selectedIndex = this.members.indexOf(member);
 
     setTimeout(() => {
       const el = document.getElementById('discussion-section');

@@ -1,90 +1,107 @@
+/* Container general */
+.team-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header listă + buton adăugare */
 .team-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0 20px 0;
-}
-
-.team-header h2 {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0;
-}
-
-.table-container {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 10px 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  margin-bottom: 40px;
-}
-
-.search-box {
-  width: 300px;
   margin-bottom: 20px;
-  display: block;
 }
 
-.action-btn {
-  pointer-events: auto;
-  z-index: 10;
+.add-btn mat-icon {
+  margin-right: 6px;
 }
 
+/* Filtru */
+.search-box {
+  width: 350px;
+  margin-bottom: 15px;
+}
+
+/* Tabel */
+.full-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
 
 .clickable {
   cursor: pointer;
 }
 
-.mat-mdc-cell, .mat-mdc-header-cell {
-  padding: 16px !important;
-  font-size: 16px;
-}
-
-.mat-mdc-header-row {
-  background: #faf9fc !important;
-  font-weight: 600;
-}
-
-.mat-mdc-row:hover {
-  background: #f5f5f5;
+.clickable:hover {
+  background-color: #f5f5f5;
   transition: 0.2s;
 }
 
-.details-wrapper {
-  margin-top: -10px;
-  margin-bottom: 40px;
+/* Butoane de acțiuni */
+.action-btn mat-icon {
+  margin-right: 4px;
 }
 
-mat-card {
-  border-radius: 16px !important;
-  padding: 25px !important;
+.text-end button {
+  margin-left: 8px;
 }
 
-.mat-mdc-button-base {
-  margin-left: 6px;
-}
-
-app-member-form {
-  display: block;
+/* Card-uri de detalii */
+mat-card.mt {
   margin-top: 20px;
 }
 
-.mb-section {
-  margin-bottom: 40px;
+mat-card {
+  border-radius: 10px;
 }
 
-.team-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 30px 0;
+/* Responsive */
+@media (max-width: 900px) {
+  .team-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-btn {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .text-end button {
+    margin-top: 8px;
+    display: block;
+    width: 100%;
+  }
 }
 
-.add-btn {
-  border-radius: 30px !important;
-  padding: 10px 22px !important;
-  font-size: 16px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
+@media (max-width: 600px) {
+  table mat-header-cell,
+  table mat-cell {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .action-btn mat-icon {
+    margin-right: 2px;
+  }
+}
+ .text-end button {
+  margin-left: 6px;
+  padding: 4px 10px;
+  min-height: 32px;
+}
+
+.text-end mat-icon {
+  font-size: 18px;
+}
+
+.details-container {
+  max-width: 1100px;
+  margin: 0 auto;
 }
