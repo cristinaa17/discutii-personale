@@ -1,11 +1,9 @@
-/* Container general */
 .team-wrapper {
   max-width: 1100px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Header listă + buton adăugare */
 .team-header {
   display: flex;
   justify-content: space-between;
@@ -17,47 +15,74 @@
   margin-right: 6px;
 }
 
-/* Filtru */
 .search-box {
   width: 350px;
   margin-bottom: 15px;
 }
 
-/* Tabel */
 .full-table {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
 }
 
-.clickable {
+.row-main {
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-.clickable:hover {
-  background-color: #f5f5f5;
-  transition: 0.2s;
+.row-main:nth-of-type(even) {
+  background-color: #fafafa;
 }
 
-/* Butoane de acțiuni */
-.action-btn mat-icon {
-  margin-right: 4px;
+.row-main td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.row-main:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.row-main:hover {
+  background-color: #eef3ff;
+}
+
+.row-main.selected-row {
+  background-color: #e8f0ff !important;
+  box-shadow: inset 4px 0 0 #3f51b5;
+}
+
+.row-details {
+  background: transparent;
+}
+
+.row-details td {
+  padding: 0 !important;
+  border-bottom: none;
+}
+
+.expanded-details {
+  margin: 12px 24px 20px 24px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .text-end button {
-  margin-left: 8px;
+  margin-left: 6px;
+  padding: 4px 10px;
+  min-height: 32px;
 }
 
-/* Card-uri de detalii */
-mat-card.mt {
-  margin-top: 20px;
+.text-end mat-icon {
+  font-size: 18px;
 }
 
 mat-card {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .team-header {
     flex-direction: column;
@@ -78,30 +103,4 @@ mat-card {
     display: block;
     width: 100%;
   }
-}
-
-@media (max-width: 600px) {
-  table mat-header-cell,
-  table mat-cell {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .action-btn mat-icon {
-    margin-right: 2px;
-  }
-}
- .text-end button {
-  margin-left: 6px;
-  padding: 4px 10px;
-  min-height: 32px;
-}
-
-.text-end mat-icon {
-  font-size: 18px;
-}
-
-.details-container {
-  max-width: 1100px;
-  margin: 0 auto;
 }

@@ -24,6 +24,7 @@ export class MemberFormComponent {
   form: Member = {} as Member;
   isEditMode = false;
   previewUrl: string | null = null;
+  isDragOver = false;
 
   germanLevels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
   englishLevels = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
@@ -76,6 +77,40 @@ export class MemberFormComponent {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 }
+
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = true;
+  }
+
+  onDragLeave() {
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+
+    const file = event.dataTransfer?.files[0];
+    if (file) {
+      this.handleFile(file);
+    }
+  }
+
+ handleFile(file: File) {
+    if (!file.type.startsWith('image/')) {
+      alert('Te rog să încarci o imagine.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewUrl = reader.result as string;
+      this.form.photoUrl = this.previewUrl!;
+    };
+    reader.readAsDataURL(file);
+  } 
 
   onPhotoSelected(event: any) {
   const file = event.target.files[0];

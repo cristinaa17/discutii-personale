@@ -112,7 +112,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   onCancelEdit() {
     this.showEditForm = false;
     this.editTarget = null;
-    this.selectedMember = null;
+    this.selectedMember = null
   }
 
   onCancelAdd() {
