@@ -94,3 +94,79 @@ h3 {
   font-size: 12px;
   display: block;
 }
+
+.photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.photo-dropzone {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #f3f4f6;
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
+}
+
+.photo-dropzone:hover {
+  background: #eef2ff;
+  border-color: #6366f1;
+}
+
+.photo-dropzone.drag-over {
+  background: #e0e7ff;
+  border-color: #4f46e5;
+  transform: scale(1.05);
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.photo-icon {
+  font-size: 36px;
+  color: #6366f1;
+  margin-bottom: 6px;
+}
+
+.photo-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.photo-subtext {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.remove-photo-btn {
+  margin-top: 10px;
+}
+
+.photo-initials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  user-select: none;
+}

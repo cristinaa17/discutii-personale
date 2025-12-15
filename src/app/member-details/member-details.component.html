@@ -1,16 +1,21 @@
 <mat-card class="details-card">
 
   <div class="header">
-    <div class="photo">
-      <ng-container *ngIf="member.photoUrl; else noPhoto">
-        <img [src]="member.photoUrl" />
-      </ng-container>
+    <!-- AVATAR -->
+    <div class="avatar">
 
-      <ng-template #noPhoto>
-        <div class="no-photo">Fără poză</div>
-      </ng-template>
+      <!-- POZĂ -->
+      <img *ngIf="member.photoUrl"
+           [src]="member.photoUrl"
+           alt="poza coleg" />
+
+      <!-- INIȚIALE -->
+      <span *ngIf="!member.photoUrl && initials">
+        {{ initials }}
+      </span>
     </div>
 
+    <!-- INFO -->
     <div class="info">
       <h2>{{ member.nume }}</h2>
       <span class="subtitle">Detalii coleg</span>

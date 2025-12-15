@@ -129,6 +129,20 @@ export class MemberFormComponent {
     fileInput.click();
   }
 
+  get initials(): string {
+  if (!this.form?.nume) return '';
+
+  const parts = this.form.nume.trim().split(' ');
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase();
+  }
+
+  return (
+    parts[0].charAt(0).toUpperCase() +
+    parts[1].charAt(0).toUpperCase()
+  );
+}
+
 
   removePhoto() {
     this.previewUrl = null;

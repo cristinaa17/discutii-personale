@@ -39,6 +39,20 @@ export class MemberDetailsComponent {
     this.text = ''; 
   }
 
+  get initials(): string {
+  if (!this.member?.nume) return '';
+
+  const parts = this.member.nume.trim().split(' ');
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase();
+  }
+
+  return (
+    parts[0].charAt(0).toUpperCase() +
+    parts[1].charAt(0).toUpperCase()
+  );
+}
+
   onDeleteDiscussion(id: number) {
      this.member.discussions = this.member.discussions.filter(d => d.id !== id);
   }

@@ -4,40 +4,37 @@
   <h3>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h3>
 
   <!-- FOTO -->
-  <div class="photo-section">
+<div class="photo-section">
 
-  <div class="photo-wrapper">
-     <div class="photo-circle drop-zone"
-         (dragover)="onDragOver($event)"
-         (dragleave)="onDragLeave()"
-         (drop)="onDrop($event)"
-         (click)="triggerPhotoUpload()"
-         [class.drag-over]="isDragOver">
+  <div class="photo-dropzone"
+       [class.drag-over]="isDragOver"
+       (dragover)="onDragOver($event)"
+       (dragleave)="onDragLeave()"
+       (drop)="onDrop($event)"
+       (click)="triggerPhotoUpload()">
 
-      <!-- PREVIEW -->
-      <img *ngIf="previewUrl; else noPhoto"
-           [src]="previewUrl"
-           alt="poza" />
+    <img *ngIf="previewUrl; else placeholder"
+         [src]="previewUrl"
+         class="photo-preview" />
 
-      <!-- FĂRĂ POZĂ -->
-      <ng-template #noPhoto>
-        <div class="placeholder">
-          <mat-icon>cloud_upload</mat-icon>
-          <span>Drag & Drop<br/>sau Click</span>
-        </div>
-      </ng-template>
-    </div>
+   <ng-template #placeholder>
 
-    <!-- ȘTERGE POZA -->
-    <button mat-stroked-button
-            color="warn"
-            *ngIf="previewUrl"
-            (click)="removePhoto()"
-            style="margin-top: 10px;">
-      Șterge poza
-    </button>
+  <!-- INIȚIALE -->
+  <div *ngIf="initials; else uploadHint"
+       class="photo-initials">
+    {{ initials }}
+  </div>
 
-    <!-- INPUT ASCUNS -->
+  <!-- ICON + TEXT -->
+  <ng-template #uploadHint>
+    <mat-icon class="photo-icon">cloud_upload</mat-icon>
+    <span class="photo-text">Drag & Drop poză</span>
+    <span class="photo-subtext">sau click pentru upload</span>
+  </ng-template>
+
+</ng-template>
+
+
     <input
       type="file"
       id="photoUploadInput"
@@ -45,7 +42,18 @@
       accept="image/*"
       (change)="onPhotoSelected($event)">
   </div>
-  </div>
+
+  <button mat-stroked-button
+          color="warn"
+          *ngIf="previewUrl"
+          class="remove-photo-btn"
+          (click)="removePhoto()">
+    <mat-icon>delete</mat-icon>
+    Șterge poza
+  </button>
+
+</div>
+
 
   <form class="grid">
 
