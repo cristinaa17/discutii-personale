@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Căutare în discuții</h2>
+
+<mat-dialog-content>
+
+  <mat-form-field appearance="outline" class="full">
+    <mat-label>Caută text</mat-label>
+    <input matInput [(ngModel)]="query" />
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    class="full"
+    (click)="search()">
+    Caută
+  </button>
+
+  <div *ngIf="results.length === 0 && searched" class="empty">
+    Nu au fost găsite rezultate.
+  </div>
+
+  <mat-list *ngIf="results.length > 0">
+    <mat-list-item
+      *ngFor="let r of results"
+      (click)="select(r)"
+      class="result-item">
+
+      <div mat-line>
+        <strong>{{ r.member.nume }}</strong>
+      </div>
+
+      <div mat-line class="preview">
+        {{ r.discussion.text }}
+      </div>
+
+    </mat-list-item>
+  </mat-list>
+
+</mat-dialog-content>

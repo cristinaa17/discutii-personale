@@ -16,6 +16,16 @@
     <div class="team-header">
       <h2>Lista colegilor</h2>
 
+       <!-- CĂUTARE DISCUȚII -->
+      <button
+        *ngIf="dataSource.data.length > 0"
+        mat-stroked-button
+        color="primary"
+        (click)="openSearchDialog()">
+        <mat-icon>search</mat-icon>
+        Caută discuție
+      </button> 
+
       <button mat-flat-button
               color="primary"
               class="add-btn"

@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from "@angular/material/icon";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatDialog } from '@angular/material/dialog';
+import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/search-discussions-dialog.component';
 
 @Component({
   selector: 'app-team',
@@ -49,7 +51,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private teamService: TeamService) {}
+  constructor(private teamService: TeamService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.reloadMembers();
@@ -100,6 +102,24 @@ export class TeamComponent implements OnInit, AfterViewInit {
     this.selectedMember = member;
     this.showEditForm = true;
   }
+
+  openSearchDialog() {
+  const dialogRef = this.dialog.open(SearchDiscussionsDialogComponent, {
+    width: '500px',
+    data: this.members
+  });
+
+  dialogRef.afterClosed().subscribe((member: Member) => {
+    if (member) {
+      this.selectMember(member);
+
+      setTimeout(() => {
+        const el = document.getElementById('discussion-section');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }, 200);
+    }
+  });
+}
 
   onSaveEdit(updated: Member) {
     Object.assign(this.selectedMember!, updated);

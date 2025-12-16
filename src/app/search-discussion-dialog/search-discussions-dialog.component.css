@@ -1,0 +1,23 @@
+.full {
+  width: 100%;
+}
+
+.result-item {
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.result-item:hover {
+  background: #eef3ff;
+}
+
+.preview {
+  font-size: 13px;
+  color: #555;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  margin-top: 12px;
+}
