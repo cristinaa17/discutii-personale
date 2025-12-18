@@ -17,34 +17,46 @@
       <h2>Lista colegilor</h2>
 
        <!-- CĂUTARE DISCUȚII -->
-      <button
-        *ngIf="dataSource.data.length > 0"
-        mat-stroked-button
-        color="primary"
-        (click)="openSearchDialog()">
-        <mat-icon>search</mat-icon>
-        Caută discuție
-      </button> 
-
-      <button mat-flat-button
-              color="primary"
-              class="add-btn"
-              (click)="showAddForm = true">
-        <mat-icon>person_add</mat-icon>
-        Adaugă coleg
-      </button>
+      <div class="header-actions">
+        <button
+          mat-flat-button
+          color="primary"
+          class="add-btn"
+          (click)="showAddForm = true">
+          <mat-icon>person_add</mat-icon>
+          Adaugă coleg
+        </button>
+      </div>
     </div>
 
-    <!-- FILTRU -->
-    <mat-form-field *ngIf="members.length > 0"
-                    appearance="outline"
-                    class="search-box">
-      <mat-label>Filtru de căutare</mat-label>
-      <input matInput
-             placeholder="Introdu numele..."
-             (keyup)="applyFilter($event)" />
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+    <div class="team-actions">
+
+      <!-- Căutare coleg -->
+      <mat-form-field appearance="outline" class="search-box" *ngIf="members.length > 0">
+        <mat-label>Caută coleg</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <!-- Căutare discuții -->
+      <mat-form-field
+        appearance="outline"
+        class="search-box clickable"
+        *ngIf="members.length > 0"
+        (click)="openSearchDialog()"
+      >
+        <mat-label>Caută în discuții</mat-label>
+        <input
+          matInput
+          readonly
+        />
+        <mat-icon matSuffix>forum</mat-icon>
+      </mat-form-field>
+    </div>
+
 
     <!-- TABEL -->
     <mat-card class="mt">

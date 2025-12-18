@@ -7,9 +7,26 @@
 .team-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 20px;
-  gap: 12px;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.team-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.add-btn,
+.search-discussion-btn {
+  align-self: flex-end;
 }
 
 .add-btn mat-icon {
@@ -19,6 +36,14 @@
 .search-box {
   width: 350px;
   margin-bottom: 15px;
+}
+
+.search-box.clickable {
+  cursor: pointer;
+}
+
+.search-box.clickable input {
+  cursor: pointer;
 }
 
 .full-table {

@@ -21,3 +21,22 @@
   color: #777;
   margin-top: 12px;
 }
+
+.search-dialog {
+  padding: 28px 32px 32px;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.dialog-header h4 {
+  margin: 10px;
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+}
