@@ -1,21 +1,22 @@
-  <mat-card *ngIf="discussions.length > 0" class="discussion-list-card">
-
-      <h3 class="section-title">Discuții anterioare</h3>
-
-      <div class="discussion-item" *ngFor="let d of discussions">
-    
-      <div class="left">
-        <div class="date">{{ d.date | date:'dd.MM.yyyy HH:mm' }}</div>
-        <div class="text">{{ d.text }}</div>
+@if (discussions.length > 0) {
+  <mat-card class="discussion-list-card">
+    <h3 class="section-title">Discuții anterioare</h3>
+    @for (d of discussions; track d) {
+      <div class="discussion-item">
+        <div class="left">
+          <div class="date">{{ d.date | date:'dd.MM.yyyy HH:mm' }}</div>
+          <div class="text">{{ d.text }}</div>
+        </div>
+        <button mat-icon-button color="warn" class="delete-button" (click)="delete.emit(d.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
-
-      <button mat-icon-button color="warn" class="delete-button" (click)="delete.emit(d.id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-
-  </div>
+    }
   </mat-card>
+}
 
-<div *ngIf="!discussions || discussions.length === 0" class="no-discussions">
-  Nu există discuții pentru acest coleg.
-</div>
+@if (!discussions || discussions.length === 0) {
+  <div class="no-discussions">
+    Nu există discuții pentru acest coleg.
+  </div>
+}

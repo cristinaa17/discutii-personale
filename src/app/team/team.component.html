@@ -1,166 +1,152 @@
 <div class="team-wrapper">
 
   <!-- FORMULAR ADĂUGARE -->
-  <div *ngIf="showAddForm">
-    <mat-card class="p-3 mb">
-      <app-member-form
-        (save)="addMember($event)"
-        (cancel)="onCancelAdd()">
-      </app-member-form>
-    </mat-card>
-  </div>
+  @if (showAddForm) {
+    <div>
+      <mat-card class="p-3 mb">
+        <app-member-form
+          (save)="addMember($event)"
+          (cancel)="onCancelAdd()">
+        </app-member-form>
+      </mat-card>
+    </div>
+  }
 
   <!-- LISTA COLEGI -->
-  <div *ngIf="!showAddForm">
-
-    <div class="team-header">
-      <h2>Lista colegilor</h2>
-
-       <!-- CĂUTARE DISCUȚII -->
-      <div class="header-actions">
-        <button
-          mat-flat-button
-          color="primary"
-          class="add-btn"
-          (click)="showAddForm = true">
-          <mat-icon>person_add</mat-icon>
-          Adaugă coleg
-        </button>
+  @if (!showAddForm) {
+    <div>
+      <div class="team-header">
+        <h2>Lista colegilor</h2>
+        <!-- CĂUTARE DISCUȚII -->
+        <div class="header-actions">
+          <button
+            mat-flat-button
+            color="primary"
+            class="add-btn"
+            (click)="showAddForm = true">
+            <mat-icon>person_add</mat-icon>
+            Adaugă coleg
+          </button>
+        </div>
       </div>
-    </div>
-
-    <div class="team-actions">
-
-      <!-- Căutare coleg -->
-      <mat-form-field appearance="outline" class="search-box" *ngIf="members.length > 0">
-        <mat-label>Caută coleg</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-        />
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-
-      <!-- Căutare discuții -->
-      <mat-form-field
-        appearance="outline"
-        class="search-box clickable"
-        *ngIf="members.length > 0"
-        (click)="openSearchDialog()"
-      >
-        <mat-label>Caută în discuții</mat-label>
-        <input
-          matInput
-          readonly
-        />
-        <mat-icon matSuffix>forum</mat-icon>
-      </mat-form-field>
-    </div>
-
-
-    <!-- TABEL -->
-    <mat-card class="mt">
-      <table mat-table
-             [dataSource]="dataSource"
-             matSort
-             multiTemplateDataRows
-             class="mat-elevation-z2 full-table">
-
-        <!-- PERNR -->
-        <ng-container matColumnDef="perNr">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>PerNR</th>
-          <td mat-cell *matCellDef="let m"
-              (click)="selectMember(m)"
-              class="clickable">
-            {{ m.perNr }}
-          </td>
-        </ng-container>
-
-        <!-- NUME -->
-        <ng-container matColumnDef="nume">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume</th>
-          <td mat-cell *matCellDef="let m"
-              (click)="selectMember(m)"
-              class="clickable">
-            {{ m.nume }}
-          </td>
-        </ng-container>
-
-        <!-- EMAIL -->
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-          <td mat-cell *matCellDef="let m"
-              (click)="selectMember(m)"
-              class="clickable">
-            {{ m.email || '-' }}
-          </td>
-        </ng-container>
-
-        <!-- ACȚIUNI -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef class="text-end">Acțiuni</th>
-          <td mat-cell *matCellDef="let m" class="text-end">
-
-            <button mat-raised-button
+      <div class="team-actions">
+        <!-- Căutare coleg -->
+        @if (members.length > 0) {
+          <mat-form-field appearance="outline" class="search-box">
+            <mat-label>Caută coleg</mat-label>
+            <input
+              matInput
+              (keyup)="applyFilter($event)"
+              />
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          }
+          <!-- Căutare discuții -->
+          @if (members.length > 0) {
+            <mat-form-field
+              appearance="outline"
+              class="search-box clickable"
+              (click)="openSearchDialog()"
+              >
+              <mat-label>Caută în discuții</mat-label>
+              <input
+                matInput
+                readonly
+                />
+                <mat-icon matSuffix>forum</mat-icon>
+              </mat-form-field>
+            }
+          </div>
+          <!-- TABEL -->
+          <mat-card class="mt">
+            <table mat-table
+              [dataSource]="dataSource"
+              matSort
+              multiTemplateDataRows
+              class="mat-elevation-z2 full-table">
+              <!-- PERNR -->
+              <ng-container matColumnDef="perNr">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>PerNR</th>
+                <td mat-cell *matCellDef="let m"
+                  (click)="selectMember(m)"
+                  class="clickable">
+                  {{ m.perNr }}
+                </td>
+              </ng-container>
+              <!-- NUME -->
+              <ng-container matColumnDef="nume">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume</th>
+                <td mat-cell *matCellDef="let m"
+                  (click)="selectMember(m)"
+                  class="clickable">
+                  {{ m.nume }}
+                </td>
+              </ng-container>
+              <!-- EMAIL -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let m"
+                  (click)="selectMember(m)"
+                  class="clickable">
+                  {{ m.email || '-' }}
+                </td>
+              </ng-container>
+              <!-- ACȚIUNI -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="text-end">Acțiuni</th>
+                <td mat-cell *matCellDef="let m" class="text-end">
+                  <button mat-raised-button
                     color="primary"
                     (click)="onEditMember(m, $event)">
-              <mat-icon>edit</mat-icon>
-              Editează
-            </button>
-
-            <button mat-raised-button
+                    <mat-icon>edit</mat-icon>
+                    Editează
+                  </button>
+                  <button mat-raised-button
                     color="warn"
                     (click)="onDeleteMember(m, $event)">
-              <mat-icon>delete</mat-icon>
-              Șterge
-            </button>
-
-            <button mat-raised-button
+                    <mat-icon>delete</mat-icon>
+                    Șterge
+                  </button>
+                  <button mat-raised-button
                     color="accent"
                     (click)="onAddDiscussionFromTable(m, $event)">
-              <mat-icon>chat</mat-icon>
-              Discuție nouă
-            </button>
-
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="details">
-          <td mat-cell *matCellDef="let m"
-              [attr.colspan]="displayedColumns.length">
-
-            <div *ngIf="selectedMember === m && !showEditForm" class="expanded-details">
-              <app-member-details [member]="m"></app-member-details>
-            </div>
-
-            <div *ngIf="selectedMember === m && showEditForm" class="expanded-details">
-              <app-member-form
-                [member]="editTarget"
-                (save)="onSaveEdit($event)"
-                (cancel)="onCancelEdit()">
-              </app-member-form>
-            </div>
-
-          </td>
-        </ng-container>
-
-        <!-- RÂNDURI -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-        <tr mat-row
-            *matRowDef="let row; columns: displayedColumns"
-            class="row-main"
-            [class.selected-row]="selectedMember === row">
-        </tr>
-
-
-        <tr mat-row
-            *matRowDef="let row; columns: ['details']"
-            class="row-details">
-        </tr>
-
-      </table>
-    </mat-card>
-
-  </div>
-</div>
+                    <mat-icon>chat</mat-icon>
+                    Discuție nouă
+                  </button>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="details">
+                <td mat-cell *matCellDef="let m"
+                  [attr.colspan]="displayedColumns.length">
+                  @if (selectedMember === m && !showEditForm) {
+                    <div class="expanded-details">
+                      <app-member-details [member]="m"></app-member-details>
+                    </div>
+                  }
+                  @if (selectedMember === m && showEditForm) {
+                    <div class="expanded-details">
+                      <app-member-form
+                        [member]="editTarget"
+                        (save)="onSaveEdit($event)"
+                        (cancel)="onCancelEdit()">
+                      </app-member-form>
+                    </div>
+                  }
+                </td>
+              </ng-container>
+              <!-- RÂNDURI -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row
+                *matRowDef="let row; columns: displayedColumns"
+                class="row-main"
+                [class.selected-row]="selectedMember === row">
+              </tr>
+              <tr mat-row
+                *matRowDef="let row; columns: ['details']"
+                class="row-details">
+              </tr>
+            </table>
+          </mat-card>
+        </div>
+      }
+    </div>

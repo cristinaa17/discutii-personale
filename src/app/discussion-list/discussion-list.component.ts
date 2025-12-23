@@ -11,11 +11,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 
 @Component({
-  selector: 'app-discussion-list',
-  standalone: true,
-  imports: [CommonModule, MatListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
-  templateUrl: './discussion-list.component.html',
-  styleUrls: ['./discussion-list.component.css']
+    selector: 'app-discussion-list',
+    imports: [CommonModule, MatListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
+    templateUrl: './discussion-list.component.html',
+    styleUrls: ['./discussion-list.component.css']
 })
 export class DiscussionListComponent {
 

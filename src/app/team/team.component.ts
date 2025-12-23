@@ -8,7 +8,7 @@ import { MemberFormComponent } from '../member-form/member-form.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-import { NgIf, NgFor } from '@angular/common';
+
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,11 +19,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/search-discussions-dialog.component';
 
 @Component({
-  selector: 'app-team',
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
+    selector: 'app-team',
+    imports: [
     MatTableModule,
     MatCardModule,
     MatButtonModule,
@@ -32,9 +29,9 @@ import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/se
     MatInputModule,
     MemberDetailsComponent,
     MemberFormComponent
-  ],
-  templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css']
+],
+    templateUrl: './team.component.html',
+    styleUrls: ['./team.component.css']
 })
 export class TeamComponent implements OnInit, AfterViewInit {
 

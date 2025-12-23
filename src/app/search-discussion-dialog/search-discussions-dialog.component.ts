@@ -6,20 +6,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { NgFor, NgIf } from '@angular/common';
+
 
 @Component({
-  standalone: true,
-  templateUrl: './search-discussions-dialog.component.html',
-  styleUrls: ['./search-discussions-dialog.component.css'],
-  imports: [
+    templateUrl: './search-discussions-dialog.component.html',
+    styleUrls: ['./search-discussions-dialog.component.css'],
+    imports: [
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatListModule,
-    NgIf,
-    NgFor,
     MatDialogContent
 ]
 })

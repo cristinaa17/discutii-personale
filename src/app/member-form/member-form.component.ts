@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Member } from '../models/member';
-import { NgFor, NgIf } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -9,11 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-member-form',
-  standalone: true,
-  imports: [FormsModule, NgIf, NgFor, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule],
-  templateUrl: './member-form.component.html',
-  styleUrls: ['./member-form.component.css']
+    selector: 'app-member-form',
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule],
+    templateUrl: './member-form.component.html',
+    styleUrls: ['./member-form.component.css']
 })
 export class MemberFormComponent {
 
@@ -142,6 +141,7 @@ export class MemberFormComponent {
     parts[1].charAt(0).toUpperCase()
   );
 }
+
 
 
   removePhoto() {

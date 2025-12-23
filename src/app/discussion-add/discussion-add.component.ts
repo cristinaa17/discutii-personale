@@ -9,11 +9,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider'; 
 
 @Component({
-  selector: 'app-discussion-add',
-  standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
-  templateUrl: './discussion-add.component.html',
-  styleUrls: ['./discussion-add.component.css']
+    selector: 'app-discussion-add',
+    imports: [FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
+    templateUrl: './discussion-add.component.html',
+    styleUrls: ['./discussion-add.component.css']
 })
 
 export class DiscussionAddComponent {

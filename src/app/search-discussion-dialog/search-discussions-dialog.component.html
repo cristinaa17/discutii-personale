@@ -17,25 +17,27 @@
     Caută
   </button>
 
-  <div *ngIf="results.length === 0 && searched" class="empty">
-    Nu au fost găsite rezultate.
-  </div>
+  @if (results.length === 0 && searched) {
+    <div class="empty">
+      Nu au fost găsite rezultate.
+    </div>
+  }
 
-  <mat-list *ngIf="results.length > 0">
-    <mat-list-item
-      *ngFor="let r of results"
-      (click)="select(r)"
-      class="result-item">
-
-      <div mat-line>
-        <strong>{{ r.member.nume }}</strong>
-      </div>
-
-      <div mat-line class="preview">
-        {{ r.discussion.text }}
-      </div>
-
-    </mat-list-item>
-  </mat-list>
+  @if (results.length > 0) {
+    <mat-list>
+      @for (r of results; track r) {
+        <mat-list-item
+          (click)="select(r)"
+          class="result-item">
+          <div mat-line>
+            <strong>{{ r.member.nume }}</strong>
+          </div>
+          <div mat-line class="preview">
+            {{ r.discussion.text }}
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
 
 </mat-dialog-content>

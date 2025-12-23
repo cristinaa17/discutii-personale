@@ -1,6 +1,6 @@
 import { Component, Input, NgModule } from '@angular/core';
 import { Member } from '../models/member';
-import { NgIf } from '@angular/common';
+
 import { DiscussionAddComponent } from '../discussion-add/discussion-add.component';
 import { DiscussionListComponent } from '../discussion-list/discussion-list.component';
 import { TeamService } from '../team.service';
@@ -14,11 +14,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-member-details',
-  standalone: true,
-  imports: [NgIf, FormsModule,  DiscussionListComponent, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
-  templateUrl: './member-details.component.html',
-  styleUrl: './member-details.component.css'
+    selector: 'app-member-details',
+    imports: [FormsModule, DiscussionListComponent, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
+    templateUrl: './member-details.component.html',
+    styleUrl: './member-details.component.css'
 })
 export class MemberDetailsComponent {
   @Input() member!: Member;
