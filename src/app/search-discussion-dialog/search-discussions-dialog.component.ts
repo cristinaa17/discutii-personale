@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { MatIcon } from "@angular/material/icon";
 
 
 @Component({
@@ -17,7 +18,8 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatButtonModule,
     MatListModule,
-    MatDialogContent
+    MatDialogContent,
+    MatIcon
 ]
 })
 export class SearchDiscussionsDialogComponent {

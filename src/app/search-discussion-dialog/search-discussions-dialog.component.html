@@ -26,15 +26,14 @@
   @if (results.length > 0) {
     <mat-list>
       @for (r of results; track r) {
-        <mat-list-item
-          (click)="select(r)"
-          class="result-item">
-          <div mat-line>
+        <mat-list-item>
+        <div class="result-item" (click)="select(r)">
+          <mat-icon>chat</mat-icon>
+          <div>
             <strong>{{ r.member.nume }}</strong>
+            <div>{{ r.discussion.text }}</div>
           </div>
-          <div mat-line class="preview">
-            {{ r.discussion.text }}
-          </div>
+        </div>
         </mat-list-item>
       }
     </mat-list>
