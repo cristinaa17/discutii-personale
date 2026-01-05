@@ -15,6 +15,44 @@
 }
 
 .save-btn {
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
+}
+
+angular-editor {
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* TOOLBAR */
+.angular-editor-toolbar {
+  background-color: #f4f6f8 !important;
+  border: 1px solid #dcdcdc;
+}
+
+/* BUTOANE */
+.angular-editor-toolbar button {
+  background-color: transparent !important;
+  border: none;
+}
+
+/* ICONIȚELE (AICI ERA PROBLEMA) */
+.angular-editor-toolbar button i {
+  background-image: url('/assets/icons.svg') !important;
+  filter: brightness(0) saturate(100%) !important; /* 🔥 face iconițele NEGRE */
+}
+
+/* HOVER */
+.angular-editor-toolbar button:hover {
+  background-color: #e0e0e0 !important;
+}
+
+/* TEXTAREA */
+.angular-editor-textarea {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.angular-editor-toolbar button svg {
+  fill: #333 !important;
 }

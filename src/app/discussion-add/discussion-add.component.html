@@ -2,22 +2,18 @@
     
     <h3 class="section-title">Adaugă o discuție</h3>
 
-    <mat-form-field appearance="outline" class="full">
-    <mat-label>Scrie ce ai discutat…</mat-label>
-    <textarea
-      matInput
-      rows="4"
+    <angular-editor
       [(ngModel)]="text"
-      name="discussionText">
-    </textarea>
-    </mat-form-field>
+      [config]="editorConfig"
+      class="editor">
+    </angular-editor>
 
       <button 
         mat-raised-button
         color="primary"
         class="save-btn"
         (click)="submit()"
-        [disabled]="!text || text.trim().length < 2">
+        [disabled]="!text || text.replace(/<[^>]*>/g, '').trim().length < 2">
         Salvează discuția
       </button>
 </mat-card>

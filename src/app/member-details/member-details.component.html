@@ -30,28 +30,9 @@
 
   <h2 id="discussion-section" class="section-title">Discuții 1:1</h2>
 
-  <mat-card class="discussion-card">
-
-    <h3 class="small-title">Adaugă o discuție</h3>
-
-    <mat-form-field appearance="outline" class="full">
-      <textarea
-        matInput
-        rows="3"
-        placeholder="Scrie ce ai discutat..."
-        [(ngModel)]="text">
-      </textarea>
-    </mat-form-field>
-
-    <button
-      mat-raised-button
-      color="primary"
-      class="full-button"
-      (click)="submit()">
-      Salvează discuția
-    </button>
-
-  </mat-card>
+  <app-discussion-add
+    (add)="onDiscussionAdded($event)">
+  </app-discussion-add>
 
   <app-discussion-list
     [discussions]="member.discussions"

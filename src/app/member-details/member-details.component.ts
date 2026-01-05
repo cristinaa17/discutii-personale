@@ -15,28 +15,24 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-member-details',
-    imports: [FormsModule, DiscussionListComponent, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
+    standalone: true,
+    imports: [FormsModule, DiscussionListComponent, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule, DiscussionAddComponent],
     templateUrl: './member-details.component.html',
     styleUrl: './member-details.component.css'
 })
 export class MemberDetailsComponent {
   @Input() member!: Member;
 
-  text: string = '';
+  onDiscussionAdded(text: string) {
+  const newDiscussion = {
+    id: Date.now(),
+    text,
+    date: new Date()
+  };
 
-  submit() {
-    const value = this.text.trim();
-    if (!value) return;
+  this.member.discussions.unshift(newDiscussion);
+}
 
-    const newDiscussion = {
-      id: Date.now(),
-      text: value,
-      date: new Date()
-    };
-
-    this.member.discussions.push(newDiscussion);
-    this.text = ''; 
-  }
 
   get initials(): string {
   if (!this.member?.nume) return '';
