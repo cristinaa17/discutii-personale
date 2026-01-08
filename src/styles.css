@@ -22,33 +22,28 @@ angular-editor {
   --ae-text: #000000;
 }
 
-/* angular-editor toolbar */
 .angular-editor-toolbar {
   background: #fafafa;
   border: 1px solid #ddd;
   padding: 4px;
 }
 
-/* butoane */
 .angular-editor-toolbar button {
   background: transparent;
   border: none;
   margin: 0 2px;
 }
 
-/* iconițe (desenează iconițele SVG) */
 .angular-editor-toolbar button svg {
   width: 18px;
   height: 18px;
   fill: #333;
 }
 
-/* hover */
 .angular-editor-toolbar button:hover {
   background: rgba(0,0,0,0.05);
 }
 
-/* zona de text */
 .angular-editor-textarea {
   min-height: 180px;
   background: #fff;
