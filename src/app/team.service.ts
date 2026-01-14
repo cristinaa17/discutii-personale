@@ -1,47 +1,57 @@
 import { Injectable } from '@angular/core';
 import { Member } from './models/member';
 import { Discussion } from './models/discussion';
+import { HttpClient } from '@angular/common/http';
+import { MemberPayload } from './models/member-payload';
+import { DiscussionSearchResult } from './models/discussion-search-result';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
-  private members: Member[] = [];
-  private discussionId = 1;
+  private api = 'http://localhost:3000/api';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getMembers(): Member[] {
-    return this.members;
+  getMembers() {
+    return this.http.get<Member[]>(`${this.api}/members`);
   }
 
-  addMember(member: Member) {
-    this.members.push(member);
+  addMember(member: MemberPayload) {
+  return this.http.post('http://localhost:3000/api/members', member);
+}
+
+  updateMember(id: number, payload: any) {
+    return this.http.put(
+      `${this.api}/members/${id}`,
+      payload
+    );
   }
 
-  editMember(index: number, updated: Member) {
-    this.members[index] = updated;
+  deleteMember(id: number) {
+    return this.http.delete(`${this.api}/members/${id}`);
   }
 
-  deleteMember(index: number) {
-    this.members.splice(index, 1);
+  getDiscussions(memberId: number) {
+  return this.http.get<Discussion[]>(
+    `${this.api}/discussions/${memberId}`
+  );
+}
+
+  addDiscussion(memberId: number, text: string) {
+  return this.http.post<Discussion>(
+    `${this.api}/discussions`,
+    { memberId, text }
+  );
+}
+
+  searchDiscussions(query: string) {
+    return this.http.get<any[]>(
+      `${this.api}/discussions/search?q=${encodeURIComponent(query)}`
+    );
   }
 
-  addDiscussion(member: Member, text: string) {
-    const newDiscussion: Discussion = {
-      id: this.discussionId++,
-      text,
-      date: new Date()
-    };
-
-    member.discussions.push(newDiscussion);
-  }
-
-  deleteDiscussion(member: Member, discId: number) {
-    member.discussions = member.discussions.filter(d => d.id !== discId);
-  }
-
-  setPhoto(member: Member, url: string) {
-    member.photoUrl = url;
-  }
+  deleteDiscussion(id: number) {
+  return this.http.delete(`${this.api}/discussions/${id}`);
+}
 }

@@ -1,4 +1,4 @@
-@if (discussions.length > 0) {
+@if (discussions && discussions.length > 0) {
   <mat-card class="discussion-list-card">
     <h3 class="section-title">Discuții anterioare</h3>
     @for (d of discussions; track d) {

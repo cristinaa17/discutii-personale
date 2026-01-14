@@ -23,16 +23,41 @@ import { FormsModule } from '@angular/forms';
 export class MemberDetailsComponent {
   @Input() member!: Member;
 
+  constructor(private teamService: TeamService) {}
+
+  ngOnInit() {
+  if (!this.member.discussions) {
+    this.member.discussions = [];
+  }
+  this.teamService
+    .getDiscussions(this.member.id!)
+    .subscribe(discussions => {
+      this.member.discussions = discussions.map(d => ({
+        ...d,
+        date: new Date(d.date)
+      }));
+    });
+}
+
   onDiscussionAdded(text: string) {
-  const newDiscussion = {
+  const tempDiscussion = {
     id: Date.now(),
     text,
     date: new Date()
   };
 
-  this.member.discussions.unshift(newDiscussion);
-}
+  this.member.discussions.unshift(tempDiscussion);
 
+  this.teamService
+    .addDiscussion(this.member.id!, text)
+    .subscribe(saved => {
+
+      const index = this.member.discussions.indexOf(tempDiscussion);
+      this.member.discussions[index].id = saved.id;
+      this.member.discussions[index].date = new Date(saved.date);
+
+    });
+}
 
   get initials(): string {
   if (!this.member?.nume) return '';
@@ -50,5 +75,6 @@ export class MemberDetailsComponent {
 
   onDeleteDiscussion(id: number) {
      this.member.discussions = this.member.discussions.filter(d => d.id !== id);
+     this.teamService.deleteDiscussion(id).subscribe();
   }
 }

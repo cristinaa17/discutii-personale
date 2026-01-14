@@ -12,8 +12,18 @@
     </div>
   }
 
+  @if (showEditForm) {
+  <mat-card class="p-3 mb">
+    <app-member-form
+      [member]="editTarget"
+      (save)="onSaveEdit($event)"
+      (cancel)="onCancelEdit()">
+    </app-member-form>
+  </mat-card>
+}
+
   <!-- LISTA COLEGI -->
-  @if (!showAddForm) {
+  @if (!showAddForm && !showEditForm) {
     <div>
       <div class="team-header">
         <h2>Lista colegilor</h2>

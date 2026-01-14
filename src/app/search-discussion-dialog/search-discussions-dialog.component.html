@@ -23,20 +23,22 @@
     </div>
   }
 
-  @if (results.length > 0) {
-    <mat-list>
-      @for (r of results; track r) {
-        <mat-list-item>
-        <div class="result-item" (click)="select(r)">
-          <mat-icon>chat</mat-icon>
-          <div>
-            <strong>{{ r.member.nume }}</strong>
-            <div>{{ r.discussion.text }}</div>
+@if (results.length > 0) {
+  <div class="results-list">
+    @for (r of results; track r) {
+      <div class="result-item" (click)="select(r)">
+        <mat-icon class="result-icon">chat</mat-icon>
+
+        <div class="result-content">
+          <strong class="name">{{ r.member.nume }}</strong>
+          <div
+            class="result-text"
+            [innerHTML]="r.discussion.text">
           </div>
         </div>
-        </mat-list-item>
-      }
-    </mat-list>
-  }
+      </div>
+    }
+  </div>
+}
 
 </mat-dialog-content>

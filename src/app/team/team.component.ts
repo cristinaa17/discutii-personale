@@ -17,6 +17,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialog } from '@angular/material/dialog';
 import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/search-discussions-dialog.component';
+import { MemberPayload } from '../models/member-payload';
 
 @Component({
     selector: 'app-team',
@@ -59,9 +60,15 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   reloadMembers() {
-    this.members = this.teamService.getMembers();
-    this.dataSource.data = [...this.members];
-  }
+  this.teamService.getMembers().subscribe(members => {
+    this.members = members.map(m => ({
+      ...m,
+      discussions: [] // se încarcă separat
+    }));
+
+    this.dataSource.data = this.members;
+  });
+}
 
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
@@ -69,10 +76,40 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   addMember(member: Member) {
-    this.teamService.addMember(member);
+  const payload: MemberPayload = {
+    perNr: member.perNr,
+    nume: member.nume,
+    dataAngajarii: member.dataAngajarii,
+    email: member.email,
+    dataNasterii: member.dataNasterii,
+    gen: member.gen,
+    oras: member.oras,
+    departament: member.departament,
+    businessUnit: member.businessUnit,
+    norma: member.norma,
+    fte: member.fte,
+    formaColaborare: member.formaColaborare,
+    tipContract: member.tipContract,
+    functie: member.functie,
+    dreptConcediu: member.dreptConcediu,
+    hrManager: member.hrManager,
+    project: member.project,
+    projectStartDate: member.projectStartDate,
+    projectEndDate: member.projectEndDate,
+    client: member.client,
+    projectManager: member.projectManager,
+    german: member.german,
+    english: member.english,
+    gLevel: member.gLevel,
+    skills: member.skills,
+    photoUrl: member.photoUrl
+  };
+
+  this.teamService.addMember(payload).subscribe(() => {
     this.showAddForm = false;
     this.reloadMembers();
-  }
+  });
+}
 
   selectMember(member: Member) {
     if (this.showEditForm) return;
@@ -82,22 +119,21 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   onDeleteMember(member: Member, event: Event) {
-    event.stopPropagation();
+  event.stopPropagation();
 
-    if (!confirm("Sigur dorești să ștergi colegul?")) return;
+  if (!confirm("Sigur dorești să ștergi colegul?")) return;
 
-    const index = this.members.indexOf(member);
-    this.teamService.deleteMember(index);
-
+  this.teamService.deleteMember(member.id!).subscribe(() => {
     this.selectedMember = null;
     this.reloadMembers();
-  }
+  });
+}
 
   onEditMember(member: Member, event: Event) {
     event.stopPropagation();
     this.editTarget = { ...member };
-    this.selectedMember = member;
     this.showEditForm = true;
+    this.showAddForm = false;
   }
 
   openSearchDialog() {
@@ -106,30 +142,40 @@ export class TeamComponent implements OnInit, AfterViewInit {
     data: this.members
   });
 
-  dialogRef.afterClosed().subscribe((member: Member) => {
-    if (member) {
-      this.selectMember(member);
+  dialogRef.afterClosed().subscribe(result => {
+  if (!result) return;
 
-      setTimeout(() => {
-        const el = document.getElementById('discussion-section');
-        el?.scrollIntoView({ behavior: 'smooth' });
-      }, 200);
-    }
-  });
+  const member = this.members.find(
+    m => m.nume === result.member.nume
+  );
+
+  if (!member) return;
+
+  this.selectedMember = member;
+
+  setTimeout(() => {
+    const el = document.getElementById('discussion-section');
+    el?.scrollIntoView({ behavior: 'smooth' });
+  }, 200);
+});
 }
 
   onSaveEdit(updated: Member) {
-    Object.assign(this.selectedMember!, updated);
-    this.showEditForm = false;
-    this.editTarget = null;
-    this.selectedMember = null;
-    this.reloadMembers();
-  }
+    const { id, discussions, ...payload } = updated;
+
+    this.teamService.updateMember(id!, payload).subscribe(() => {
+      this.showEditForm = false;
+      this.editTarget = null;
+      this.selectedMember = null;
+
+      this.reloadMembers(); // 🔥 cheia
+  });
+}
+
 
   onCancelEdit() {
     this.showEditForm = false;
     this.editTarget = null;
-    this.selectedMember = null
   }
 
   onCancelAdd() {

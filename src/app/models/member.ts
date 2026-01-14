@@ -1,7 +1,7 @@
 import { Discussion } from './discussion';
 
 export interface Member {
-  
+  id?: number;
   perNr: number;           
   nume: string;           
   dataAngajarii: string; 

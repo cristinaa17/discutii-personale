@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from "@angular/material/icon";
+import { TeamService } from '../team.service';
+
 
 
 @Component({
@@ -30,25 +32,32 @@ export class SearchDiscussionsDialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<SearchDiscussionsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public members: Member[]
+    private teamService: TeamService,
+    @Inject(MAT_DIALOG_DATA) public members: Member[],
+    
   ) {}
 
   search() {
-    this.searched = true;
-    this.results = [];
+  this.searched = true;
 
-    const q = this.query.toLowerCase();
-
-    this.members.forEach(member => {
-      member.discussions?.forEach(discussion => {
-        if (discussion.text.toLowerCase().includes(q)) {
-          this.results.push({ member, discussion });
-        }
-      });
-    });
+  this.teamService.searchDiscussions(this.query)
+  .subscribe(results => {
+    this.results = results.map(r => ({
+  member: {
+    nume: r.nume
+  },
+  discussion: {
+    id: r.id,
+    text: r.text,
+    date: new Date(r.date)
   }
+}));
 
-  select(result: any) {
-    this.dialogRef.close(result.member);
+  });
+
+}
+
+  select(r: any) {
+    this.dialogRef.close(r);
   }
 }

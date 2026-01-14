@@ -37,8 +37,11 @@ export class DiscussionAddComponent {
 
 
   submit() {
-    if (!this.text.trim()) return;
-    this.add.emit(this.text.trim());
-    this.text = "";
+     const plainText = this.text.replace(/<[^>]*>/g, '').trim();
+
+  if (!plainText) return;
+
+  this.add.emit(this.text);
+  this.text = '';
   }
 }
