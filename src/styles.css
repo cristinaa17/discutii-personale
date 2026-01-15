@@ -49,3 +49,59 @@ angular-editor {
   background: #fff;
   color: #000;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600;700&family=Noto+Serif:wght@400;700&display=swap');
+
+:root {
+  --ntt-blue: #0072BC;
+  --ntt-blue-dark: #005B96;
+  --ntt-blue-light: #19A3FC;
+
+  --ntt-navy: #070F26;
+
+  --ntt-text: #2E404D;
+  --ntt-gray-50: #E8E8E8;
+
+  --ntt-success: #00CB5D;
+  --ntt-warning: #FFC400;
+  --ntt-danger: #E42600;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Noto Sans', Arial, sans-serif;
+  background-color: #F7F9FC;
+  color: var(--ntt-text);
+}
+
+h1 {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-weight: 700;
+}
+
+h2, h3, h4, h5 {
+  font-family: 'Noto Sans', Arial, sans-serif;
+  font-weight: 600;
+}
+
+.app-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+body {
+  background-color: #F7F9FC;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ntt-navy);
+  margin-bottom: 16px;
+}

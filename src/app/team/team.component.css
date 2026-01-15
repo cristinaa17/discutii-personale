@@ -1,20 +1,26 @@
 .team-wrapper {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
+  background: #f8fafc;
 }
 
 .team-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-.header-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.team-header h2 {
+  font-weight: 600;
+  color: #070F26; 
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #2E404D; 
 }
 
 .team-actions {
@@ -24,18 +30,13 @@
   flex-wrap: wrap;
 }
 
-.add-btn,
-.search-discussion-btn {
-  align-self: flex-end;
-}
-
 .add-btn mat-icon {
   margin-right: 6px;
 }
 
 .search-box {
-  width: 350px;
-  margin-bottom: 15px;
+  width: 340px;
+  margin-bottom: 16px;
 }
 
 .search-box.clickable {
@@ -50,6 +51,7 @@
   width: 100%;
   border-radius: 12px;
   overflow: hidden;
+  background: #ffffff;
 }
 
 .row-main {
@@ -58,11 +60,11 @@
 }
 
 .row-main:nth-of-type(even) {
-  background-color: #fafafa;
+  background-color: #f4f6f9;
 }
 
 .row-main td {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .row-main:nth-of-type(odd) {
@@ -70,12 +72,12 @@
 }
 
 .row-main:hover {
-  background-color: #eef3ff;
+  background-color: rgba(0, 114, 188, 0.06);
 }
 
 .row-main.selected-row {
-  background-color: #e8f0ff !important;
-  box-shadow: inset 4px 0 0 #3f51b5;
+  background-color: rgba(0, 114, 188, 0.06) !important;
+  box-shadow: inset 4px 0 0 #0072bc;
 }
 
 .row-details {
@@ -88,16 +90,16 @@
 }
 
 .expanded-details {
-  margin: 12px 24px 20px 24px;
+  margin: 16px 24px 24px;
   padding: 20px;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(7, 15, 38, 0.08);
 }
 
 .text-end button {
   margin-left: 6px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   min-height: 32px;
 }
 
@@ -107,16 +109,88 @@
 
 mat-card {
   border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(7, 15, 38, 0.08);
 }
+
+.ntt-btn-primary { 
+  background-color: #0072BC !important; 
+  color: #ffffff !important; 
+  border-radius: 999px; 
+  font-weight: 500; 
+  padding: 6px 18px; 
+  box-shadow: none !important; 
+} 
+
+.ntt-btn-primary:hover { 
+  background-color: #005B96 !important; 
+}
+
+.action-buttons {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.action-buttons button {
+  border-radius: 999px !important;
+  font-weight: 500;
+  padding: 4px 14px;
+  min-height: 32px;
+  box-shadow: none !important;
+}
+
+.action-buttons mat-icon {
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+.ntt-btn-edit {
+  color: #0072BC !important;
+  border-color: #0072BC !important;
+}
+
+.ntt-btn-edit mat-icon {
+  color: #0072BC;
+}
+
+.ntt-btn-edit:hover {
+  background-color: rgba(0, 114, 188, 0.08) !important;
+}
+
+.ntt-btn-delete {
+  color: #E42600 !important;
+  border-color: #E42600 !important;
+}
+
+.ntt-btn-delete mat-icon {
+  color: #E42600;
+}
+
+.ntt-btn-delete:hover {
+  background-color: rgba(228, 38, 0, 0.08) !important;
+}
+
+.ntt-btn-chat {
+  color: #005B96 !important; 
+  border-color: #005B96 !important;
+}
+
+.ntt-btn-chat mat-icon {
+  color: #005B96;
+}
+
+.ntt-btn-chat:hover {
+  background-color: rgba(0, 91, 150, 0.08) !important;
+}
+
 
 @media (max-width: 900px) {
   .team-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
   }
 
   .add-btn {
-    margin-top: 10px;
     width: 100%;
   }
 
