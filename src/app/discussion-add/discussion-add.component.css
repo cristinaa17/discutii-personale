@@ -1,37 +1,31 @@
 .discussion-add-card {
   padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 25px;
+  border-radius: 16px;
+  margin-bottom: 28px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(7, 15, 38, 0.06);
 }
 
 .section-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.full {
-  width: 100%;
-}
-
-.save-btn {
-  margin-top: 12px;
-  width: 100%;
+  margin-bottom: 12px;
+  color: #070f26;
 }
 
 angular-editor {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .angular-editor-toolbar {
-  background-color: #f4f6f8 !important;
-  border: 1px solid #dcdcdc;
+  background-color: #f8fafc !important;
+  border: 1px solid #e4e7eb;
+  border-radius: 8px 8px 0 0;
 }
 
 .angular-editor-toolbar button {
   background-color: transparent !important;
-  border: none;
 }
 
 .angular-editor-toolbar button i {
@@ -40,14 +34,24 @@ angular-editor {
 }
 
 .angular-editor-toolbar button:hover {
-  background-color: #e0e0e0 !important;
+  background-color: rgba(0, 114, 188, 0.08) !important;
 }
 
 .angular-editor-textarea {
-  color: #000 !important;
-  background-color: #fff !important;
+  border-radius: 0 0 8px 8px;
+  background-color: #ffffff !important;
+  color: #070F26 !important;
+  min-height: 110px;
+  font-size: 14px;
 }
 
 .angular-editor-toolbar button svg {
   fill: #333 !important;
+}
+
+.save-btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  font-weight: 500;
 }

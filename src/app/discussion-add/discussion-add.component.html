@@ -1,6 +1,6 @@
 <mat-card class="discussion-add-card">
     
-    <h3 class="section-title">Adaugă o discuție</h3>
+    <h4 class="section-title">Adaugă discuție</h4>
 
     <angular-editor
       [(ngModel)]="text"
@@ -9,11 +9,10 @@
     </angular-editor>
 
       <button 
-        mat-raised-button
-        color="primary"
-        class="save-btn"
+        mat-flat-button
+        class="ntt-btn-primary save-btn"
         (click)="submit()"
         [disabled]="!text || text.replace(/<[^>]*>/g, '').trim().length < 2">
-        Salvează discuția
+        Salvează
       </button>
 </mat-card>

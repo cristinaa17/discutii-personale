@@ -81,20 +81,20 @@
 }
 
 .row-details {
-  background: transparent;
+  background: #f8fafc;
 }
 
 .row-details td {
   padding: 0 !important;
-  border-bottom: none;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .expanded-details {
-  margin: 16px 24px 24px;
-  padding: 20px;
+  margin: 0x 24px 16px;
+  padding: 16px 20px;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(7, 15, 38, 0.08);
+  box-shadow: 0 2px 6px rgba(7, 15, 38, 0.06);
 }
 
 .text-end button {

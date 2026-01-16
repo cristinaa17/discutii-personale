@@ -2,7 +2,7 @@
   padding: 28px 32px 32px;
   border-radius: 22px;
   box-sizing: border-box;
-  background: #fafafa;
+  background: #f8fafc;
 }
 
 .dialog-header {
@@ -14,9 +14,9 @@
 
 .dialog-header h4 {
   margin: 0;
-  font-size: 26px;
+  font-size: 18px;
   font-weight: 600;
-  text-align: center;
+  color: #070F26; 
 }
 
 .full {
@@ -28,7 +28,7 @@ mat-form-field.full {
 }
 
 button.full {
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   height: 48px;
   border-radius: 24px;
   font-size: 16px;
@@ -42,24 +42,11 @@ button.full {
   font-size: 14px;
 }
 
-mat-list {
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: 12px;
-  max-height: 260px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-mat-list {
-  padding: 0;
-}
-
-mat-list-item {
-  padding: 0 !important;
-  margin-bottom: 10px;
-
-  height: auto !important;
-  align-items: flex-start !important;
-  overflow: visible !important;
 }
 
 .result-item {
@@ -72,59 +59,57 @@ mat-list-item {
 
   background: #ffffff;
   border-radius: 14px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e8e8e8;
 
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .result-item:hover {
-  background-color: #eef3ff;
-  border-color: #c7d7ff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 114, 188, 0.03); 
+  border-color: #0072BC;
 }
 
-.result-item:focus {
-  outline: none;
-  background-color: #e0ebff;
+.result-item + .result-item {
+  margin-top: 4px;
 }
 
-.result-item mat-icon {
+.result-item:focus-visible {
+  outline: 2px solid rgba(0, 114, 188, 0.4);
+  outline-offset: 2px;
+}
+
+.result-icon {
   font-size: 20px;
-  color: #3f51b5;
+  color: #0072BC; 
   margin-top: 2px;
   flex-shrink: 0;
 }
 
-.result-text {
+.result-content {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  width: 100%;
+}
+
+.result-text {
+  font-size: 13px;
+  color: #2E404D; 
+  line-height: 1.4;
 }
 
 .name {
-  display: block;
-
   font-size: 14px;
   font-weight: 600;
-  line-height: 1.4;
-
-  white-space: normal;
-  overflow: visible;
+  color: #070F26; 
   margin-bottom: 4px;
-}
-
-.result-text div,
-.result-text {
-  font-size: 13px;
-  color: #555;
   line-height: 1.4;
 }
 
 .result-text b,
 .result-text strong {
   font-weight: 600;
+  color: #0072BC;
 }
 
 .result-text i,
