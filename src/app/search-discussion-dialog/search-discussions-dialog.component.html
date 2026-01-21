@@ -6,16 +6,8 @@
 
   <mat-form-field appearance="outline" class="full">
     <mat-label>Caută text</mat-label>
-    <input matInput [(ngModel)]="query" />
+    <input matInput [(ngModel)]="query" (ngModelChange)="onQueryChange($event)" placeholder="Introdu minim 2 caractere"/>
   </mat-form-field>
-
-  <button
-    mat-flat-button
-    color="primary"
-    class="full"
-    (click)="search()">
-    Caută
-  </button>
 
   @if (results.length === 0 && searched) {
     <div class="empty">

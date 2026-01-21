@@ -1,16 +1,21 @@
 @if (discussions && discussions.length > 0) {
   <mat-card class="discussion-list-card">
-    <h3 class="section-title">Discuții anterioare</h3>
+    <h4 class="section-title">Discuții anterioare</h4>
+
     @for (d of discussions; track d) {
       <div class="discussion-item">
-        <div class="left">
-          <div class="date">{{ d.date | date:'dd.MM.yyyy HH:mm' }}</div>
-          <div class="text" [innerHTML]="d.text"></div>
+
+        <div class="discussion-header">
+          <span class="date">
+            {{ d.date | date:'dd.MM.yyyy HH:mm' }}
+          </span>
+          <button mat-icon-button class="delete-button" (click)="delete.emit(d.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
-        <button mat-icon-button color="warn" class="delete-button" (click)="delete.emit(d.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+
+         <div class="text" [innerHTML]="d.text"></div>
+      </div> 
     }
   </mat-card>
 }

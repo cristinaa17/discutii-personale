@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatIcon } from "@angular/material/icon";
 import { TeamService } from '../team.service';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 
 
@@ -29,34 +31,54 @@ export class SearchDiscussionsDialogComponent {
   query = '';
   results: any[] = [];
   searched = false;
+  private queryChanged = new Subject<string>();
+
 
   constructor(
     private dialogRef: MatDialogRef<SearchDiscussionsDialogComponent>,
     private teamService: TeamService,
     @Inject(MAT_DIALOG_DATA) public members: Member[],
     
-  ) {}
-
-  search() {
-  this.searched = true;
-
-  this.teamService.searchDiscussions(this.query)
-  .subscribe(results => {
-    this.results = results.map(r => ({
-  member: {
-    nume: r.nume
-  },
-  discussion: {
-    id: r.id,
-    text: r.text,
-    date: new Date(r.date)
+  ) {
+    
+  this.queryChanged
+    .pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    )
+    .subscribe(value => {
+      this.performSearch(value);
+    });
   }
-}));
 
-  });
-
+  onQueryChange(value: string) {
+  this.queryChanged.next(value);
 }
 
+private performSearch(query: string) {
+  this.query = query;
+
+  if (!query || query.trim().length < 2) {
+    this.results = [];
+    this.searched = false;
+    return;
+  }
+
+  this.searched = true;
+
+  this.teamService.searchDiscussions(query).subscribe(results => {
+    this.results = results.map(r => ({
+      member: {
+        nume: r.nume
+      },
+      discussion: {
+        id: r.id,
+        text: r.text,
+        date: new Date(r.date)
+      }
+    }));
+  });
+}
   select(r: any) {
     this.dialogRef.close(r);
   }

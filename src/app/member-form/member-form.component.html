@@ -2,6 +2,9 @@
 
   <!-- TITLU -->
   <h3>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h3>
+    <p class="form-subtitle">
+      Completează datele colegului
+    </p>
 
   <!-- FOTO -->
   <div class="photo-section">
@@ -42,8 +45,7 @@
 
       @if (previewUrl) {
         <button mat-stroked-button
-          color="warn"
-          class="remove-photo-btn"
+          class="ntt-btn-secondary remove-photo-btn"
           (click)="removePhoto()">
           <mat-icon>delete</mat-icon>
           Șterge poza
@@ -238,11 +240,11 @@
     </form>
 
     <div class="buttons">
-      <button mat-flat-button color="primary" (click)="submit()">
+      <button mat-raised-button class="ntt-btn-primary" (click)="submit()">
         {{ isEditMode ? 'Salvează' : 'Adaugă coleg' }}
       </button>
 
-      <button mat-stroked-button color="warn" (click)="cancel.emit()">
+      <button mat-stroked-button class="ntt-btn-secondary" (click)="cancel.emit()">
         Renunță
       </button>
     </div>

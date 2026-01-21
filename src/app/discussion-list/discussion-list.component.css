@@ -1,54 +1,85 @@
 .discussion-list-card {
   padding: 20px;
-  border-radius: 12px;
-  background: #fff;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(7, 15, 38, 0.06);
 }
 
 .section-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  color: #070f26;
 }
 
 .discussion-item {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  margin-bottom: 12px;
+  transition: background-color 0.15s ease;
+}
+
+.discussion-item:hover {
+  background: rgba(0, 114, 188, 0.04);
+}
+
+.discussion-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.discussion-item:last-child {
-  border-bottom: none;
-}
-
-.left {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  margin-bottom: 6px;
 }
 
 .date {
-  font-size: 13px;
-  color: #777;
-}
-
-.text {
-  font-size: 15px;
-  color: #222;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0072bc;
 }
 
 .delete-button {
-  margin-left: 16px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.discussion-item:hover .delete-button {
+  opacity: 1;
+}
+
+.delete-button mat-icon {
+  font-size: 18px;
+  color: #949494; 
+}
+
+.delete-button:hover mat-icon {
+  color: #E42600;
 }
 
 .no-discussions {
+  font-size: 14px;
+  color: #949494;
   font-style: italic;
-  color: #666;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .text {
   color: #000;
   font-size: 14px;
+}
+
+.text {
+  font-size: 14px;
+  color: #2E404D; 
+  line-height: 1.5;
+}
+
+.text b,
+.text strong {
+  font-weight: 600;
+  color: #070F26;
+}
+
+.text i,
+.text em {
+  font-style: italic;
 }
