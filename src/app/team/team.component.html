@@ -30,7 +30,9 @@
           <h2>Lista colegilor</h2>
           <p class="subtitle">Gestionare colegi și discuții 1:1</p>
         </div>
+        
         <!-- CĂUTARE DISCUȚII -->
+        <div class="team-header-actions">
           <button
             mat-raised-button
             class="ntt-btn-primary add-btn"
@@ -38,6 +40,37 @@
             <mat-icon>person_add</mat-icon>
             Adaugă coleg
           </button>
+
+           <button
+            mat-stroked-button
+            class="ntt-btn-secondary import-btn"
+            (click)="fileInput.click()">
+            <mat-icon>upload_file</mat-icon>
+            Import colegi
+          </button>
+
+          <input
+          type="file"
+          #fileInput
+          hidden
+          accept=".xlsx,.xls"
+          (change)="onExcelSelected($event)">
+
+          <button
+          mat-stroked-button
+          class="ntt-btn-secondary import-btn"
+          (click)="discussionInput.click()">
+          <mat-icon>forum</mat-icon>
+          Import discuții
+        </button>
+
+        <input
+          type="file"
+          #discussionInput
+          hidden
+          accept=".xlsx,.xls"
+          (change)="onDiscussionsExcelSelected($event)">
+        </div> 
       </div>
       <div class="team-actions">
           <!-- Căutare coleg -->

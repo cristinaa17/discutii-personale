@@ -25,10 +25,11 @@ export class MemberDetailsComponent {
 
   constructor(private teamService: TeamService) {}
 
-  ngOnInit() {
-  if (!this.member.discussions) {
-    this.member.discussions = [];
-  }
+ ngOnInit() {
+  this.loadDiscussions();
+}
+
+loadDiscussions() {
   this.teamService
     .getDiscussions(this.member.id!)
     .subscribe(discussions => {

@@ -17,6 +17,17 @@
   color: #070F26; 
 }
 
+.team-header-actions {
+  display: flex;
+  flex-direction: column;   
+  gap: 10px;
+  align-items: stretch;
+}
+
+.team-header-actions button {
+  width: 175px;  
+} 
+
 .subtitle {
   margin-top: 4px;
   font-size: 14px;

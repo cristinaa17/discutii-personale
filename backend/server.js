@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');              
 const db = require('./db');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 
 app.get('/api/discussions/search', (req, res) => {
   const q = `%${req.query.q || ''}%`;
@@ -171,13 +173,14 @@ app.put('/api/members/:id', (req, res) => {
       m.photoUrl,
       id
     ],
-    function (err) {
+    err => {
       if (err) return res.status(500).json(err);
       res.sendStatus(204);
     }
   );
 });
 
-app.listen(3000, () => {
-  console.log('Backend pornit pe http://localhost:3000');
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server pornit pe http://localhost:${PORT}`);
 });

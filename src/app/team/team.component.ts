@@ -7,8 +7,7 @@ import { MemberFormComponent } from '../member-form/member-form.component';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-
-
+import * as XLSX from 'xlsx';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +17,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDialog } from '@angular/material/dialog';
 import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/search-discussions-dialog.component';
 import { MemberPayload } from '../models/member-payload';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-team',
@@ -29,7 +29,7 @@ import { MemberPayload } from '../models/member-payload';
     MatFormFieldModule,
     MatInputModule,
     MemberDetailsComponent,
-    MemberFormComponent
+    MemberFormComponent,
 ],
     templateUrl: './team.component.html',
     styleUrls: ['./team.component.css']
@@ -63,7 +63,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   this.teamService.getMembers().subscribe(members => {
     this.members = members.map(m => ({
       ...m,
-      discussions: [] // se încarcă separat
+      discussions: [] 
     }));
 
     this.dataSource.data = this.members;
@@ -158,6 +158,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
     el?.scrollIntoView({ behavior: 'smooth' });
   }, 200);
 });
+
 }
 
   onSaveEdit(updated: Member) {
@@ -168,10 +169,9 @@ export class TeamComponent implements OnInit, AfterViewInit {
       this.editTarget = null;
       this.selectedMember = null;
 
-      this.reloadMembers(); // 🔥 cheia
+      this.reloadMembers(); 
   });
 }
-
 
   onCancelEdit() {
     this.showEditForm = false;
@@ -190,5 +190,164 @@ export class TeamComponent implements OnInit, AfterViewInit {
       const el = document.getElementById('discussion-section');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }, 200);
+  }
+
+  handleImported(members: Member[]) {
+  members.forEach(m => this.addMember(m));
+}
+
+  onExcelSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    this.importFromExcel(file);
+  }
+
+  importFromExcel(file: File) {
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows: any[] = XLSX.utils.sheet_to_json(sheet);
+
+      let added = 0;
+      let skipped = 0;
+
+      rows.forEach(row => {
+        if (!row['PerNr'] || !row['Nume']) {
+          skipped++;
+          return;
+        }
+
+        const perNr = row['PerNr'].toString().trim();
+
+        const exists = this.members.some(m => m.perNr.toString() === perNr);
+        if (exists) {
+          skipped++;
+          return;
+        }
+
+        const member: Member = {
+          perNr: Number(perNr),
+          nume: row['Nume'],
+          dataAngajarii: row['DataAngajarii'] || '',
+          email: row['Email'] || '',
+          dataNasterii: row['DataNasterii'] || '',
+          gen: row['Gen'] || '',
+          oras: row['Oras'] || '',
+          departament: row['Departament'] || '',
+          businessUnit: row['BusinessUnit'] || '',
+          norma: Number(row['Norma']) || 0,
+          fte: Number(row['FTE']) || 0,
+          formaColaborare: row['FormaColaborare'] || '',
+          tipContract: row['TipContract'] || '',
+          functie: row['Functie'] || '',
+          dreptConcediu: Number(row['DreptConcediu']) || 0,
+          hrManager: row['HRManager'] || '',
+          project: row['Project'] || '',
+          projectStartDate: row['ProjectStartDate'] || '',
+          projectEndDate: row['ProjectEndDate'] || '',
+          client: row['Client'] || '',
+          projectManager: row['ProjectManager'] || '',
+          german: row['German'] || '',
+          english: row['English'] || '',
+          gLevel: row['G-Level'] || '',
+          skills: row['Skills'] || '',
+          photoUrl: '',
+          discussions: []
+        };
+
+        this.addMember(member);
+        added++;
+      });
+
+      this.dataSource.data = [...this.members];
+
+      alert(`Import angajați finalizat.\nAdăugați: ${added}\nIgnorați: ${skipped}`);
+    };
+
+    reader.readAsBinaryString(file);
+  }
+
+  private normalizeText(text: string): string {
+    return text
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  importDiscussionsFromExcel(file: File) {
+    const reader = new FileReader();
+
+    reader.onload = async (e: any) => {
+      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows: any[] = XLSX.utils.sheet_to_json(sheet);
+
+      let added = 0;
+      let skipped = 0;
+
+      for (const row of rows) {
+        const perNrRaw = row['PerNr'];
+        if (!perNrRaw) { skipped++; continue; }
+
+        const perNr = perNrRaw.toString().trim();
+        const member = this.members.find(m => m.perNr.toString() === perNr);
+        if (!member) { skipped++; continue; }
+
+            const backendDiscussions = await firstValueFrom(
+              this.teamService.getDiscussions(member.id!)
+            );
+
+            const existingSet = new Set(
+              backendDiscussions.map(d => this.normalizeText(d.text))
+            );
+
+        for (let i = 1; i <= 10; i++) {
+          const text = row[`Discutie${i}`];
+          if (!text || text.toString().trim() === '') continue;
+
+          const cleanText = text.toString().trim();
+          const normalized = this.normalizeText(cleanText);
+
+          if (existingSet.has(normalized)) {
+            skipped++;
+            continue;
+          }
+
+          await this.teamService
+            .addDiscussion(member.id!, cleanText)
+            .toPromise();
+
+          existingSet.add(normalized);
+          added++;
+        }
+      }
+
+      alert(`Import discuții finalizat.\nAdăugate: ${added}\nIgnorate: ${skipped}`);
+    };
+
+    reader.readAsBinaryString(file);
+  }
+
+
+  reloadMemberDiscussions(member: Member) {
+    this.teamService.getDiscussions(member.id!).subscribe(discussions => {
+      member.discussions = discussions.map(d => ({
+        ...d,
+        date: new Date(d.date)
+      }));
+    });
+  }
+
+
+  onDiscussionsExcelSelected(event: any) {
+    const file = event.target.files[0];
+    console.log('Fisier selectat:', file);
+    if (!file) return;
+
+    this.importDiscussionsFromExcel(file);
   }
 }
