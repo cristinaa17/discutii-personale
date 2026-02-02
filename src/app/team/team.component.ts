@@ -42,6 +42,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   displayedColumns = ['perNr', 'nume', 'email', 'actions'];
 
   selectedMember: Member | null = null;
+  selectedDiscussionId: number | null = null;
 
   showAddForm = false;
   showEditForm = false;
@@ -152,6 +153,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   if (!member) return;
 
   this.selectedMember = member;
+  this.selectedDiscussionId = result.discussion.id;
 
   setTimeout(() => {
     const el = document.getElementById('discussion-section');

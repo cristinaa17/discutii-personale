@@ -117,6 +117,13 @@ button.full {
   font-style: italic;
 }
 
+:host ::ng-deep .highlight {
+  background-color: yellow;
+  font-weight: bold;
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+
 mat-dialog-content {
   max-height: 60vh;
   overflow-y: auto;

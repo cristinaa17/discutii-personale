@@ -3,7 +3,7 @@
     <h4 class="section-title">Discuții anterioare</h4>
 
     @for (d of discussions; track d) {
-      <div class="discussion-item">
+      <div class="discussion-item" [attr.id]="'discussion-' + d.id">
 
         <div class="discussion-header">
           <span class="date">

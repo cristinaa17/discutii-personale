@@ -25,7 +25,7 @@
           <strong class="name">{{ r.member.nume }}</strong>
           <div
             class="result-text"
-            [innerHTML]="r.discussion.text">
+            [innerHTML]="highlight(r.discussion.text, query)">
           </div>
         </div>
       </div>

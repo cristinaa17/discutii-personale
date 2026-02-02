@@ -79,6 +79,16 @@ private performSearch(query: string) {
     }));
   });
 }
+
+highlight(text: string, search: string): string {
+  if (!search) return text;
+
+  const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'gi');
+
+  return text.replace(regex, `<span class="highlight">$1</span>`);
+}
+
   select(r: any) {
     this.dialogRef.close(r);
   }

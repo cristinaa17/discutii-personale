@@ -1,4 +1,4 @@
-import { Component, Input, NgModule } from '@angular/core';
+import { Component, Input, NgModule, OnChanges, SimpleChanges } from '@angular/core';
 import { Member } from '../models/member';
 
 import { DiscussionAddComponent } from '../discussion-add/discussion-add.component';
@@ -20,13 +20,25 @@ import { FormsModule } from '@angular/forms';
     templateUrl: './member-details.component.html',
     styleUrl: './member-details.component.css'
 })
-export class MemberDetailsComponent {
+export class MemberDetailsComponent implements OnChanges{
   @Input() member!: Member;
+  @Input() scrollToDiscussionId: number | null = null;
 
   constructor(private teamService: TeamService) {}
 
  ngOnInit() {
   this.loadDiscussions();
+}
+
+ngOnChanges(changes: SimpleChanges) {
+  if (changes['scrollToDiscussionId'] && this.scrollToDiscussionId) {
+    setTimeout(() => {
+      const el = document.getElementById(
+        'discussion-' + this.scrollToDiscussionId
+      );
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  }
 }
 
 loadDiscussions() {
@@ -37,6 +49,14 @@ loadDiscussions() {
         ...d,
         date: new Date(d.date)
       }));
+       if (this.scrollToDiscussionId) {
+        setTimeout(() => {
+          const el = document.getElementById(
+            'discussion-' + this.scrollToDiscussionId
+          );
+          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
     });
 }
 
