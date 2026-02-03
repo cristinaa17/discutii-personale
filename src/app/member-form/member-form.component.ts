@@ -142,15 +142,17 @@ export class MemberFormComponent {
   );
 }
 
-
-
   removePhoto() {
     this.previewUrl = null;
     this.form.photoUrl = '';
   }
 
-
   submit() {
+    if (!this.form.perNr) {
+    alert("Te rog să completezi PerNr.");
+    return;
+  }
+  
     if (!this.form.nume) {
     alert("Te rog să completezi numele.");
     return;

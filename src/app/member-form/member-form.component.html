@@ -1,14 +1,10 @@
 <div class="material-form-container">
 
-  <!-- TITLU -->
   <h3>{{ isEditMode ? 'Editează colegul' : 'Adaugă coleg nou' }}</h3>
-    <p class="form-subtitle">
-      Completează datele colegului
-    </p>
+  <p class="form-subtitle">Completează datele colegului</p>
 
   <!-- FOTO -->
   <div class="photo-section">
-
     <div class="photo-dropzone"
       [class.drag-over]="isDragOver"
       (dragover)="onDragOver($event)"
@@ -17,235 +13,147 @@
       (click)="triggerPhotoUpload()">
 
       @if (previewUrl) {
-        <img
-          [src]="previewUrl"
-          class="photo-preview" />
+        <img [src]="previewUrl" class="photo-preview" />
       } @else {
-        <!-- INIȚIALE -->
         @if (initials) {
-          <div
-            class="photo-initials">
-            {{ initials }}
-          </div>
+          <div class="photo-initials">{{ initials }}</div>
         } @else {
           <mat-icon class="photo-icon">cloud_upload</mat-icon>
           <span class="photo-text">Drag & Drop poză</span>
           <span class="photo-subtext">sau click pentru upload</span>
         }
-        <!-- ICON + TEXT -->
       }
 
-      <input
-        type="file"
-        id="photoUploadInput"
-        hidden
-        accept="image/*"
-        (change)="onPhotoSelected($event)">
-      </div>
-
-      @if (previewUrl) {
-        <button mat-stroked-button
-          class="ntt-btn-secondary remove-photo-btn"
-          (click)="removePhoto()">
-          <mat-icon>delete</mat-icon>
-          Șterge poza
-        </button>
-      }
-
+      <input type="file" hidden accept="image/*" (change)="onPhotoSelected($event)">
     </div>
 
-
-    <form class="grid">
-
-      <!-- PerNR -->
-      <mat-form-field appearance="outline">
-        <mat-label>PerNR</mat-label>
-        <input matInput type="number" [(ngModel)]="form.perNr" name="pernr" />
-      </mat-form-field>
-
-      <!-- Nume -->
-      <mat-form-field appearance="outline">
-        <mat-label>Nume</mat-label>
-        <input matInput [(ngModel)]="form.nume" name="nume" required #numeInput="ngModel"/>
-
-        @if (numeInput.invalid && numeInput.touched) {
-          <mat-error>
-            Numele este obligatoriu.
-          </mat-error>
-        }
-      </mat-form-field>
-
-      <!-- Email -->
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" [(ngModel)]="form.email" name="email" email #emailInput="ngModel"/>
-
-        @if (emailInput.invalid && emailInput.touched) {
-          <mat-error>
-            Emailul este invalid.
-          </mat-error>
-        }
-      </mat-form-field>
-
-      <!-- Data angajării -->
-      <mat-form-field appearance="outline">
-        <mat-label>Data angajării</mat-label>
-        <input matInput type="date" [(ngModel)]="form.dataAngajarii" name="ang" />
-      </mat-form-field>
-
-      <!-- Data nașterii -->
-      <mat-form-field appearance="outline">
-        <mat-label>Data nașterii</mat-label>
-        <input matInput type="date" [(ngModel)]="form.dataNasterii" name="nastere" />
-      </mat-form-field>
-
-      <!-- Gen -->
-      <mat-form-field appearance="outline">
-        <mat-label>Gen</mat-label>
-        <input matInput [(ngModel)]="form.gen" name="gen" />
-      </mat-form-field>
-
-      <!-- Oraș -->
-      <mat-form-field appearance="outline">
-        <mat-label>Oraș</mat-label>
-        <input matInput [(ngModel)]="form.oras" name="oras" />
-      </mat-form-field>
-
-      <!-- Departament -->
-      <mat-form-field appearance="outline">
-        <mat-label>Departament</mat-label>
-        <input matInput [(ngModel)]="form.departament" name="departament" />
-      </mat-form-field>
-
-      <!-- Business Unit -->
-      <mat-form-field appearance="outline">
-        <mat-label>Business Unit</mat-label>
-        <input matInput [(ngModel)]="form.businessUnit" name="bu" />
-      </mat-form-field>
-
-      <!-- Normă -->
-      <mat-form-field appearance="outline">
-        <mat-label>Normă</mat-label>
-        <input matInput type="number" [(ngModel)]="form.norma" name="norma" />
-      </mat-form-field>
-
-      <!-- FTE -->
-      <mat-form-field appearance="outline">
-        <mat-label>FTE</mat-label>
-        <input matInput type="number" [(ngModel)]="form.fte" name="fte" />
-      </mat-form-field>
-
-      <!-- Forma colaborare -->
-      <mat-form-field appearance="outline">
-        <mat-label>Forma Colaborare</mat-label>
-        <input matInput [(ngModel)]="form.formaColaborare" name="forma" />
-      </mat-form-field>
-
-      <!-- Tip contract -->
-      <mat-form-field appearance="outline">
-        <mat-label>Tip Contract</mat-label>
-        <input matInput [(ngModel)]="form.tipContract" name="contract" />
-      </mat-form-field>
-
-      <!-- Funcție -->
-      <mat-form-field appearance="outline">
-        <mat-label>Funcție</mat-label>
-        <input matInput [(ngModel)]="form.functie" name="functie" />
-      </mat-form-field>
-
-      <!-- Drept concediu -->
-      <mat-form-field appearance="outline">
-        <mat-label>Drept concediu</mat-label>
-        <input matInput type="number" [(ngModel)]="form.dreptConcediu" name="dc" />
-      </mat-form-field>
-
-      <!-- HR Manager -->
-      <mat-form-field appearance="outline">
-        <mat-label>HR Manager</mat-label>
-        <input matInput [(ngModel)]="form.hrManager" name="hr" />
-      </mat-form-field>
-
-      <!-- Project -->
-      <mat-form-field appearance="outline">
-        <mat-label>Project</mat-label>
-        <input matInput [(ngModel)]="form.project" name="project" />
-      </mat-form-field>
-
-      <!-- Project Start -->
-      <mat-form-field appearance="outline">
-        <mat-label>Project Start Date</mat-label>
-        <input matInput type="date" [(ngModel)]="form.projectStartDate" name="psd" />
-      </mat-form-field>
-
-      <!-- Project End -->
-      <mat-form-field appearance="outline">
-        <mat-label>Project End Date</mat-label>
-        <input matInput type="date" [(ngModel)]="form.projectEndDate" name="ped" />
-      </mat-form-field>
-
-      <!-- Client -->
-      <mat-form-field appearance="outline">
-        <mat-label>Client</mat-label>
-        <input matInput [(ngModel)]="form.client" name="client" />
-      </mat-form-field>
-
-      <!-- Project Manager -->
-      <mat-form-field appearance="outline">
-        <mat-label>Project Manager</mat-label>
-        <input matInput [(ngModel)]="form.projectManager" name="pm" />
-      </mat-form-field>
-
-      <!-- Germana -->
-      <mat-form-field appearance="outline">
-        <mat-label>Germană</mat-label>
-        <mat-select [(ngModel)]="form.german" name="german">
-          @for (level of germanLevels; track level) {
-            <mat-option [value]="level">
-              {{ level }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <!-- Engleză -->
-      <mat-form-field appearance="outline">
-        <mat-label>Engleză</mat-label>
-        <mat-select [(ngModel)]="form.english" name="english">
-          @for (level of englishLevels; track level) {
-            <mat-option [value]="level">
-              {{ level }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <!-- G-Level -->
-      <mat-form-field appearance="outline">
-        <mat-label>G-Level</mat-label>
-        <mat-select [(ngModel)]="form.gLevel" name="glevel">
-          @for (level of glevels; track level) {
-            <mat-option [value]="level">
-              {{ level }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <!-- Skills -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Skills</mat-label>
-        <input matInput [(ngModel)]="form.skills" name="skills" />
-      </mat-form-field>
-
-    </form>
-
-    <div class="buttons">
-      <button mat-raised-button class="ntt-btn-primary" (click)="submit()">
-        {{ isEditMode ? 'Salvează' : 'Adaugă coleg' }}
+    @if (previewUrl) {
+      <button mat-stroked-button class="ntt-btn-secondary remove-photo-btn"
+        (click)="removePhoto()">
+        <mat-icon>delete</mat-icon>
+        Șterge poza
       </button>
-
-      <button mat-stroked-button class="ntt-btn-secondary" (click)="cancel.emit()">
-        Renunță
-      </button>
-    </div>
+    }
   </div>
+
+  <form class="grid">
+
+    <!-- INFORMAȚII PERSONALE -->
+    <div class="section-title">Informații personale</div>
+    <div class="section-separator"></div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>PerNR</mat-label>
+      <input matInput type="number" [(ngModel)]="form.perNr" name="pernr" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nume</mat-label>
+      <input matInput [(ngModel)]="form.nume" name="nume" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="form.email" name="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data nașterii</mat-label>
+      <input matInput type="date" [(ngModel)]="form.dataNasterii" name="dn" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Gen</mat-label>
+      <input matInput [(ngModel)]="form.gen" name="gen" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Oraș</mat-label>
+      <input matInput [(ngModel)]="form.oras" name="oras" />
+    </mat-form-field>
+
+    <!-- DATE CONTRACTUALE -->
+    <div class="section-title">Date contractuale</div>
+    <div class="section-separator"></div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data angajării</mat-label>
+      <input matInput type="date" [(ngModel)]="form.dataAngajarii" name="da" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Normă</mat-label>
+      <input matInput type="number" [(ngModel)]="form.norma" name="norma" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>FTE</mat-label>
+      <input matInput type="number" [(ngModel)]="form.fte" name="fte" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Forma colaborare</mat-label>
+      <input matInput [(ngModel)]="form.formaColaborare" name="fc" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tip contract</mat-label>
+      <input matInput [(ngModel)]="form.tipContract" name="tc" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Funcție</mat-label>
+      <input matInput [(ngModel)]="form.functie" name="functie" />
+    </mat-form-field>
+
+    <!-- INFORMAȚII PROIECT -->
+    <div class="section-title">Informații proiect</div>
+    <div class="section-separator"></div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Project</mat-label>
+      <input matInput [(ngModel)]="form.project" name="project" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Project Start</mat-label>
+      <input matInput type="date" [(ngModel)]="form.projectStartDate" name="ps" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Project End</mat-label>
+      <input matInput type="date" [(ngModel)]="form.projectEndDate" name="pe" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Client</mat-label>
+      <input matInput [(ngModel)]="form.client" name="client" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Project Manager</mat-label>
+      <input matInput [(ngModel)]="form.projectManager" name="pm" />
+    </mat-form-field>
+
+    <!-- SKILLS -->
+    <div class="section-title">Skills</div>
+    <div class="section-separator"></div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Skills</mat-label>
+      <input matInput [(ngModel)]="form.skills" name="skills" />
+    </mat-form-field>
+
+  </form>
+
+  <div class="buttons">
+    <button mat-raised-button class="ntt-btn-primary" (click)="submit()">
+      {{ isEditMode ? 'Salvează' : 'Adaugă coleg' }}
+    </button>
+
+    <button mat-stroked-button class="ntt-btn-secondary" (click)="cancel.emit()">
+      Renunță
+    </button>
+  </div>
+
+</div>
