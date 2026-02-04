@@ -36,7 +36,8 @@
 
   <app-discussion-list
     [discussions]="member.discussions"
-    (delete)="onDeleteDiscussion($event)">
+    (delete)="onDeleteDiscussion($event)"
+    (update)="onUpdateDiscussion($event)">
   </app-discussion-list>
 
 </mat-card>

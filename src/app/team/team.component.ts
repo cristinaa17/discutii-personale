@@ -43,6 +43,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   selectedMember: Member | null = null;
   selectedDiscussionId: number | null = null;
+  scrollToDiscussionId: number | null = null;
 
   showAddForm = false;
   showEditForm = false;
@@ -138,29 +139,27 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   openSearchDialog() {
-  const dialogRef = this.dialog.open(SearchDiscussionsDialogComponent, {
-    width: '500px',
-    data: this.members
+   const dialogRef = this.dialog.open(SearchDiscussionsDialogComponent, {
+    width: '500px'
   });
 
   dialogRef.afterClosed().subscribe(result => {
-  if (!result) return;
+    if (!result) return;
 
-  const member = this.members.find(
-    m => m.nume === result.member.nume
-  );
+    const member = this.members.find(
+      m => m.id === result.memberId   
+    );
+    
+    if (!member) return;
 
-  if (!member) return;
+    this.selectedMember = null;
+    this.scrollToDiscussionId = null;
 
-  this.selectedMember = member;
-  this.selectedDiscussionId = result.discussion.id;
-
-  setTimeout(() => {
-    const el = document.getElementById('discussion-section');
-    el?.scrollIntoView({ behavior: 'smooth' });
-  }, 200);
-});
-
+    setTimeout(() => {
+      this.selectedMember = member;
+      this.scrollToDiscussionId = result.discussion.id;
+    });
+  });
 }
 
   onSaveEdit(updated: Member) {

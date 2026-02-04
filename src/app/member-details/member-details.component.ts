@@ -49,34 +49,24 @@ loadDiscussions() {
         ...d,
         date: new Date(d.date)
       }));
-       if (this.scrollToDiscussionId) {
+
+      if (this.scrollToDiscussionId) {
         setTimeout(() => {
           const el = document.getElementById(
             'discussion-' + this.scrollToDiscussionId
           );
           el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
+          this.scrollToDiscussionId = null;
+        }, 100);
       }
     });
 }
 
-  onDiscussionAdded(text: string) {
-  const tempDiscussion = {
-    id: Date.now(),
-    text,
-    date: new Date()
-  };
-
-  this.member.discussions.unshift(tempDiscussion);
-
+ onDiscussionAdded(text: string) {
   this.teamService
     .addDiscussion(this.member.id!, text)
-    .subscribe(saved => {
-
-      const index = this.member.discussions.indexOf(tempDiscussion);
-      this.member.discussions[index].id = saved.id;
-      this.member.discussions[index].date = new Date(saved.date);
-
+    .subscribe(() => {
+      this.loadDiscussions(); 
     });
 }
 
@@ -98,4 +88,13 @@ loadDiscussions() {
      this.member.discussions = this.member.discussions.filter(d => d.id !== id);
      this.teamService.deleteDiscussion(id).subscribe();
   }
+
+  onUpdateDiscussion(e: {id:number, text:string}) {
+  const d = this.member.discussions.find(x => x.id === e.id);
+  if (!d) return;
+
+  d.text = e.text;
+
+  this.teamService.updateDiscussion(e.id, e.text).subscribe();
+}
 }

@@ -165,7 +165,7 @@
                   [attr.colspan]="displayedColumns.length">
                   @if (selectedMember === m && !showEditForm) {
                     <div class="expanded-details">
-                      <app-member-details [member]="m" [scrollToDiscussionId]="selectedDiscussionId"></app-member-details>
+                      <app-member-details  [member]="m" [scrollToDiscussionId]="scrollToDiscussionId"></app-member-details>
                     </div>
                   }
                   @if (selectedMember === m && showEditForm) {

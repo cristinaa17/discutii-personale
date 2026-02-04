@@ -54,4 +54,12 @@ export class TeamService {
   deleteDiscussion(id: number) {
   return this.http.delete(`${this.api}/discussions/${id}`);
 }
+
+updateDiscussion(id: number, text: string) {
+  return this.http.put(
+    `${this.api}/discussions/${id}`,
+    { text }
+  );
+}
+
 }

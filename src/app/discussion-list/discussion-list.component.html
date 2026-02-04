@@ -2,20 +2,48 @@
   <mat-card class="discussion-list-card">
     <h4 class="section-title">Discuții anterioare</h4>
 
-    @for (d of discussions; track d) {
+    @for (d of discussions; track d.id) {
       <div class="discussion-item" [attr.id]="'discussion-' + d.id">
 
         <div class="discussion-header">
           <span class="date">
             {{ d.date | date:'dd.MM.yyyy HH:mm' }}
           </span>
-          <button mat-icon-button class="delete-button" (click)="delete.emit(d.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
+
+          <div class="actions">
+            <button mat-icon-button (click)="startEdit(d)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="delete.emit(d.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
 
-         <div class="text" [innerHTML]="d.text"></div>
-      </div> 
+        <!-- AFIȘARE -->
+        @if (editingId !== d.id) {
+          <div class="text" [innerHTML]="d.text"></div>
+        }
+
+        <!-- EDITARE -->
+        @if (editingId === d.id) {
+          <angular-editor
+            [(ngModel)]="editText"
+            [config]="editorConfig">
+          </angular-editor>
+
+          <div class="edit-actions">
+            <button mat-button color="primary" (click)="saveEdit(d)">
+              Salvează
+            </button>
+            <button mat-button (click)="cancelEdit()">
+              Renunță
+            </button>
+          </div>
+        }
+
+      </div>
     }
   </mat-card>
 }

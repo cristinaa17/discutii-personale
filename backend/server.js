@@ -63,6 +63,22 @@ app.post('/api/discussions', (req, res) => {
   );
 });
 
+app.put('/api/discussions/:id', (req, res) => {
+  const { text } = req.body;
+  const id = req.params.id;
+
+  db.run(
+    'UPDATE discussion SET text = ? WHERE id = ?',
+    [text, id],
+    function (err) {
+      if (err) return res.status(500).json(err);
+
+      res.sendStatus(204);
+    }
+  );
+});
+
+
 app.delete('/api/discussions/:id', (req, res) => {
   db.run(
     'DELETE FROM discussion WHERE id = ?',

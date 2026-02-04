@@ -68,6 +68,7 @@ private performSearch(query: string) {
 
   this.teamService.searchDiscussions(query).subscribe(results => {
     this.results = results.map(r => ({
+      memberId: r.memberId,
       member: {
         nume: r.nume
       },
