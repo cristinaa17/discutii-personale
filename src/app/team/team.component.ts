@@ -11,17 +11,17 @@ import * as XLSX from 'xlsx';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from "@angular/material/icon";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/search-discussions-dialog.component';
 import { MemberPayload } from '../models/member-payload';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'app-team',
-    imports: [
+  selector: 'app-team',
+  imports: [
     MatTableModule,
     MatCardModule,
     MatButtonModule,
@@ -30,12 +30,11 @@ import { firstValueFrom } from 'rxjs';
     MatInputModule,
     MemberDetailsComponent,
     MemberFormComponent,
-],
-    templateUrl: './team.component.html',
-    styleUrls: ['./team.component.css']
+  ],
+  templateUrl: './team.component.html',
+  styleUrls: ['./team.component.css'],
 })
 export class TeamComponent implements OnInit, AfterViewInit {
-
   members: Member[] = [];
   dataSource = new MatTableDataSource<Member>();
 
@@ -51,7 +50,10 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private teamService: TeamService, private dialog: MatDialog) {}
+  constructor(
+    private teamService: TeamService,
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.reloadMembers();
@@ -62,15 +64,15 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   reloadMembers() {
-  this.teamService.getMembers().subscribe(members => {
-    this.members = members.map(m => ({
-      ...m,
-      discussions: [] 
-    }));
+    this.teamService.getMembers().subscribe((members) => {
+      this.members = members.map((m) => ({
+        ...m,
+        discussions: [],
+      }));
 
-    this.dataSource.data = this.members;
-  });
-}
+      this.dataSource.data = this.members;
+    });
+  }
 
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
@@ -78,58 +80,57 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   addMember(member: Member) {
-  const payload: MemberPayload = {
-    perNr: member.perNr,
-    nume: member.nume,
-    dataAngajarii: member.dataAngajarii,
-    email: member.email,
-    dataNasterii: member.dataNasterii,
-    gen: member.gen,
-    oras: member.oras,
-    departament: member.departament,
-    businessUnit: member.businessUnit,
-    norma: member.norma,
-    fte: member.fte,
-    formaColaborare: member.formaColaborare,
-    tipContract: member.tipContract,
-    functie: member.functie,
-    dreptConcediu: member.dreptConcediu,
-    hrManager: member.hrManager,
-    project: member.project,
-    projectStartDate: member.projectStartDate,
-    projectEndDate: member.projectEndDate,
-    client: member.client,
-    projectManager: member.projectManager,
-    german: member.german,
-    english: member.english,
-    gLevel: member.gLevel,
-    skills: member.skills,
-    photoUrl: member.photoUrl
-  };
+    const payload: MemberPayload = {
+      perNr: member.perNr,
+      nume: member.nume,
+      dataAngajarii: member.dataAngajarii,
+      email: member.email,
+      dataNasterii: member.dataNasterii,
+      gen: member.gen,
+      oras: member.oras,
+      departament: member.departament,
+      businessUnit: member.businessUnit,
+      norma: member.norma,
+      fte: member.fte,
+      formaColaborare: member.formaColaborare,
+      tipContract: member.tipContract,
+      functie: member.functie,
+      dreptConcediu: member.dreptConcediu,
+      hrManager: member.hrManager,
+      project: member.project,
+      projectStartDate: member.projectStartDate,
+      projectEndDate: member.projectEndDate,
+      client: member.client,
+      projectManager: member.projectManager,
+      german: member.german,
+      english: member.english,
+      gLevel: member.gLevel,
+      skills: member.skills,
+      photoUrl: member.photoUrl,
+    };
 
-  this.teamService.addMember(payload).subscribe(() => {
-    this.showAddForm = false;
-    this.reloadMembers();
-  });
-}
+    this.teamService.addMember(payload).subscribe(() => {
+      this.showAddForm = false;
+      this.reloadMembers();
+    });
+  }
 
   selectMember(member: Member) {
     if (this.showEditForm) return;
 
-    this.selectedMember =
-      this.selectedMember === member ? null : member;
+    this.selectedMember = this.selectedMember === member ? null : member;
   }
 
   onDeleteMember(member: Member, event: Event) {
-  event.stopPropagation();
+    event.stopPropagation();
 
-  if (!confirm("Sigur dorești să ștergi colegul?")) return;
+    if (!confirm('Sigur dorești să ștergi colegul?')) return;
 
-  this.teamService.deleteMember(member.id!).subscribe(() => {
-    this.selectedMember = null;
-    this.reloadMembers();
-  });
-}
+    this.teamService.deleteMember(member.id!).subscribe(() => {
+      this.selectedMember = null;
+      this.reloadMembers();
+    });
+  }
 
   onEditMember(member: Member, event: Event) {
     event.stopPropagation();
@@ -139,28 +140,26 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   openSearchDialog() {
-   const dialogRef = this.dialog.open(SearchDiscussionsDialogComponent, {
-    width: '500px'
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-    if (!result) return;
-
-    const member = this.members.find(
-      m => m.id === result.memberId   
-    );
-    
-    if (!member) return;
-
-    this.selectedMember = null;
-    this.scrollToDiscussionId = null;
-
-    setTimeout(() => {
-      this.selectedMember = member;
-      this.scrollToDiscussionId = result.discussion.id;
+    const dialogRef = this.dialog.open(SearchDiscussionsDialogComponent, {
+      width: '500px',
     });
-  });
-}
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+
+      const member = this.members.find((m) => m.id === result.memberId);
+
+      if (!member) return;
+
+      this.selectedMember = null;
+      this.scrollToDiscussionId = null;
+
+      setTimeout(() => {
+        this.selectedMember = member;
+        this.scrollToDiscussionId = result.discussion.id;
+      });
+    });
+  }
 
   onSaveEdit(updated: Member) {
     const { id, discussions, ...payload } = updated;
@@ -170,9 +169,9 @@ export class TeamComponent implements OnInit, AfterViewInit {
       this.editTarget = null;
       this.selectedMember = null;
 
-      this.reloadMembers(); 
-  });
-}
+      this.reloadMembers();
+    });
+  }
 
   onCancelEdit() {
     this.showEditForm = false;
@@ -194,8 +193,8 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   handleImported(members: Member[]) {
-  members.forEach(m => this.addMember(m));
-}
+    members.forEach((m) => this.addMember(m));
+  }
 
   onExcelSelected(event: any) {
     const file = event.target.files[0];
@@ -212,60 +211,69 @@ export class TeamComponent implements OnInit, AfterViewInit {
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
       const rows: any[] = XLSX.utils.sheet_to_json(sheet);
 
-      let added = 0;
-      let skipped = 0;
+      this.teamService.getMembers().subscribe((existingMembers) => {
+        const existingPerNrSet = new Set(
+          existingMembers.map((m) => m.perNr.toString()),
+        );
 
-      rows.forEach(row => {
-        if (!row['PerNr'] || !row['Nume']) {
-          skipped++;
-          return;
-        }
+        let added = 0;
+        let skipped = 0;
 
-        const perNr = row['PerNr'].toString().trim();
+        rows.forEach((row) => {
+          if (!row['PerNr'] || !row['Nume']) {
+            skipped++;
+            return;
+          }
 
-        const exists = this.members.some(m => m.perNr.toString() === perNr);
-        if (exists) {
-          skipped++;
-          return;
-        }
+          const perNr = row['PerNr'].toString().trim();
 
-        const member: Member = {
-          perNr: Number(perNr),
-          nume: row['Nume'],
-          dataAngajarii: row['DataAngajarii'] || '',
-          email: row['Email'] || '',
-          dataNasterii: row['DataNasterii'] || '',
-          gen: row['Gen'] || '',
-          oras: row['Oras'] || '',
-          departament: row['Departament'] || '',
-          businessUnit: row['BusinessUnit'] || '',
-          norma: Number(row['Norma']) || 0,
-          fte: Number(row['FTE']) || 0,
-          formaColaborare: row['FormaColaborare'] || '',
-          tipContract: row['TipContract'] || '',
-          functie: row['Functie'] || '',
-          dreptConcediu: Number(row['DreptConcediu']) || 0,
-          hrManager: row['HRManager'] || '',
-          project: row['Project'] || '',
-          projectStartDate: row['ProjectStartDate'] || '',
-          projectEndDate: row['ProjectEndDate'] || '',
-          client: row['Client'] || '',
-          projectManager: row['ProjectManager'] || '',
-          german: row['German'] || '',
-          english: row['English'] || '',
-          gLevel: row['G-Level'] || '',
-          skills: row['Skills'] || '',
-          photoUrl: '',
-          discussions: []
-        };
+          if (existingPerNrSet.has(perNr)) {
+            skipped++;
+            return;
+          }
 
-        this.addMember(member);
-        added++;
+          const member: Member = {
+            perNr: Number(perNr),
+            nume: row['Nume'],
+            dataAngajarii: this.parseExcelDate(row['DataAngajarii']) || '',
+            email: row['Email'] || '',
+            dataNasterii: this.parseExcelDate(row['DataNasterii']) || '',
+            gen: row['Gen'] || '',
+            oras: row['Oras'] || '',
+            departament: row['Departament'] || '',
+            businessUnit: row['BusinessUnit'] || '',
+            norma: Number(row['Norma']) || 0,
+            fte: Number(row['FTE']) || 0,
+            formaColaborare: row['FormaColaborare'] || '',
+            tipContract: row['TipContract'] || '',
+            functie: row['Functie'] || '',
+            dreptConcediu: Number(row['DreptConcediu']) || 0,
+            hrManager: row['HRManager'] || '',
+            project: row['Project'] || '',
+            projectStartDate:
+              this.parseExcelDate(row['ProjectStartDate']) || '',
+            projectEndDate: this.parseExcelDate(row['ProjectEndDate']) || '',
+            client: row['Client'] || '',
+            projectManager: row['ProjectManager'] || '',
+            german: row['German'] || '',
+            english: row['English'] || '',
+            gLevel: row['G-Level'] || '',
+            skills: row['Skills'] || '',
+            photoUrl: '',
+            discussions: [],
+          };
+
+          
+          this.addMember(member);
+          existingPerNrSet.add(perNr);
+          added++;
+        });
+
+        alert(
+          `Import angajați finalizat.\nAdăugați: ${added}\nIgnorați: ${skipped}`,
+        );
+        this.reloadMembers(); 
       });
-
-      this.dataSource.data = [...this.members];
-
-      alert(`Import angajați finalizat.\nAdăugați: ${added}\nIgnorați: ${skipped}`);
     };
 
     reader.readAsBinaryString(file);
@@ -279,32 +287,81 @@ export class TeamComponent implements OnInit, AfterViewInit {
       .toLowerCase();
   }
 
+  private parseExcelDate(value: any): string {
+    if (!value) return '';
+
+    if (typeof value === 'number') {
+      const date = new Date(Math.round((value - 25569) * 86400 * 1000));
+      return date.toISOString().slice(0, 10);
+    }
+
+    if (value instanceof Date && !isNaN(value.getTime())) {
+      return value.toISOString().slice(0, 10);
+    }
+
+    if (typeof value === 'string') {
+      const v = value.trim();
+
+      if (/^\d{4}-\d{2}-\d{2}$/.test(v)) {
+        return v;
+      }
+
+      let m = v.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+      if (m) {
+        const [, d, mo, y] = m;
+        return `${y}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`;
+      }
+
+      m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (m) {
+        const [, mo, d, y] = m;
+        return `${y}-${mo.padStart(2, '0')}-${d.padStart(2, '0')}`;
+      }
+    }
+
+    return '';
+  }
+
   importDiscussionsFromExcel(file: File) {
     const reader = new FileReader();
 
     reader.onload = async (e: any) => {
-      const workbook = XLSX.read(e.target.result, { type: 'binary' });
+      const workbook = XLSX.read(e.target.result, {
+        type: 'binary',
+        cellDates: true,
+      });
+
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const rows: any[] = XLSX.utils.sheet_to_json(sheet);
+
+      const rows: any[] = XLSX.utils.sheet_to_json(sheet, {
+        raw: false,
+        defval: '',
+      });
 
       let added = 0;
       let skipped = 0;
 
       for (const row of rows) {
         const perNrRaw = row['PerNr'];
-        if (!perNrRaw) { skipped++; continue; }
+        if (!perNrRaw) {
+          skipped++;
+          continue;
+        }
 
         const perNr = perNrRaw.toString().trim();
-        const member = this.members.find(m => m.perNr.toString() === perNr);
-        if (!member) { skipped++; continue; }
+        const member = this.members.find((m) => m.perNr.toString() === perNr);
+        if (!member) {
+          skipped++;
+          continue;
+        }
 
-            const backendDiscussions = await firstValueFrom(
-              this.teamService.getDiscussions(member.id!)
-            );
+        const backendDiscussions = await firstValueFrom(
+          this.teamService.getDiscussions(member.id!),
+        );
 
-            const existingSet = new Set(
-              backendDiscussions.map(d => this.normalizeText(d.text))
-            );
+        const existingSet = new Set(
+          backendDiscussions.map((d) => this.normalizeText(d.text)),
+        );
 
         for (let i = 1; i <= 10; i++) {
           const text = row[`Discutie${i}`];
@@ -327,22 +384,22 @@ export class TeamComponent implements OnInit, AfterViewInit {
         }
       }
 
-      alert(`Import discuții finalizat.\nAdăugate: ${added}\nIgnorate: ${skipped}`);
+      alert(
+        `Import discuții finalizat.\nAdăugate: ${added}\nIgnorate: ${skipped}`,
+      );
     };
 
     reader.readAsBinaryString(file);
   }
 
-
   reloadMemberDiscussions(member: Member) {
-    this.teamService.getDiscussions(member.id!).subscribe(discussions => {
-      member.discussions = discussions.map(d => ({
+    this.teamService.getDiscussions(member.id!).subscribe((discussions) => {
+      member.discussions = discussions.map((d) => ({
         ...d,
-        date: new Date(d.date)
+        date: new Date(d.date),
       }));
     });
   }
-
 
   onDiscussionsExcelSelected(event: any) {
     const file = event.target.files[0];

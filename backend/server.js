@@ -99,7 +99,7 @@ app.get('/api/members', (req, res) => {
 
 app.post('/api/members', (req, res) => {
   const m = req.body;
-
+  
   const sql = `
     INSERT INTO member (
       perNr, nume, dataAngajarii, email, dataNasterii, gen, oras,

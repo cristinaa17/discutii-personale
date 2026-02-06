@@ -139,6 +139,33 @@
     <div class="section-title">Skills</div>
     <div class="section-separator"></div>
 
+    <mat-form-field appearance="outline">
+        <mat-label>Germană</mat-label>
+        <mat-select [(ngModel)]="form.german" name="german">
+          @for (level of germanLevels; track level) {
+            <mat-option [value]="level">{{ level }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Engleză</mat-label>
+        <mat-select [(ngModel)]="form.english" name="english">
+          @for (level of englishLevels; track level) {
+            <mat-option [value]="level">{{ level }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>G-Level</mat-label>
+        <mat-select [(ngModel)]="form.gLevel" name="glevel">
+          @for (level of glevels; track level) {
+            <mat-option [value]="level">{{ level }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Skills</mat-label>
       <input matInput [(ngModel)]="form.skills" name="skills" />
