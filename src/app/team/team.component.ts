@@ -263,7 +263,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
             discussions: [],
           };
 
-          
           this.addMember(member);
           existingPerNrSet.add(perNr);
           added++;
@@ -272,7 +271,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
         alert(
           `Import angajați finalizat.\nAdăugați: ${added}\nIgnorați: ${skipped}`,
         );
-        this.reloadMembers(); 
+        this.reloadMembers();
       });
     };
 
@@ -322,6 +321,16 @@ export class TeamComponent implements OnInit, AfterViewInit {
     return '';
   }
 
+  private parseDiscussionText(value: any): string {
+    if (value === null || value === undefined) return '';
+
+    let text = String(value);
+
+    text = text.replace(/\r\n/g, '\n');
+
+    return text; 
+  }
+
   importDiscussionsFromExcel(file: File) {
     const reader = new FileReader();
 
@@ -364,22 +373,14 @@ export class TeamComponent implements OnInit, AfterViewInit {
         );
 
         for (let i = 1; i <= 10; i++) {
-          const text = row[`Discutie${i}`];
-          if (!text || text.toString().trim() === '') continue;
+          const cell = row[`Discutie${i}`];
 
-          const cleanText = text.toString().trim();
-          const normalized = this.normalizeText(cleanText);
+          if (cell === undefined) continue; 
 
-          if (existingSet.has(normalized)) {
-            skipped++;
-            continue;
-          }
+          const text = this.parseDiscussionText(cell);
 
-          await this.teamService
-            .addDiscussion(member.id!, cleanText)
-            .toPromise();
+          await this.teamService.addDiscussion(member.id!, text).toPromise();
 
-          existingSet.add(normalized);
           added++;
         }
       }
