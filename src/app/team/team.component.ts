@@ -328,69 +328,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
     text = text.replace(/\r\n/g, '\n');
 
-    return text; 
-  }
-
-  importDiscussionsFromExcel(file: File) {
-    const reader = new FileReader();
-
-    reader.onload = async (e: any) => {
-      const workbook = XLSX.read(e.target.result, {
-        type: 'binary',
-        cellDates: true,
-      });
-
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-      const rows: any[] = XLSX.utils.sheet_to_json(sheet, {
-        raw: false,
-        defval: '',
-      });
-
-      let added = 0;
-      let skipped = 0;
-
-      for (const row of rows) {
-        const perNrRaw = row['PerNr'];
-        if (!perNrRaw) {
-          skipped++;
-          continue;
-        }
-
-        const perNr = perNrRaw.toString().trim();
-        const member = this.members.find((m) => m.perNr.toString() === perNr);
-        if (!member) {
-          skipped++;
-          continue;
-        }
-
-        const backendDiscussions = await firstValueFrom(
-          this.teamService.getDiscussions(member.id!),
-        );
-
-        const existingSet = new Set(
-          backendDiscussions.map((d) => this.normalizeText(d.text)),
-        );
-
-        for (let i = 1; i <= 10; i++) {
-          const cell = row[`Discutie${i}`];
-
-          if (cell === undefined) continue; 
-
-          const text = this.parseDiscussionText(cell);
-
-          await this.teamService.addDiscussion(member.id!, text).toPromise();
-
-          added++;
-        }
-      }
-
-      alert(
-        `Import discuții finalizat.\nAdăugate: ${added}\nIgnorate: ${skipped}`,
-      );
-    };
-
-    reader.readAsBinaryString(file);
+    return text;
   }
 
   reloadMemberDiscussions(member: Member) {
@@ -404,9 +342,13 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   onDiscussionsExcelSelected(event: any) {
     const file = event.target.files[0];
-    console.log('Fisier selectat:', file);
     if (!file) return;
 
-    this.importDiscussionsFromExcel(file);
+    this.teamService.importDiscussionsExcel(file).subscribe((res) => {
+      alert(`Import finalizat.
+        Discuții adăugate: ${res.added}
+        Poze actualizate: ${res.updatedPhotos}`);
+      this.reloadMembers();
+    });
   }
 }

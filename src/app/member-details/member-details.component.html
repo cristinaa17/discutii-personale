@@ -1,14 +1,13 @@
 <mat-card class="details-card">
-
   <div class="header">
     <!-- AVATAR -->
     <div class="avatar">
-
       <!-- POZĂ -->
       @if (member.photoUrl) {
         <img
-          [src]="member.photoUrl"
-          alt="poza coleg" />
+          [src]="'http://localhost:3000' + member.photoUrl"
+          alt="poza coleg"
+        />
       }
 
       <!-- INIȚIALE -->
@@ -30,14 +29,12 @@
 
   <h2 id="discussion-section" class="section-title">Discuții 1:1</h2>
 
-  <app-discussion-add
-    (add)="onDiscussionAdded($event)">
-  </app-discussion-add>
+  <app-discussion-add (add)="onDiscussionAdded($event)"> </app-discussion-add>
 
   <app-discussion-list
     [discussions]="member.discussions"
     (delete)="onDeleteDiscussion($event)"
-    (update)="onUpdateDiscussion($event)">
+    (update)="onUpdateDiscussion($event)"
+  >
   </app-discussion-list>
-
 </mat-card>
