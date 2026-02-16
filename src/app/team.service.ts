@@ -12,9 +12,11 @@ export class TeamService {
 
   constructor(private http: HttpClient) {}
 
-  getMembers() {
-    return this.http.get<Member[]>(`${this.api}/members`);
-  }
+  getMembers(showAll: boolean = false) {
+  return this.http.get<Member[]>(
+    `http://localhost:3000/api/members?showAll=${showAll}`
+  );
+}
 
   addMember(member: MemberPayload) {
     return this.http.post('http://localhost:3000/api/members', member);

@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchDiscussionsDialogComponent } from '../search-discussion-dialog/search-discussions-dialog.component';
 import { MemberPayload } from '../models/member-payload';
-import { firstValueFrom } from 'rxjs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-team',
@@ -30,6 +30,7 @@ import { firstValueFrom } from 'rxjs';
     MatInputModule,
     MemberDetailsComponent,
     MemberFormComponent,
+    MatSlideToggleModule,
   ],
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.css'],
@@ -47,6 +48,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   showAddForm = false;
   showEditForm = false;
   editTarget: Member | null = null;
+  showAll = false;
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -64,14 +66,18 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   reloadMembers() {
-    this.teamService.getMembers().subscribe((members) => {
+    this.teamService.getMembers(this.showAll).subscribe((members) => {
       this.members = members.map((m) => ({
         ...m,
         discussions: [],
       }));
-
       this.dataSource.data = this.members;
     });
+  }
+
+  toggleShowAll(event: any) {
+    this.showAll = event.checked;
+    this.reloadMembers();
   }
 
   applyFilter(event: Event) {

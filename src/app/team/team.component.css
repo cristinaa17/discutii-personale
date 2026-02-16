@@ -35,10 +35,9 @@
 }
 
 .team-actions {
-  display: flex;
-  gap: 16px;
+   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .add-btn mat-icon {
@@ -191,6 +190,27 @@ mat-card {
 
 .ntt-btn-chat:hover {
   background-color: rgba(0, 91, 150, 0.08) !important;
+}
+
+.show-all-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  height: 56px; 
+}
+
+::ng-deep .mat-mdc-slide-toggle {
+  display: flex;
+  align-items: center;
+  height: 56px;
+}
+
+::ng-deep .mat-mdc-slide-toggle.mat-accent .mdc-switch--selected .mdc-switch__track {
+  background-color: #0077b6 !important;
+}
+
+::ng-deep .mat-mdc-slide-toggle.mat-accent .mdc-switch--selected .mdc-switch__handle {
+  background-color: #0077b6 !important;
 }
 
 

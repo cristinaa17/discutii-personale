@@ -33,7 +33,8 @@ db.serialize(() => {
       english TEXT,
       gLevel TEXT,
       skills TEXT,
-      photoUrl TEXT
+      photoUrl TEXT,
+      isDeleted INTEGER DEFAULT 0
     )
   `);
 
@@ -46,6 +47,15 @@ db.serialize(() => {
       FOREIGN KEY(memberId) REFERENCES member(id) ON DELETE CASCADE
     )
   `);
+
+  db.run(
+  `ALTER TABLE member ADD COLUMN isDeleted INTEGER DEFAULT 0`,
+  (err) => {
+    if (err && !String(err.message).includes('duplicate column name')) {
+      console.error('[DB] Failed to add isDeleted column:', err.message);
+    }
+  }
+);
 });
 
 module.exports = db;
