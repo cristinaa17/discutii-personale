@@ -49,6 +49,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   showEditForm = false;
   editTarget: Member | null = null;
   showAll = false;
+  private searchDialogOpen = false;
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -146,24 +147,26 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   openSearchDialog() {
+    if (this.searchDialogOpen) return;
+    this.searchDialogOpen = true;
+
     const dialogRef = this.dialog.open(SearchDiscussionsDialogComponent, {
       width: '500px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.searchDialogOpen = false;
+
       if (!result) return;
 
       const member = this.members.find((m) => m.id === result.memberId);
-
       if (!member) return;
 
-      this.selectedMember = null;
-      this.scrollToDiscussionId = null;
+      this.selectedMember = member;
 
       setTimeout(() => {
-        this.selectedMember = member;
         this.scrollToDiscussionId = result.discussion.id;
-      });
+      }, 250);
     });
   }
 

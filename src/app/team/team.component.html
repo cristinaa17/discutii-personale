@@ -119,6 +119,7 @@
               *matCellDef="let m"
               (click)="selectMember(m)"
               class="clickable"
+              [class.deleted-text]="m.isDeleted === 1"
             >
               {{ m.perNr }}
             </td>
@@ -131,6 +132,7 @@
               *matCellDef="let m"
               (click)="selectMember(m)"
               class="clickable"
+              [class.deleted-text]="m.isDeleted === 1"
             >
               {{ m.nume }}
             </td>
@@ -143,6 +145,7 @@
               *matCellDef="let m"
               (click)="selectMember(m)"
               class="clickable"
+              [class.deleted-text]="m.isDeleted === 1"
             >
               {{ m.email || "-" }}
             </td>

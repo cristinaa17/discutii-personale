@@ -14,28 +14,28 @@
 
 .team-header h2 {
   font-weight: 600;
-  color: #070F26; 
+  color: #070f26;
 }
 
 .team-header-actions {
   display: flex;
-  flex-direction: column;   
+  flex-direction: column;
   gap: 10px;
   align-items: stretch;
 }
 
 .team-header-actions button {
-  width: 175px;  
-} 
+  width: 175px;
+}
 
 .subtitle {
   margin-top: 4px;
   font-size: 14px;
-  color: #2E404D; 
+  color: #2e404d;
 }
 
 .team-actions {
-   display: flex;
+  display: flex;
   align-items: center;
   gap: 15px;
 }
@@ -122,17 +122,17 @@ mat-card {
   box-shadow: 0 2px 8px rgba(7, 15, 38, 0.08);
 }
 
-.ntt-btn-primary { 
-  background-color: #0072BC !important; 
-  color: #ffffff !important; 
-  border-radius: 999px; 
-  font-weight: 500; 
-  padding: 6px 18px; 
-  box-shadow: none !important; 
-} 
+.ntt-btn-primary {
+  background-color: #0072bc !important;
+  color: #ffffff !important;
+  border-radius: 999px;
+  font-weight: 500;
+  padding: 6px 18px;
+  box-shadow: none !important;
+}
 
-.ntt-btn-primary:hover { 
-  background-color: #005B96 !important; 
+.ntt-btn-primary:hover {
+  background-color: #005b96 !important;
 }
 
 .action-buttons {
@@ -154,12 +154,12 @@ mat-card {
 }
 
 .ntt-btn-edit {
-  color: #0072BC !important;
-  border-color: #0072BC !important;
+  color: #0072bc !important;
+  border-color: #0072bc !important;
 }
 
 .ntt-btn-edit mat-icon {
-  color: #0072BC;
+  color: #0072bc;
 }
 
 .ntt-btn-edit:hover {
@@ -167,12 +167,12 @@ mat-card {
 }
 
 .ntt-btn-delete {
-  color: #E42600 !important;
-  border-color: #E42600 !important;
+  color: #e42600 !important;
+  border-color: #e42600 !important;
 }
 
 .ntt-btn-delete mat-icon {
-  color: #E42600;
+  color: #e42600;
 }
 
 .ntt-btn-delete:hover {
@@ -180,12 +180,12 @@ mat-card {
 }
 
 .ntt-btn-chat {
-  color: #005B96 !important; 
-  border-color: #005B96 !important;
+  color: #005b96 !important;
+  border-color: #005b96 !important;
 }
 
 .ntt-btn-chat mat-icon {
-  color: #005B96;
+  color: #005b96;
 }
 
 .ntt-btn-chat:hover {
@@ -196,7 +196,7 @@ mat-card {
   display: flex;
   align-items: center;
   margin-left: auto;
-  height: 56px; 
+  height: 56px;
 }
 
 ::ng-deep .mat-mdc-slide-toggle {
@@ -205,14 +205,23 @@ mat-card {
   height: 56px;
 }
 
-::ng-deep .mat-mdc-slide-toggle.mat-accent .mdc-switch--selected .mdc-switch__track {
+::ng-deep
+  .mat-mdc-slide-toggle.mat-accent
+  .mdc-switch--selected
+  .mdc-switch__track {
   background-color: #0077b6 !important;
 }
 
-::ng-deep .mat-mdc-slide-toggle.mat-accent .mdc-switch--selected .mdc-switch__handle {
+::ng-deep
+  .mat-mdc-slide-toggle.mat-accent
+  .mdc-switch--selected
+  .mdc-switch__handle {
   background-color: #0077b6 !important;
 }
 
+.deleted-text {
+  color: #bdbdbd;
+}
 
 @media (max-width: 900px) {
   .team-header {

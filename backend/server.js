@@ -137,16 +137,16 @@ app.delete("/api/discussions/:id", (req, res) => {
   });
 });
 
-app.get('/api/members', (req, res) => {
-  const showAll = req.query.showAll === 'true';
+app.get("/api/members", (req, res) => {
+  const showAll = req.query.showAll === "true";
 
   const sql = showAll
-    ? 'SELECT * FROM member'
-    : 'SELECT * FROM member WHERE isDeleted = 0';
+    ? "SELECT * FROM member"
+    : "SELECT * FROM member WHERE isDeleted = 0";
 
   db.all(sql, [], (err, rows) => {
     if (err) {
-      console.error('[MEMBER][GET][ERROR]', err);
+      console.error("[MEMBER][GET][ERROR]", err);
       return res.status(500).json(err);
     }
 
@@ -207,34 +207,62 @@ app.put("/api/members/:id", (req, res) => {
     WHERE id=?
   `;
 
-  db.run(sql, [...Object.values(m), id], (err) => {
-    if (err) {
-      console.error("[MEMBER][UPDATE][ERROR]", err);
-      return res.status(500).json(err);
-    }
-
-    console.log(`[MEMBER][UPDATE][OK] id=${id}`);
-    res.sendStatus(204);
-  });
-});
-
-app.delete('/api/members/:id', (req, res) => {
-  const id = req.params.id;
-  console.log(`\n[MEMBER][SOFT DELETE] id=${id}`);
-
   db.run(
-    'UPDATE member SET isDeleted = 1 WHERE id = ?',
-    [id],
-    err => {
+    sql,
+    [
+      m.perNr,
+      m.nume,
+      m.dataAngajarii,
+      m.email,
+      m.dataNasterii,
+      m.gen,
+      m.oras,
+      m.departament,
+      m.businessUnit,
+      m.norma,
+      m.fte,
+      m.formaColaborare,
+      m.tipContract,
+      m.functie,
+      m.dreptConcediu,
+      m.hrManager,
+      m.project,
+      m.projectStartDate,
+      m.projectEndDate,
+      m.client,
+      m.projectManager,
+      m.german,
+      m.english,
+      m.gLevel,
+      m.skills,
+      m.photoUrl,
+      id,
+    ],
+    (err) => {
       if (err) {
-        console.error('[MEMBER][SOFT DELETE][ERROR]', err);
+        console.error("[MEMBER][UPDATE][ERROR]", err);
         return res.status(500).json(err);
       }
 
-      console.log(`[MEMBER][SOFT DELETE][OK] id=${id}`);
+      console.log(`[MEMBER][UPDATE][OK] id=${id}`);
       res.sendStatus(204);
-    }
+    },
   );
+});
+
+app.delete("/api/members/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(`\n[MEMBER][SOFT DELETE] id=${id}`);
+
+  db.run("UPDATE member SET isDeleted = 1 WHERE id = ?", [id], (err) => {
+    if (err) {
+      console.error("[MEMBER][SOFT DELETE][ERROR]", err);
+      return res.status(500).json(err);
+    }
+
+    console.log(`[MEMBER][SOFT DELETE][OK] id=${id}`);
+    res.sendStatus(204);
+  });
 });
 
 const multer = require("multer");
