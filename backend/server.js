@@ -265,6 +265,21 @@ app.delete("/api/members/:id", (req, res) => {
   });
 });
 
+app.put("/api/members/:id/restore", (req, res) => {
+  const id = req.params.id;
+  console.log(`\n[MEMBER][RESTORE] id=${id}`);
+
+  db.run("UPDATE member SET isDeleted = 0 WHERE id = ?", [id], (err) => {
+    if (err) {
+      console.error("[MEMBER][RESTORE][ERROR]", err);
+      return res.status(500).json(err);
+    }
+
+    console.log(`[MEMBER][RESTORE][OK] id=${id}`);
+    res.sendStatus(204);
+  });
+});
+
 const multer = require("multer");
 const ExcelJS = require("exceljs");
 const fs = require("fs");

@@ -223,6 +223,15 @@ mat-card {
   color: #bdbdbd;
 }
 
+.ntt-btn-restore {
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.ntt-btn-restore:hover {
+  background: rgba(76, 175, 80, 0.1);
+}
+
 @media (max-width: 900px) {
   .team-header {
     flex-direction: column;

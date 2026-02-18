@@ -155,22 +155,37 @@
             <th mat-header-cell *matHeaderCellDef class="text-end">Acțiuni</th>
             <td mat-cell *matCellDef="let m" class="text-end">
               <div class="action-buttons">
-                <button
-                  mat-stroked-button
-                  class="ntt-btn-edit"
-                  (click)="onEditMember(m, $event)"
-                >
-                  <mat-icon>edit</mat-icon>
-                  Editează
-                </button>
-                <button
-                  mat-stroked-button
-                  class="ntt-btn-delete"
-                  (click)="onDeleteMember(m, $event)"
-                >
-                  <mat-icon>delete</mat-icon>
-                  Șterge
-                </button>
+                @if (m.isDeleted !== 1) {
+                  <button
+                    mat-stroked-button
+                    class="ntt-btn-edit"
+                    (click)="onEditMember(m, $event)"
+                  >
+                    <mat-icon>edit</mat-icon>
+                    Editează
+                  </button>
+
+                  <button
+                    mat-stroked-button
+                    class="ntt-btn-delete"
+                    (click)="onDeleteMember(m, $event)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                    Șterge
+                  </button>
+                }
+
+                @if (m.isDeleted === 1) {
+                  <button
+                    mat-stroked-button
+                    class="ntt-btn-restore"
+                    (click)="onRestoreMember(m, $event)"
+                  >
+                    <mat-icon>restore</mat-icon>
+                    Reactivează
+                  </button>
+                }
+
                 <button
                   mat-stroked-button
                   class="ntt-btn-chat"

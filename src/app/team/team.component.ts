@@ -60,6 +60,15 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.reloadMembers();
+
+    this.dataSource.filterPredicate = (data: Member, filter: string) => {
+      const search = this.normalize(filter);
+      const name = this.normalize(data.nume || '');
+
+      const words = search.split(' ');
+
+      return words.every((w) => name.includes(w));
+    };
   }
 
   ngAfterViewInit(): void {
@@ -84,6 +93,13 @@ export class TeamComponent implements OnInit, AfterViewInit {
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  private normalize(str: string): string {
+    return str
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
   addMember(member: Member) {
@@ -287,14 +303,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
     reader.readAsBinaryString(file);
   }
 
-  private normalizeText(text: string): string {
-    return text
-      .replace(/<[^>]*>/g, '')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .toLowerCase();
-  }
-
   private parseExcelDate(value: any): string {
     if (!value) return '';
 
@@ -330,16 +338,6 @@ export class TeamComponent implements OnInit, AfterViewInit {
     return '';
   }
 
-  private parseDiscussionText(value: any): string {
-    if (value === null || value === undefined) return '';
-
-    let text = String(value);
-
-    text = text.replace(/\r\n/g, '\n');
-
-    return text;
-  }
-
   reloadMemberDiscussions(member: Member) {
     this.teamService.getDiscussions(member.id!).subscribe((discussions) => {
       member.discussions = discussions.map((d) => ({
@@ -357,6 +355,14 @@ export class TeamComponent implements OnInit, AfterViewInit {
       alert(`Import finalizat.
         Discuții adăugate: ${res.added}
         Poze actualizate: ${res.updatedPhotos}`);
+      this.reloadMembers();
+    });
+  }
+
+  onRestoreMember(member: Member, event: Event) {
+    event.stopPropagation();
+
+    this.teamService.restoreMember(member.id!).subscribe(() => {
       this.reloadMembers();
     });
   }
