@@ -288,6 +288,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
   try {
+    console.log("\n[IMPORT][DISCUSSIONS] Starting import...");
     if (!req.file) return res.status(400).json({ error: "Fisier lipsa" });
 
     const workbook = new ExcelJS.Workbook();
@@ -402,7 +403,6 @@ app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
     console.error(err);
     res.status(500).json({ error: "Eroare import" });
   }
-  console.log("IMAGES FOUND:", worksheet.getImages().length);
 });
 
 const PORT = 3000;

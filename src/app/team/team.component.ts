@@ -253,6 +253,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
           const perNr = row['PerNr'].toString().trim();
 
           if (existingPerNrSet.has(perNr)) {
+            console.warn(`Angajat cu PerNr ${perNr} deja există. Ignorat.`);
             skipped++;
             return;
           }
