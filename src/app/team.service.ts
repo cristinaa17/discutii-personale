@@ -13,13 +13,11 @@ export class TeamService {
   constructor(private http: HttpClient) {}
 
   getMembers(showAll: boolean = false) {
-    return this.http.get<Member[]>(
-      `http://localhost:3000/api/members?showAll=${showAll}`,
-    );
+    return this.http.get<Member[]>(`${this.api}/members?showAll=${showAll}`);
   }
 
   addMember(member: MemberPayload) {
-    return this.http.post('http://localhost:3000/api/members', member);
+    return this.http.post(`${this.api}/members`, member);
   }
 
   updateMember(id: number, payload: any) {
@@ -59,13 +57,10 @@ export class TeamService {
     const formData = new FormData();
     formData.append('file', file);
 
-    return this.http.post<any>(
-      'http://localhost:3000/api/import/discussions',
-      formData,
-    );
+    return this.http.post<any>(`${this.api}/import/discussions`, formData);
   }
 
   restoreMember(id: number) {
-    return this.http.put(`http://localhost:3000/api/members/${id}/restore`, {});
+    return this.http.put(`${this.api}/members/${id}/restore`, {});
   }
 }

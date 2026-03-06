@@ -19,9 +19,9 @@
 
 .team-header-actions {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: stretch;
+  gap: 12px;
+  margin-top: 16px;
+  margin-bottom: 20px;
 }
 
 .team-header-actions button {
@@ -92,19 +92,27 @@
 
 .row-details {
   background: #f8fafc;
+  height: 0;
 }
 
 .row-details td {
   padding: 0 !important;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: none;
 }
 
 .expanded-details {
-  margin: 0x 24px 16px;
+  margin: 0 24px 16px;
   padding: 16px 20px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(7, 15, 38, 0.06);
+  animation: expand 0.2s ease;
+}
+
+.mat-mdc-row td,
+.mat-mdc-header-row th {
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 
 .text-end button {
@@ -230,6 +238,17 @@ mat-card {
 
 .ntt-btn-restore:hover {
   background: rgba(76, 175, 80, 0.1);
+}
+
+@keyframes expand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 900px) {

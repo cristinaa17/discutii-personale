@@ -3,9 +3,13 @@
     <!-- AVATAR -->
     <div class="avatar">
       <!-- POZĂ -->
-      @if (member.photoUrl) {
+      @if (member.photoUrl && member.photoUrl.length > 0) {
         <img
-          [src]="'http://localhost:3000' + member.photoUrl"
+          [src]="
+            member.photoUrl.startsWith('data:')
+              ? member.photoUrl
+              : 'http://localhost:3000' + member.photoUrl
+          "
           alt="poza coleg"
         />
       }

@@ -146,7 +146,11 @@ export class MemberFormComponent {
     const fileInput = document.getElementById(
       'photoUploadInput',
     ) as HTMLInputElement;
-    fileInput.click();
+
+    if (fileInput) {
+      fileInput.value = '';
+      fileInput.click();
+    }
   }
 
   get initials(): string {
