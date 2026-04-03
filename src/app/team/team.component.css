@@ -164,12 +164,16 @@ mat-card {
 }
 
 .icon-only {
-  padding: 6px !important;
-  min-width: 40px !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .icon-only mat-icon {
   margin-right: 0 !important;
+  font-size: 20px;
 }
 
 .ntt-btn-edit {
