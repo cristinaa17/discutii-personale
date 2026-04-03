@@ -163,6 +163,15 @@ mat-card {
   margin-right: 6px;
 }
 
+.icon-only {
+  padding: 6px !important;
+  min-width: 40px !important;
+}
+
+.icon-only mat-icon {
+  margin-right: 0 !important;
+}
+
 .ntt-btn-edit {
   color: #0072bc !important;
   border-color: #0072bc !important;

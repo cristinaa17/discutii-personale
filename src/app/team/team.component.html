@@ -140,20 +140,22 @@
                 @if (m.isDeleted !== 1) {
                   <button
                     mat-stroked-button
-                    class="ntt-btn-edit"
+                    class="ntt-btn-edit icon-only"
+                    matTooltip="Editează"
+                    aria-label="Editează"
                     (click)="onEditMember(m, $event)"
                   >
                     <mat-icon>edit</mat-icon>
-                    Editează
                   </button>
 
                   <button
                     mat-stroked-button
-                    class="ntt-btn-delete"
+                    class="ntt-btn-delete icon-only"
+                    matTooltip="Șterge"
+                    aria-label="Șterge"
                     (click)="onDeleteMember(m, $event)"
                   >
                     <mat-icon>delete</mat-icon>
-                    Șterge
                   </button>
                 }
 
@@ -170,11 +172,12 @@
 
                 <button
                   mat-stroked-button
-                  class="ntt-btn-chat"
+                  class="ntt-btn-chat icon-only"
+                  matTooltip="Discuție nouă"
+                  aria-label="Discuție nouă"
                   (click)="onAddDiscussionFromTable(m, $event)"
                 >
                   <mat-icon>chat</mat-icon>
-                  Discuție nouă
                 </button>
               </div>
             </td>
