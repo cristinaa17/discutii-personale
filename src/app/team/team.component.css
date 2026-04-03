@@ -22,10 +22,12 @@
   gap: 12px;
   margin-top: 16px;
   margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .team-header-actions button {
-  width: 175px;
+  min-width: 140px;
 }
 
 .subtitle {

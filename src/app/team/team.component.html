@@ -32,45 +32,26 @@
 
       <!-- CĂUTARE DISCUȚII -->
       <div class="team-header-actions">
-        <button
-          mat-stroked-button
-          class="ntt-btn-secondary import-btn"
-          (click)="fileInput.click()"
-        >
-          <mat-icon>upload_file</mat-icon>
-          Import colegi
+        <button mat-stroked-button class="ntt-btn-secondary" [matMenuTriggerFor]="toolsMenu">
+          <mat-icon>build</mat-icon>
+          Tools
         </button>
 
-        <input
-          type="file"
-          #fileInput
-          hidden
-          accept=".xlsx,.xls"
-          (change)="onExcelSelected($event)"
-        />
+        <mat-menu #toolsMenu="matMenu">
+          <button mat-menu-item (click)="fileInput.click()">
+            <mat-icon>upload_file</mat-icon>
+            Import colegi
+          </button>
+          <button mat-menu-item (click)="discussionInput.click()">
+            <mat-icon>forum</mat-icon>
+            Import discuții
+          </button>
+        </mat-menu>
 
-        <button
-          mat-stroked-button
-          class="ntt-btn-secondary import-btn"
-          (click)="discussionInput.click()"
-        >
-          <mat-icon>forum</mat-icon>
-          Import discuții
-        </button>
+        <input type="file" #fileInput hidden accept=".xlsx,.xls" (change)="onExcelSelected($event)" />
+        <input type="file" #discussionInput hidden accept=".xlsx,.xls" (change)="onDiscussionsExcelSelected($event)" />
 
-        <input
-          type="file"
-          #discussionInput
-          hidden
-          accept=".xlsx,.xls"
-          (change)="onDiscussionsExcelSelected($event)"
-        />
-
-        <button
-          mat-raised-button
-          class="ntt-btn-primary add-btn"
-          (click)="showAddForm = true"
-        >
+        <button mat-raised-button class="ntt-btn-primary add-btn" (click)="showAddForm = true">
           <mat-icon>person_add</mat-icon>
           Adaugă coleg
         </button>
