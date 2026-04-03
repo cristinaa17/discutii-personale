@@ -151,6 +151,13 @@
 
 .mat-mdc-text-field-wrapper {
   border-radius: 12px;
+  top: 0px;
+}
+.mat-mdc-floating-label {
+  top: 0px !important;
+  left: 12px;
+  font-size: 14px;
+  color: #6b7280;
 }
 
 .buttons {
