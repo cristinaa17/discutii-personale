@@ -67,4 +67,8 @@ export class TeamService {
   getFollowUpCount() {
     return this.http.get<{ count: number }>(`${this.api}/discussions/followup/count`);
   }
+
+  restoreMember(id: number) {
+    return this.http.put(`${this.api}/members/${id}/restore`, {});
+  }
 }
