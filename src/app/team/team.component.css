@@ -41,17 +41,20 @@
   flex-direction: column;
 }
 
+/* Keep the member name normal weight (not bold) */
 .member-name {
-  font-weight: 600;
+  font-weight: 400;
 }
 
+/* Allow project / client / skills to wrap so details are visible */
 .member-subtitle {
   margin-top: 4px;
   font-size: 13px;
   color: #556976;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
+  line-height: 1.25;
 }
 
 .team-actions {
