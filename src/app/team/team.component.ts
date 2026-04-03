@@ -46,7 +46,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   members: Member[] = [];
   dataSource = new MatTableDataSource<Member>();
 
-  displayedColumns = ['perNr', 'nume', 'project', 'client', 'email', 'actions'];
+  displayedColumns = ['perNr', 'nume', 'project', 'client', 'actions'];
 
   selectedMember: Member | null = null;
   selectedDiscussionId: number | null = null;

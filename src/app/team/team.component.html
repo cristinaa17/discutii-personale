@@ -125,13 +125,7 @@
             </td>
           </ng-container>
 
-          <!-- EMAIL -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
-              {{ m.email || '-' }}
-            </td>
-          </ng-container>
+          <!-- EMAIL (removed from table - shown in details card) -->
 
           <!-- ACȚIUNI -->
           <ng-container matColumnDef="actions">
