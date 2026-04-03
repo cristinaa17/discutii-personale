@@ -51,9 +51,11 @@
   margin-top: 4px;
   font-size: 13px;
   color: #556976;
-  white-space: normal;
-  overflow: visible;
-  text-overflow: initial;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1.25;
 }
 
