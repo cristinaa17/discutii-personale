@@ -357,9 +357,20 @@ mat-card {
   }
 }
 
-/* Override floating label vertical position for condensed form-fields to keep label aligned */
+/* Override floating label vertical position for condensed form-fields (default state) */
 .search-box.condensed ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
   top: 50% !important;
   transform: translateY(-50%) !important;
   line-height: 1 !important;
+}
+
+/* When the form-field is in floating state (has value or is focused), position label top-left */
+.search-box.condensed ::ng-deep .mat-mdc-form-field-wrapper.mat-mdc-form-field-should-float .mat-mdc-form-field-flex .mat-mdc-floating-label,
+.search-box.condensed ::ng-deep .mat-mdc-form-field-wrapper.mat-mdc-form-field-floating .mat-mdc-form-field-flex .mat-mdc-floating-label,
+.search-box.condensed ::ng-deep .mat-mdc-form-field-wrapper.mat-form-field-should-float .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 6px !important;
+  transform: none !important;
+  left: 10px !important;
+  font-size: 12px !important;
+  color: rgba(0,0,0,0.6) !important;
 }
