@@ -31,6 +31,32 @@
 
   <mat-divider></mat-divider>
 
+  <!-- DETAILS SECTION -->
+  <div class="details-section">
+    <div class="detail-row">
+      <div class="detail-item">
+        <span class="label">Skill Level</span>
+        <span class="value">{{ member.gLevel || '-' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Skills</span>
+        <span class="value">{{ member.skills || '-' }}</span>
+      </div>
+    </div>
+    <div class="detail-row">
+      <div class="detail-item">
+        <span class="label">Germană</span>
+        <span class="value">{{ member.german || '-' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Engleză</span>
+        <span class="value">{{ member.english || '-' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
   <h2 id="discussion-section" class="section-title">Discuții 1:1</h2>
 
   <app-discussion-add (add)="onDiscussionAdded($event)"> </app-discussion-add>

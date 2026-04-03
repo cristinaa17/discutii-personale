@@ -53,6 +53,38 @@
   color: #070F26
 }
 
+.details-section {
+  padding: 16px 0;
+  margin: 16px 0;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-item .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #556976;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-item .value {
+  font-size: 14px;
+  color: #070F26;
+  font-weight: 500;
+}
+
 .discussion-card {
   padding: 16px;
   margin: 12px 0;
