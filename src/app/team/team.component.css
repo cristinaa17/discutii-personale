@@ -356,3 +356,10 @@ mat-card {
     width: 100%;
   }
 }
+
+/* Override floating label vertical position for condensed form-fields to keep label aligned */
+.search-box.condensed ::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  line-height: 1 !important;
+}
