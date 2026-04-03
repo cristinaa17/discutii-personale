@@ -113,10 +113,14 @@
               mat-cell
               *matCellDef="let m"
               (click)="selectMember(m)"
-              class="clickable"
+              class="clickable member-cell"
               [class.deleted-text]="m.isDeleted === 1"
             >
-              {{ m.nume }}
+              <div class="member-name">{{ m.nume }}</div>
+              <div class="member-subtitle">
+                <span *ngIf="m.project">{{ m.project }}</span><span *ngIf="m.client"> • {{ m.client }}</span>
+                <span *ngIf="m.skills"> • {{ m.skills }}</span>
+              </div>
             </td>
           </ng-container>
           <!-- EMAIL -->

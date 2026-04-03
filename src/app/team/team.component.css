@@ -36,6 +36,24 @@
   color: #2e404d;
 }
 
+.member-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-name {
+  font-weight: 600;
+}
+
+.member-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #556976;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .team-actions {
   display: flex;
   align-items: center;
