@@ -28,34 +28,35 @@
           <h2>Lista colegilor</h2>
           <p class="subtitle">Gestionare colegi și discuții 1:1</p>
         </div>
+
+        <div class="team-header-actions">
+          <button mat-stroked-button class="ntt-btn-secondary" [matMenuTriggerFor]="toolsMenu">
+            <mat-icon>build</mat-icon>
+            Tools
+          </button>
+
+          <mat-menu #toolsMenu="matMenu">
+            <button mat-menu-item (click)="fileInput.click()">
+              <mat-icon>upload_file</mat-icon>
+              Import colegi
+            </button>
+            <button mat-menu-item (click)="discussionInput.click()">
+              <mat-icon>forum</mat-icon>
+              Import discuții
+            </button>
+          </mat-menu>
+
+          <input type="file" #fileInput hidden accept=".xlsx,.xls" (change)="onExcelSelected($event)" />
+          <input type="file" #discussionInput hidden accept=".xlsx,.xls" (change)="onDiscussionsExcelSelected($event)" />
+
+          <button mat-raised-button class="ntt-btn-primary add-btn" (click)="showAddForm = true">
+            <mat-icon>person_add</mat-icon>
+            Adaugă coleg
+          </button>
+        </div>
       </div>
 
-      <!-- CĂUTARE DISCUȚII -->
-      <div class="team-header-actions">
-        <button mat-stroked-button class="ntt-btn-secondary" [matMenuTriggerFor]="toolsMenu">
-          <mat-icon>build</mat-icon>
-          Tools
-        </button>
 
-        <mat-menu #toolsMenu="matMenu">
-          <button mat-menu-item (click)="fileInput.click()">
-            <mat-icon>upload_file</mat-icon>
-            Import colegi
-          </button>
-          <button mat-menu-item (click)="discussionInput.click()">
-            <mat-icon>forum</mat-icon>
-            Import discuții
-          </button>
-        </mat-menu>
-
-        <input type="file" #fileInput hidden accept=".xlsx,.xls" (change)="onExcelSelected($event)" />
-        <input type="file" #discussionInput hidden accept=".xlsx,.xls" (change)="onDiscussionsExcelSelected($event)" />
-
-        <button mat-raised-button class="ntt-btn-primary add-btn" (click)="showAddForm = true">
-          <mat-icon>person_add</mat-icon>
-          Adaugă coleg
-        </button>
-      </div>
       <div class="team-actions">
         <!-- Căutare coleg -->
         @if (members.length > 0) {
