@@ -59,18 +59,18 @@
   line-height: 1.25;
 }
 
-/* Column sizing for table layout */
-.col-pernr { width: 100px; }
-.col-name { width: 420px; }
-.col-email { width: 360px; }
-.col-actions { width: 120px; }
+/* Column sizing */
+.member-name-cell { width: 180px; }
+[matColumnDef="project"] { width: 140px; }
+[matColumnDef="client"] { width: 140px; }
+[matColumnDef="email"] { width: 200px; }
+[matColumnDef="actions"] { width: 100px; text-align: center; }
 
-/* Ensure member cell content doesn't overflow actions */
-.col-name.member-cell { padding-right: 8px; }
-
-@media (max-width: 900px) {
-  .col-name { width: 220px; }
-  .col-email { width: 140px; }
+@media (max-width: 1200px) {
+  .member-name-cell { width: 120px; }
+  [matColumnDef="project"] { width: 100px; }
+  [matColumnDef="client"] { width: 100px; }
+  [matColumnDef="email"] { width: 140px; }
 }
 
 

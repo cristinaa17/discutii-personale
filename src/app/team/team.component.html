@@ -86,7 +86,7 @@
       </div>
       <!-- TABEL -->
       <mat-card class="mt">
-        <div
+        <table
           mat-table
           [dataSource]="dataSource"
           matSort
@@ -95,41 +95,50 @@
         >
           <!-- PERNR -->
           <ng-container matColumnDef="perNr">
-            <div mat-header-cell *matHeaderCellDef class="col-pernr">PerNR</div>
-            <div mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable col-pernr" [class.deleted-text]="m.isDeleted === 1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>PerNR</th>
+            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
               {{ m.perNr }}
-            </div>
+            </td>
           </ng-container>
 
           <!-- NUME -->
           <ng-container matColumnDef="nume">
-            <div mat-header-cell *matHeaderCellDef class="col-name">Nume</div>
-            <div mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable member-cell col-name" [class.deleted-text]="m.isDeleted === 1">
-              <div class="member-name">{{ m.nume }}</div>
-              <div class="member-subtitle">
-                <div class="project" *ngIf="m.project">{{ m.project }}</div>
-                <div class="client-skills">
-                  <span *ngIf="m.client">{{ m.client }}</span>
-                  <span *ngIf="m.skills"> • {{ m.skills }}</span>
-                </div>
-              </div>
-            </div>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume</th>
+            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable member-name-cell" [class.deleted-text]="m.isDeleted === 1">
+              {{ m.nume }}
+            </td>
+          </ng-container>
+
+          <!-- PROJECT -->
+          <ng-container matColumnDef="project">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Proiect</th>
+            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
+              {{ m.project || '-' }}
+            </td>
+          </ng-container>
+
+          <!-- CLIENT -->
+          <ng-container matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
+              {{ m.client || '-' }}
+            </td>
           </ng-container>
 
           <!-- EMAIL -->
           <ng-container matColumnDef="email">
-            <div mat-header-cell *matHeaderCellDef class="col-email">Email</div>
-            <div mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable col-email" [class.deleted-text]="m.isDeleted === 1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
               {{ m.email || '-' }}
-            </div>
+            </td>
           </ng-container>
 
           <!-- ACȚIUNI -->
           <ng-container matColumnDef="actions">
-            <div mat-header-cell *matHeaderCellDef class="text-end col-actions">Acțiuni</div>
-            <div mat-cell *matCellDef="let m" class="text-end col-actions">
+            <th mat-header-cell *matHeaderCellDef>Acțiuni</th>
+            <td mat-cell *matCellDef="let m">
               <div class="action-buttons">
-                @if (m.isDeleted !== 1) {
+                <ng-container *ngIf="m.isDeleted !== 1; else deleted">
                   <button mat-button class="ntt-btn-edit icon-only" matTooltip="Editează" aria-label="Editează" (click)="onEditMember(m, $event)">
                     <mat-icon>edit</mat-icon>
                   </button>
@@ -137,38 +146,42 @@
                   <button mat-button class="ntt-btn-delete icon-only" matTooltip="Șterge" aria-label="Șterge" (click)="onDeleteMember(m, $event)">
                     <mat-icon>delete</mat-icon>
                   </button>
-                }
+                </ng-container>
 
-                @if (m.isDeleted === 1) {
+                <ng-template #deleted>
                   <button mat-stroked-button class="ntt-btn-restore" (click)="onRestoreMember(m, $event)">
                     <mat-icon>restore</mat-icon>
                     Reactivează
                   </button>
-                }
+                </ng-template>
 
                 <button mat-button class="ntt-btn-chat icon-only" matTooltip="Discuție nouă" aria-label="Discuție nouă" (click)="onAddDiscussionFromTable(m, $event)">
                   <mat-icon>chat</mat-icon>
                 </button>
               </div>
-            </div>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="details">
-            <div mat-cell *matCellDef="let m" [attr.colspan]="displayedColumns.length">
-              <div *ngIf="selectedMember === m && !showEditForm" class="expanded-details">
-                <app-member-details [member]="m" [scrollToDiscussionId]="scrollToDiscussionId"></app-member-details>
-              </div>
-              <div *ngIf="selectedMember === m && showEditForm" class="expanded-details">
-                <app-member-form [member]="editTarget" (save)="onSaveEdit($event)" (cancel)="onCancelEdit()"></app-member-form>
-              </div>
-            </div>
+            <td mat-cell *matCellDef="let m" [attr.colspan]="displayedColumns.length">
+              <ng-container *ngIf="selectedMember === m && !showEditForm">
+                <div class="expanded-details">
+                  <app-member-details [member]="m" [scrollToDiscussionId]="scrollToDiscussionId"></app-member-details>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="selectedMember === m && showEditForm">
+                <div class="expanded-details">
+                  <app-member-form [member]="editTarget" (save)="onSaveEdit($event)" (cancel)="onCancelEdit()"></app-member-form>
+                </div>
+              </ng-container>
+            </td>
           </ng-container>
 
           <!-- RÂNDURI -->
-          <div mat-header-row *matHeaderRowDef="displayedColumns"></div>
-          <div mat-row *matRowDef="let row; columns: displayedColumns" class="row-main" [class.selected-row]="selectedMember === row"></div>
-          <div mat-row *matRowDef="let row; columns: ['details']" class="row-details" [style.display]="selectedMember === row ? '' : 'none'"></div>
-        </div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" class="row-main" [class.selected-row]="selectedMember === row"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['details']" class="row-details" [style.display]="selectedMember === row ? '' : 'none'"></tr>
+        </table>
       </mat-card>
     </div>
   }

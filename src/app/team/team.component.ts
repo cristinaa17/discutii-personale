@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Member } from '../models/member';
 import { TeamService } from '../team.service';
 
@@ -6,7 +7,7 @@ import { MemberDetailsComponent } from '../member-details/member-details.compone
 import { MemberFormComponent } from '../member-form/member-form.component';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import * as XLSX from 'xlsx';
 
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +25,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-team',
   imports: [
+    CommonModule,
     MatTableModule,
+    MatSortModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -43,7 +46,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   members: Member[] = [];
   dataSource = new MatTableDataSource<Member>();
 
-  displayedColumns = ['perNr', 'nume', 'email', 'actions'];
+  displayedColumns = ['perNr', 'nume', 'project', 'client', 'email', 'actions'];
 
   selectedMember: Member | null = null;
   selectedDiscussionId: number | null = null;
