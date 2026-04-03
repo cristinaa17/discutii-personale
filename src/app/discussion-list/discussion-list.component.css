@@ -85,3 +85,24 @@
 .text em {
   font-style: italic;
 }
+
+/* Align action controls (checkbox + icon buttons) */
+.discussion-header .actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.discussion-header .actions .mat-checkbox {
+  display: flex;
+  align-items: center;
+  margin: 0; /* avoid extra spacing */
+}
+
+.discussion-header .actions button.mat-icon-button {
+  height: 36px;
+  width: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

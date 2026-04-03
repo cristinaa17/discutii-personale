@@ -65,7 +65,7 @@
       <div class="team-actions">
         <!-- Căutare coleg -->
         @if (members.length > 0) {
-          <mat-form-field appearance="outline" class="search-box">
+          <mat-form-field appearance="outline" class="search-box condensed">
             <mat-label>Caută coleg</mat-label>
             <input matInput (keyup)="applyFilter($event)" />
             <mat-icon matSuffix>search</mat-icon>
@@ -75,7 +75,7 @@
         @if (members.length > 0) {
           <mat-form-field
             appearance="outline"
-            class="search-box clickable"
+            class="search-box condensed clickable"
             (click)="openSearchDialog()"
           >
             <mat-label>Caută în discuții</mat-label>

@@ -72,10 +72,13 @@ export class TeamComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = (data: Member, filter: string) => {
       const search = this.normalize(filter);
       const name = this.normalize(data.nume || '');
+      const skills = this.normalize(data.skills || '');
+      const project = this.normalize(data.project || '');
+      const client = this.normalize(data.client || '');
+n      const combined = `${name} ${skills} ${project} ${client}`;
+      const words = search.split(' ').filter(Boolean);
 
-      const words = search.split(' ');
-
-      return words.every((w) => name.includes(w));
+      return words.every((w) => combined.includes(w));
     };
 
     this.dataSource.sortingDataAccessor = (data: Member, sortHeaderId: string) => {

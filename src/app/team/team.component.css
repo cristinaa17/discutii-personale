@@ -108,7 +108,17 @@
 
 .search-box {
   width: 340px;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+}
+
+.search-box.condensed ::ng-deep .mat-mdc-text-field-wrapper {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.search-box.condensed input {
+  font-size: 13px;
+  padding: 4px 0;
 }
 
 .search-box.clickable {
