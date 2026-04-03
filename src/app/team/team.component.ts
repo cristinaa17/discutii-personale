@@ -76,6 +76,17 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
       return words.every((w) => name.includes(w));
     };
+
+    this.dataSource.sortingDataAccessor = (data: Member, sortHeaderId: string) => {
+      switch (sortHeaderId) {
+        case 'perNr': return data.perNr || 0;
+        case 'nume': return (data.nume || '').toLowerCase();
+        case 'project': return (data.project || '').toLowerCase();
+        case 'client': return (data.client || '').toLowerCase();
+        case 'email': return (data.email || '').toLowerCase();
+        default: return '';
+      }
+    };
   }
 
   ngAfterViewInit(): void {
