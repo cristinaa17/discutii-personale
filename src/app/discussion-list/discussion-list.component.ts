@@ -9,12 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider'; 
 import { MatListModule } from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { AngularEditorConfig, AngularEditorModule } from '@kolkov/angular-editor';
 
 @Component({
     selector: 'app-discussion-list',
-    imports: [CommonModule, AngularEditorModule, FormsModule, MatListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule],
+    imports: [CommonModule, AngularEditorModule, FormsModule, MatListModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule, MatCheckboxModule],
     templateUrl: './discussion-list.component.html',
     styleUrls: ['./discussion-list.component.css']
 })
@@ -22,7 +23,8 @@ export class DiscussionListComponent {
 
   @Input() discussions: Discussion[] = [];
   @Output() delete = new EventEmitter<number>();
-   @Output() update = new EventEmitter<{ id: number; text: string }>();
+  @Output() update = new EventEmitter<{ id: number; text: string }>();
+  @Output() followUpToggle = new EventEmitter<{ id: number; hasFollowUp: boolean }>();
 
   editingId: number | null = null;
   editText: string = '';
@@ -51,5 +53,9 @@ export class DiscussionListComponent {
   saveEdit(d: Discussion) {
     this.update.emit({ id: d.id, text: this.editText });
     this.editingId = null;
+  }
+
+  toggleFollowUp(d: Discussion) {
+    this.followUpToggle.emit({ id: d.id, hasFollowUp: !(d.hasFollowUp || 0) });
   }
 }

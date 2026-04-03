@@ -58,6 +58,15 @@ db.serialize(() => {
     }
   }
 );
+
+db.run(
+  `ALTER TABLE discussion ADD COLUMN hasFollowUp INTEGER DEFAULT 0`,
+  (err) => {
+    if (err && !String(err.message).includes('duplicate column name')) {
+      console.error('[DB] Failed to add hasFollowUp column:', err.message);
+    }
+  }
+);
 });
 
 module.exports = db;

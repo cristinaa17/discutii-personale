@@ -97,4 +97,12 @@ loadDiscussions() {
 
   this.teamService.updateDiscussion(e.id, e.text).subscribe();
 }
+
+onFollowUpToggle(e: {id: number, hasFollowUp: boolean}) {
+  const d = this.member.discussions.find(x => x.id === e.id);
+  if (!d) return;
+
+  d.hasFollowUp = e.hasFollowUp ? 1 : 0;
+  this.teamService.updateDiscussionFollowUp(e.id, e.hasFollowUp).subscribe();
+}
 }

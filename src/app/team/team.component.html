@@ -53,6 +53,11 @@
             <mat-icon>person_add</mat-icon>
             Adaugă coleg
           </button>
+
+          <button mat-icon-button matTooltip="Discuții cu follow-up" *ngIf="followUpCount > 0" class="followup-badge">
+            <mat-icon>notifications</mat-icon>
+            <span class="badge">{{ followUpCount }}</span>
+          </button>
         </div>
       </div>
 

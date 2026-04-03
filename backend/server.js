@@ -122,6 +122,37 @@ app.put("/api/discussions/:id", (req, res) => {
   });
 });
 
+app.put("/api/discussions/:id/followup", (req, res) => {
+  const id = req.params.id;
+  const { hasFollowUp } = req.body;
+
+  console.log(`\n[DISCUSSION][FOLLOWUP] id=${id}, hasFollowUp=${hasFollowUp}`);
+
+  db.run("UPDATE discussion SET hasFollowUp = ? WHERE id = ?", [hasFollowUp ? 1 : 0, id], (err) => {
+    if (err) {
+      console.error("[DISCUSSION][FOLLOWUP][ERROR]", err);
+      return res.status(500).json(err);
+    }
+
+    console.log(`[DISCUSSION][FOLLOWUP][OK] id=${id}`);
+    res.sendStatus(204);
+  });
+});
+
+app.get("/api/discussions/followup/count", (req, res) => {
+  console.log(`\n[DISCUSSION][FOLLOWUP][COUNT]`);
+
+  db.get("SELECT COUNT(*) as count FROM discussion WHERE hasFollowUp = 1", (err, row) => {
+    if (err) {
+      console.error("[DISCUSSION][FOLLOWUP][COUNT][ERROR]", err);
+      return res.status(500).json(err);
+    }
+
+    console.log(`[DISCUSSION][FOLLOWUP][COUNT][OK] count=${row.count}`);
+    res.json(row);
+  });
+});
+
 app.delete("/api/discussions/:id", (req, res) => {
   const id = req.params.id;
   console.log(`\n[DISCUSSION][DELETE] id=${id}`);

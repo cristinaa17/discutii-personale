@@ -1,5 +1,6 @@
 export interface Discussion {
   id: number;  
   text: string; 
-  date: Date;  
+  date: Date;
+  hasFollowUp?: number;
 }

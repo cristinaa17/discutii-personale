@@ -53,6 +53,10 @@ export class TeamService {
     return this.http.put(`${this.api}/discussions/${id}`, { text });
   }
 
+  updateDiscussionFollowUp(id: number, hasFollowUp: boolean) {
+    return this.http.put(`${this.api}/discussions/${id}/followup`, { hasFollowUp: hasFollowUp ? 1 : 0 });
+  }
+
   importDiscussionsExcel(file: File) {
     const formData = new FormData();
     formData.append('file', file);
@@ -60,7 +64,7 @@ export class TeamService {
     return this.http.post<any>(`${this.api}/import/discussions`, formData);
   }
 
-  restoreMember(id: number) {
-    return this.http.put(`${this.api}/members/${id}/restore`, {});
+  getFollowUpCount() {
+    return this.http.get<{ count: number }>(`${this.api}/discussions/followup/count`);
   }
 }

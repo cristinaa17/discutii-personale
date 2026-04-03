@@ -11,6 +11,12 @@
           </span>
 
           <div class="actions">
+            <mat-checkbox 
+              [checked]="d.hasFollowUp === 1" 
+              (change)="toggleFollowUp(d)"
+              matTooltip="Urmărire necesară">
+            </mat-checkbox>
+
             <button mat-icon-button (click)="startEdit(d)">
               <mat-icon>edit</mat-icon>
             </button>

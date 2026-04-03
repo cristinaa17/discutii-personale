@@ -45,6 +45,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 export class TeamComponent implements OnInit, AfterViewInit {
   members: Member[] = [];
   dataSource = new MatTableDataSource<Member>();
+  followUpCount = 0;
 
   displayedColumns = ['perNr', 'nume', 'project', 'client', 'actions'];
 
@@ -100,6 +101,13 @@ export class TeamComponent implements OnInit, AfterViewInit {
         discussions: [],
       }));
       this.dataSource.data = this.members;
+      this.updateFollowUpCount();
+    });
+  }
+
+  updateFollowUpCount() {
+    this.teamService.getFollowUpCount().subscribe((count) => {
+      this.followUpCount = count.count || 0;
     });
   }
 
@@ -363,6 +371,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
         ...d,
         date: new Date(d.date),
       }));
+      this.updateFollowUpCount();
     });
   }
 
