@@ -57,6 +57,21 @@
   line-height: 1.25;
 }
 
+/* Column sizing for table layout */
+.col-pernr { width: 100px; }
+.col-name { width: 420px; }
+.col-email { width: 360px; }
+.col-actions { width: 120px; }
+
+/* Ensure member cell content doesn't overflow actions */
+.col-name.member-cell { padding-right: 8px; }
+
+@media (max-width: 900px) {
+  .col-name { width: 220px; }
+  .col-email { width: 140px; }
+}
+
+
 .team-actions {
   display: flex;
   align-items: center;

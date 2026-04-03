@@ -95,12 +95,12 @@
         >
           <!-- PERNR -->
           <ng-container matColumnDef="perNr">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>PerNR</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-pernr">PerNR</th>
             <td
               mat-cell
               *matCellDef="let m"
               (click)="selectMember(m)"
-              class="clickable"
+              class="clickable col-pernr"
               [class.deleted-text]="m.isDeleted === 1"
             >
               {{ m.perNr }}
@@ -108,12 +108,12 @@
           </ng-container>
           <!-- NUME -->
           <ng-container matColumnDef="nume">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-name">Nume</th>
             <td
               mat-cell
               *matCellDef="let m"
               (click)="selectMember(m)"
-              class="clickable member-cell"
+              class="clickable member-cell col-name"
               [class.deleted-text]="m.isDeleted === 1"
             >
               <div class="member-name">{{ m.nume }}</div>
@@ -125,12 +125,12 @@
           </ng-container>
           <!-- EMAIL -->
           <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="col-email">Email</th>
             <td
               mat-cell
               *matCellDef="let m"
               (click)="selectMember(m)"
-              class="clickable"
+              class="clickable col-email"
               [class.deleted-text]="m.isDeleted === 1"
             >
               {{ m.email || "-" }}
