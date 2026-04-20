@@ -41,5 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
+hr.db
 backend/hr.db
 backend/uploads/

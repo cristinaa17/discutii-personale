@@ -1,7 +1,12 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
 const dbPath = path.join(__dirname, 'hr.db');
+
+// Log which database file we are using so it's obvious on startup
+console.log(`[DB] Using database file: ${dbPath}`);
+
 const db = new sqlite3.Database(dbPath);
 
 db.serialize(() => {
