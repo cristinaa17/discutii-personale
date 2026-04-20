@@ -56,7 +56,8 @@ export class TeamComponent implements OnInit, AfterViewInit {
   showAddForm = false;
   showEditForm = false;
   editTarget: Member | null = null;
-  showAll = false;
+  includeDeleted = false;
+  hasFollowup = false;
   private searchDialogOpen = false;
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -104,7 +105,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   }
 
   reloadMembers() {
-    this.teamService.getMembers(this.showAll).subscribe((members) => {
+    this.teamService.getMembers(this.includeDeleted, this.hasFollowup).subscribe((members) => {
       this.members = members.map((m) => ({
         ...m,
         discussions: [],
@@ -120,8 +121,13 @@ export class TeamComponent implements OnInit, AfterViewInit {
     });
   }
 
-  toggleShowAll(event: any) {
-    this.showAll = event.checked;
+  toggleIncludeDeleted(event: any) {
+    this.includeDeleted = event.checked;
+    this.reloadMembers();
+  }
+
+  toggleHasFollowup(event: any) {
+    this.hasFollowup = event.checked;
     this.reloadMembers();
   }
 

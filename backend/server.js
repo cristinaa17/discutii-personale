@@ -170,11 +170,29 @@ app.delete("/api/discussions/:id", (req, res) => {
 });
 
 app.get("/api/members", (req, res) => {
-  const showAll = req.query.showAll === "true";
+  // treat presence of the param as the flag (no need to be set to 'true')
+  const includeDeleted = req.query.includeDeleted !== undefined;
+  const hasFollowup = req.query.hasFollowup !== undefined;
 
-  const sql = showAll
+  if (hasFollowup) {
+    // return members that have at least one discussion with hasFollowUp = 1
+    const sql = `SELECT DISTINCT m.* FROM member m JOIN discussion d ON d.memberId = m.id WHERE d.hasFollowUp = 1 ${includeDeleted ? '' : 'AND m.isDeleted = 0'}`;
+    console.log('[MEMBER][GET] SQL:', sql);
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        console.error("[MEMBER][GET][HASFOLLOWUP][ERROR]", err);
+        return res.status(500).json(err);
+      }
+
+      res.json(rows);
+    });
+    return;
+  }
+
+  const sql = includeDeleted
     ? "SELECT * FROM member"
     : "SELECT * FROM member WHERE isDeleted = 0";
+  console.log('[MEMBER][GET] SQL:', sql);
 
   db.all(sql, [], (err, rows) => {
     if (err) {

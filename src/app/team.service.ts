@@ -12,8 +12,13 @@ export class TeamService {
 
   constructor(private http: HttpClient) {}
 
-  getMembers(showAll: boolean = false) {
-    return this.http.get<Member[]>(`${this.api}/members?showAll=${showAll}`);
+  getMembers(includeDeleted: boolean = false, hasFollowup: boolean = false) {
+    const params: string[] = [];
+    if (includeDeleted) params.push('includeDeleted');
+    if (hasFollowup) params.push('hasFollowup');
+
+    const suffix = params.length ? `?${params.join('&')}` : '';
+    return this.http.get<Member[]>(`${this.api}/members${suffix}`);
   }
 
   addMember(member: MemberPayload) {

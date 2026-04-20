@@ -84,8 +84,11 @@
           </mat-form-field>
         }
         <div class="show-all-toggle">
-          <mat-slide-toggle color="primary" (change)="toggleShowAll($event)">
-            Arată toți
+          <mat-slide-toggle color="primary" (change)="toggleIncludeDeleted($event)">
+            Include șterși
+          </mat-slide-toggle>
+          <mat-slide-toggle color="accent" class="ml-2" (change)="toggleHasFollowup($event)">
+            Follow up
           </mat-slide-toggle>
         </div>
       </div>
