@@ -4,14 +4,7 @@
     <div class="avatar">
       <!-- POZĂ -->
       @if (member.photoUrl && member.photoUrl.length > 0) {
-        <img
-          [src]="
-            member.photoUrl.startsWith('data:')
-              ? member.photoUrl
-              : 'http://localhost:3000' + member.photoUrl
-          "
-          alt="poza coleg"
-        />
+        <img [src]="getPhotoUrl(member.photoUrl)" alt="poza coleg" />
       }
 
       <!-- INIȚIALE -->

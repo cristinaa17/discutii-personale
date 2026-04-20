@@ -124,7 +124,7 @@ node server.js
 Backend runs on:
 
 ```
-http://localhost:3000
+http://localhost:3001
 ```
 
 ### Start the frontend

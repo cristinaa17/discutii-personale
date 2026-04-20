@@ -27,7 +27,7 @@ RUN npm install
 # =========================
 # 6. Expunem portul backend
 # =========================
-EXPOSE 3000
+EXPOSE 3001
 
 # =========================
 # 7. Pornim serverul

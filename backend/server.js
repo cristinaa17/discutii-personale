@@ -455,7 +455,7 @@ app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`\n Server pornit pe http://localhost:${PORT}`);
 });

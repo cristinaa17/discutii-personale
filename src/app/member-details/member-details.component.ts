@@ -26,6 +26,18 @@ export class MemberDetailsComponent implements OnChanges{
 
   constructor(private teamService: TeamService) {}
 
+  getPhotoUrl(photoUrl?: string): string | undefined {
+    if (!photoUrl) return undefined;
+    if (photoUrl.startsWith('data:')) return photoUrl;
+    if (/^https?:\/\//.test(photoUrl)) return photoUrl;
+
+    // build absolute URL based on backend base (no hardcoded host)
+    const base = this.teamService.getBackendBase();
+    // ensure leading slash
+    const path = photoUrl.startsWith('/') ? photoUrl : '/' + photoUrl;
+    return `${base}${path}`;
+  }
+
  ngOnInit() {
   this.loadDiscussions();
 }
