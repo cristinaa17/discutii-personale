@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3001
+      DATA_DIR: /data
+    expose:
+      - "3001"
+    volumes:
+      - ./backend/hr.db:/data/hr.db
+      - ./backend/uploads:/data/uploads
+
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"

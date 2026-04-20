@@ -8,14 +8,9 @@ import { MemberPayload } from './models/member-payload';
   providedIn: 'root',
 })
 export class TeamService {
-  private api = 'http://localhost:3001/api';
+  private api = '/api';
 
   constructor(private http: HttpClient) {}
-
-  // Return backend origin (without trailing '/api'). Used by components to build absolute URLs for uploads.
-  getBackendBase(): string {
-    return this.api.replace(/\/api\/?$/, '');
-  }
 
   getMembers(includeDeleted: boolean = false, hasFollowup: boolean = false) {
     const params: string[] = [];

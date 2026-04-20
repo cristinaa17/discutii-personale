@@ -1,18 +1,13 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const fs = require('fs');
+const Database = require('better-sqlite3');
+const { dbPath } = require('./runtime-paths');
 
-const dbPath = path.join(__dirname, 'hr.db');
-
-// Log which database file we are using so it's obvious on startup
 console.log(`[DB] Using database file: ${dbPath}`);
 
-const db = new sqlite3.Database(dbPath);
+const rawDb = new Database(dbPath);
+rawDb.pragma('foreign_keys = ON');
 
-db.serialize(() => {
-  db.run(`PRAGMA foreign_keys = ON`);
-
-  db.run(`
+function runMigrations() {
+  rawDb.exec(`
     CREATE TABLE IF NOT EXISTS member (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       perNr INTEGER,
@@ -42,36 +37,82 @@ db.serialize(() => {
       skills TEXT,
       photoUrl TEXT,
       isDeleted INTEGER DEFAULT 0
-    )
-  `);
+    );
 
-  db.run(`
     CREATE TABLE IF NOT EXISTS discussion (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       memberId INTEGER,
       text TEXT,
       date TEXT,
+      hasFollowUp INTEGER DEFAULT 0,
       FOREIGN KEY(memberId) REFERENCES member(id) ON DELETE CASCADE
-    )
+    );
   `);
 
-  db.run(
-  `ALTER TABLE member ADD COLUMN isDeleted INTEGER DEFAULT 0`,
-  (err) => {
-    if (err && !String(err.message).includes('duplicate column name')) {
+  try {
+    rawDb.exec(`ALTER TABLE member ADD COLUMN isDeleted INTEGER DEFAULT 0`);
+  } catch (err) {
+    if (!String(err.message).includes('duplicate column name')) {
       console.error('[DB] Failed to add isDeleted column:', err.message);
     }
   }
-);
 
-db.run(
-  `ALTER TABLE discussion ADD COLUMN hasFollowUp INTEGER DEFAULT 0`,
-  (err) => {
-    if (err && !String(err.message).includes('duplicate column name')) {
+  try {
+    rawDb.exec(`ALTER TABLE discussion ADD COLUMN hasFollowUp INTEGER DEFAULT 0`);
+  } catch (err) {
+    if (!String(err.message).includes('duplicate column name')) {
       console.error('[DB] Failed to add hasFollowUp column:', err.message);
     }
   }
-);
-});
+}
+
+function normalizeArgs(sql, params, cb) {
+  if (typeof params === 'function') {
+    return { params: [], cb: params };
+  }
+
+  return {
+    params: Array.isArray(params) ? params : [params],
+    cb,
+  };
+}
+
+const db = {
+  serialize(fn) {
+    fn();
+  },
+  run(sql, params, cb) {
+    const normalized = normalizeArgs(sql, params, cb);
+
+    try {
+      const info = rawDb.prepare(sql).run(...normalized.params);
+      normalized.cb?.call({ lastID: Number(info.lastInsertRowid), changes: info.changes }, null);
+    } catch (err) {
+      normalized.cb?.(err);
+    }
+  },
+  get(sql, params, cb) {
+    const normalized = normalizeArgs(sql, params, cb);
+
+    try {
+      const row = rawDb.prepare(sql).get(...normalized.params);
+      normalized.cb?.(null, row);
+    } catch (err) {
+      normalized.cb?.(err);
+    }
+  },
+  all(sql, params, cb) {
+    const normalized = normalizeArgs(sql, params, cb);
+
+    try {
+      const rows = rawDb.prepare(sql).all(...normalized.params);
+      normalized.cb?.(null, rows);
+    } catch (err) {
+      normalized.cb?.(err);
+    }
+  },
+};
+
+runMigrations();
 
 module.exports = db;

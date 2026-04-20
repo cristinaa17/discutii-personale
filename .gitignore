@@ -44,3 +44,4 @@ Thumbs.db
 hr.db
 backend/hr.db
 backend/uploads/
+backend/node_modules/

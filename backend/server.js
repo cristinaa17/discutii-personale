@@ -1,13 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
+const { uploadsDir } = require("./runtime-paths");
+const multer = require("multer");
+const XLSX = require("xlsx");
+const fs = require("fs");
 
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-const path = require("path");
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(uploadsDir));
 
 app.get("/api/discussions/search", (req, res) => {
   const rawQ = (req.query.q || "").trim();
@@ -330,10 +333,6 @@ app.put("/api/members/:id/restore", (req, res) => {
   });
 });
 
-const multer = require("multer");
-const ExcelJS = require("exceljs");
-const fs = require("fs");
-
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
@@ -341,22 +340,31 @@ app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
     console.log("\n[IMPORT][DISCUSSIONS] Starting import...");
     if (!req.file) return res.status(400).json({ error: "Fisier lipsa" });
 
-    const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.load(req.file.buffer);
+    const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    const sheetName = workbook.SheetNames[0];
+    if (!sheetName) {
+      return res.status(400).json({ error: "Fisier Excel fara foi de calcul" });
+    }
 
-    const worksheet = workbook.worksheets[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const rows = XLSX.utils.sheet_to_json(worksheet, {
+      header: 1,
+      defval: "",
+      raw: false,
+    });
+    if (!rows.length) {
+      return res.json({ added: 0, updatedPhotos: 0 });
+    }
 
-    console.log("IMAGES FOUND:", worksheet.getImages().length);
-
-    const images = worksheet.getImages();
-
-    const headerRow = worksheet.getRow(1);
     const headers = {};
-    headerRow.eachCell((cell, col) => {
-      headers[cell.value] = col;
+    rows[0].forEach((header, index) => {
+      headers[String(header).trim()] = index + 1;
     });
 
     const perNrCol = headers["PerNr"];
+    if (!perNrCol) {
+      return res.status(400).json({ error: "Coloana PerNr lipsa" });
+    }
 
     const discCols = [];
     for (let i = 1; i <= 10; i++) {
@@ -365,15 +373,12 @@ app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
       }
     }
 
-    const photosDir = path.join(__dirname, "uploads/photos");
-    fs.mkdirSync(photosDir, { recursive: true });
-
     let added = 0;
-    let updatedPhotos = 0;
+    const startRow = 1;
 
-    for (let r = 2; r <= worksheet.rowCount; r++) {
-      const row = worksheet.getRow(r);
-      const perNr = String(row.getCell(perNrCol).value || "").trim();
+    for (let r = startRow; r < rows.length; r++) {
+      const row = rows[r];
+      const perNr = String(row[perNrCol - 1] || "").trim();
       if (!perNr) continue;
 
       const member = await new Promise((resolve, reject) => {
@@ -385,52 +390,8 @@ app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
 
       if (!member) continue;
 
-      const imageOnRow = images.find((img) => {
-        const startRow = img.range.tl.nativeRow + 1;
-        const endRow = img.range.br.nativeRow + 1;
-        return r >= startRow && r <= endRow;
-      });
-
-      if (imageOnRow) {
-        const media = workbook.model.media.find(
-          (m) => m.index === imageOnRow.imageId,
-        );
-
-        if (media?.buffer) {
-          const fileName = `${member.perNr}_${Date.now()}.png`;
-          const savePath = path.join(photosDir, fileName);
-
-          fs.writeFileSync(savePath, media.buffer);
-
-          const publicUrl = `/uploads/photos/${fileName}`;
-
-          await new Promise((resolve, reject) => {
-            db.run(
-              "UPDATE member SET photoUrl = ? WHERE id = ?",
-              [publicUrl, member.id],
-              (err) => (err ? reject(err) : resolve()),
-            );
-          });
-
-          updatedPhotos++;
-        }
-      }
-
       for (const col of discCols) {
-        let cellValue = row.getCell(col).value;
-        let text = "";
-
-        if (typeof cellValue === "string") {
-          text = cellValue;
-        } else if (cellValue?.richText) {
-          text = cellValue.richText.map((rt) => rt.text).join("");
-        } else if (cellValue?.text) {
-          text = cellValue.text;
-        } else {
-          text = "";
-        }
-
-        text = text.trim();
+        const text = String(row[col - 1] || "").trim();
 
         if (!text) continue;
 
@@ -448,7 +409,7 @@ app.post("/api/import/discussions", upload.single("file"), async (req, res) => {
       }
     }
 
-    res.json({ added, updatedPhotos });
+    res.json({ added, updatedPhotos: 0 });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Eroare import" });

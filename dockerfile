@@ -1,35 +1,21 @@
-# =========================
-# 1. Image de bază Node
-# =========================
-FROM node:18-alpine
+FROM docker.io/library/node:24-alpine AS build
 
-# =========================
-# 2. Director de lucru
-# =========================
 WORKDIR /app
 
-# =========================
-# 3. Copiem backend-ul
-# =========================
-COPY backend ./backend
+COPY package*.json ./
+RUN npm ci
 
-# =========================
-# 4. Copiem frontend build
-# =========================
-COPY dist/directives-deep-dive/browser ./frontend
+COPY angular.json tsconfig*.json proxy.conf.js ./
+COPY src ./src
+COPY public ./public
 
-# =========================
-# 5. Instalăm dependențe backend
-# =========================
-WORKDIR /app/backend
-RUN npm install
+RUN npx ng build --configuration development
 
-# =========================
-# 6. Expunem portul backend
-# =========================
-EXPOSE 3001
+FROM docker.io/library/nginx:1.27-alpine
 
-# =========================
-# 7. Pornim serverul
-# =========================
-CMD ["node", "server.js"]
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist/directives-deep-dive/browser /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

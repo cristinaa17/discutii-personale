@@ -30,6 +30,7 @@ The application is built using **Angular for the frontend** and **Node.js + Expr
 
 * Import members from Excel files
 * Import discussions from Excel files
+* Discussion imports read the text cells from the workbook; embedded images are not imported
 
 ---
 
@@ -138,3 +139,23 @@ Frontend runs on:
 ```
 http://localhost:4200
 ```
+
+---
+
+## Docker
+
+You can start the full stack with:
+
+```
+docker compose up --build
+```
+If the images have been already built, then you can start the up by running:
+You can start the full stack with:
+
+```
+docker compose up -d
+```
+
+The frontend is available at `http://localhost:4200`.
+The backend is only exposed inside the Compose network, not on the host.
+The frontend image is built during `docker compose up --build` and served by Nginx.
