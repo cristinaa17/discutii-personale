@@ -47,7 +47,7 @@ export class TeamComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Member>();
   followUpCount = 0;
 
-  displayedColumns = ['perNr', 'nume', 'project', 'client', 'actions'];
+  displayedColumns = ['nume', 'projectClient', 'level', 'skills', 'actions'];
 
   selectedMember: Member | null = null;
   selectedDiscussionId: number | null = null;
@@ -76,8 +76,9 @@ export class TeamComponent implements OnInit, AfterViewInit {
       const skills = this.normalize((data.skills || '').replace(/[,;]+/g, ' '));
       const project = this.normalize(data.project || '');
       const client = this.normalize(data.client || '');
+      const level = this.normalize(data.gLevel || '');
 
-      const combined = `${name} ${skills} ${project} ${client}`;
+      const combined = `${name} ${skills} ${project} ${client} ${level}`;
       const combinedNoSpace = combined.replace(/\s+/g, '');
       const words = search.split(/\s+/).filter(Boolean);
 
@@ -90,10 +91,13 @@ export class TeamComponent implements OnInit, AfterViewInit {
 
     this.dataSource.sortingDataAccessor = (data: Member, sortHeaderId: string) => {
       switch (sortHeaderId) {
-        case 'perNr': return data.perNr || 0;
         case 'nume': return (data.nume || '').toLowerCase();
-        case 'project': return (data.project || '').toLowerCase();
-        case 'client': return (data.client || '').toLowerCase();
+        case 'projectClient':
+          return `${data.project || ''} ${data.client || ''}`.toLowerCase();
+        case 'level':
+          return (data.gLevel || '').toLowerCase();
+        case 'skills':
+          return (data.skills || '').toLowerCase();
         case 'email': return (data.email || '').toLowerCase();
         default: return '';
       }
@@ -141,6 +145,14 @@ export class TeamComponent implements OnInit, AfterViewInit {
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  formatProjectClient(member: Member): string {
+    return [member.project, member.client].filter(Boolean).join(' / ') || '-';
+  }
+
+  formatLevel(member: Member): string {
+    return member.gLevel || '-';
   }
 
   addMember(member: Member) {

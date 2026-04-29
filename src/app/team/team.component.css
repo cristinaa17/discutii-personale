@@ -78,16 +78,18 @@
 }
 
 /* Column sizing */
-.member-name-cell { width: 180px; }
-[matColumnDef="project"] { width: 140px; }
-[matColumnDef="client"] { width: 140px; }
+[matColumnDef="nume"] { width: 180px; }
+[matColumnDef="projectClient"] { width: 220px; }
+[matColumnDef="level"] { width: 120px; }
+[matColumnDef="skills"] { width: 220px; }
 [matColumnDef="email"] { width: 200px; }
 [matColumnDef="actions"] { width: 100px; text-align: center; }
 
 @media (max-width: 1200px) {
-  .member-name-cell { width: 120px; }
-  [matColumnDef="project"] { width: 100px; }
-  [matColumnDef="client"] { width: 100px; }
+  [matColumnDef="nume"] { width: 120px; }
+  [matColumnDef="projectClient"] { width: 150px; }
+  [matColumnDef="level"] { width: 90px; }
+  [matColumnDef="skills"] { width: 150px; }
   [matColumnDef="email"] { width: 140px; }
 }
 

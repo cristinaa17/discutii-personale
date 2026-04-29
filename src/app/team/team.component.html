@@ -101,14 +101,6 @@
           multiTemplateDataRows
           class="mat-elevation-z2 full-table"
         >
-          <!-- PERNR -->
-          <ng-container matColumnDef="perNr">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>PerNR</th>
-            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
-              {{ m.perNr }}
-            </td>
-          </ng-container>
-
           <!-- NUME -->
           <ng-container matColumnDef="nume">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume</th>
@@ -117,19 +109,27 @@
             </td>
           </ng-container>
 
-          <!-- PROJECT -->
-          <ng-container matColumnDef="project">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Proiect</th>
+          <!-- PROIECT / CLIENT -->
+          <ng-container matColumnDef="projectClient">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Proiect / client</th>
             <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
-              {{ m.project || '-' }}
+              {{ formatProjectClient(m) }}
             </td>
           </ng-container>
 
-          <!-- CLIENT -->
-          <ng-container matColumnDef="client">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+          <!-- LEVEL -->
+          <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Level</th>
             <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
-              {{ m.client || '-' }}
+              {{ formatLevel(m) }}
+            </td>
+          </ng-container>
+
+          <!-- SKILLS -->
+          <ng-container matColumnDef="skills">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Skills</th>
+            <td mat-cell *matCellDef="let m" (click)="selectMember(m)" class="clickable" [class.deleted-text]="m.isDeleted === 1">
+              {{ m.skills || '-' }}
             </td>
           </ng-container>
 
